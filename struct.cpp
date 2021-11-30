@@ -1,0 +1,1 @@
+const int MAX_LEN_VALUE = 20;
