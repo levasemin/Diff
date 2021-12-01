@@ -5,26 +5,26 @@ BuildF = obj/
 
 all: clean main.exe
 
-main.exe :	 $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o 
-	$(CC) -g $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
+main.exe :	 $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o 
+	$(CC) -g $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
 
 $(BuildF)main.o : main.cpp | obj
 	$(CC) -c $(CFLAGS) main.cpp -o $(BuildF)main.o
+
+$(BuildF)make_graph.o : make_graph.cpp | obj
+	$(CC) -c $(CFLAGS) make_graph.cpp -o $(BuildF)make_graph.o
 
 $(BuildF)read_graph.o : read_graph.cpp | obj
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
 
-$(BuildF)main.o : main.cpp | obj
-	$(CC) -c $(CFLAGS) main.cpp -o $(BuildF)main.o
-
 $(BuildF)differentiate.o : differentiate.cpp | obj
 	$(CC) -c $(CFLAGS) differentiate.cpp -o $(BuildF)differentiate.o
 
+$(BuildF)simplifier.o : main.cpp | obj
+	$(CC) -c $(CFLAGS) simplifier.cpp -o $(BuildF)simplifier.o
+
 $(BuildF)dump_graph.o : dump_graph.cpp | obj
 	$(CC) -c $(CFLAGS) dump_graph.cpp -o $(BuildF)dump_graph.o
-
-$(BuildF)make_graph.o : make_graph.cpp | obj
-	$(CC) -c $(CFLAGS) make_graph.cpp -o $(BuildF)make_graph.o
 
 $(BuildF)open.o : open.cpp | obj
 	$(CC) -c $(CFLAGS) open.cpp -o $(BuildF)open.o

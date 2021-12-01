@@ -1,6 +1,5 @@
 #include "differentiator.h"
 
-int initializate_function(const char *value);
 node *read_graph_bracket(graph *diff_graph, const char **current_el);
 void read_value(node *current_node, const char **current_el);
 
@@ -11,6 +10,38 @@ void construct_graph(graph *graph)
     construct_node(&graph->root_node, 0, 0);
     
     graph->count_nodes = 1;
+}
+
+bool copy_node_with_childrens(node **new_node, node **old_node) 
+{
+    copy_node(new_node, old_node);
+
+    if ((*old_node)->left_node != nullptr)
+    {
+        copy_node(&(*new_node)->left_node,  &(*old_node)->left_node);
+    }
+
+    if ((*old_node)->right_node != nullptr)
+    {
+        copy_node(&(*new_node)->right_node, &(*old_node)->right_node);
+    }
+}
+
+bool copy_node(node **new_node, node **old_node)
+{
+    assert(new_node != nullptr);
+
+    *new_node = (node *)calloc(1, sizeof(node));
+    
+    assert(*new_node != nullptr);
+
+    (*new_node)->value      = (*old_node)->value;
+    (*new_node)->type       = (*old_node)->type;
+    
+    (*new_node)->left_node  = (*old_node)->left_node;
+    (*new_node)->right_node = (*old_node)->right_node;
+
+    return (bool)*new_node;
 }
 
 bool construct_node(node **new_node, int type, int value, node *left_node, node* right_node)
@@ -134,7 +165,7 @@ void read_value(node *current_node, const char **current_el)
     }
 }
 
-#define DERIVATIVE(oper, symbols, code)                    \
+#define DERIVATIVE(oper, symbols, level, code)             \
     if (strncmp(value, symbols, strlen(symbols)) == 0)     \
     {                                                      \
         return oper##_OPER;                                \

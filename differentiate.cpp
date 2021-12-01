@@ -1,5 +1,8 @@
 #include "differentiator.h"
 
+node *differentiate_internal(node* calc_node, node *external_derivative);
+
+
 void differentiate_graph(graph *diff_graph)
 {
     diff_graph->root_node = differentiate_node(diff_graph->root_node);
@@ -7,6 +10,7 @@ void differentiate_graph(graph *diff_graph)
     DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 
 }
+
 
 void change_node(node *current_node, int type, int value, node *left_node, node *right_node)
 {
@@ -16,18 +20,28 @@ void change_node(node *current_node, int type, int value, node *left_node, node 
     current_node->right_node = right_node;
 }
 
-#define DERIVATIVE(oper, symbols, code) \
-    case oper##_OPER:          \
-        code                   \
+
+#define DERIVATIVE(oper, symbols, level, code) \
+    case oper##_OPER:                          \
+        code                                   \
         break;
 
-node *differentiate_internal(node *current_node, node* calc_node, node *external_derivative)
+
+
+node *differentiate_internal(node* calc_node, node *external_derivative)
 {
+    node *current_node = nullptr;
+
     node* internal_derivative = differentiate_node(calc_node);
 
     if (internal_derivative->type == CONST_TYPE && internal_derivative->value == 1)
     {
-        current_node = external_derivative;
+        copy_node_with_childrens(&current_node, &external_derivative);
+    }
+
+    else if (internal_derivative->type == CONST_TYPE && internal_derivative->value == 0)
+    {
+        current_node = nullptr;
     }
 
     else
@@ -37,6 +51,7 @@ node *differentiate_internal(node *current_node, node* calc_node, node *external
 
     return current_node;
 }
+
 
 node *differentiate_node(node *current_node)
 {
@@ -64,5 +79,4 @@ node *differentiate_node(node *current_node)
     }
     
     return current_node;
-
 }

@@ -3,6 +3,7 @@
 node *get_add_sub(const char **s);
 node *get_mul_div(const char **s);
 node *get_func(const char **s);
+node *get_pow(const char **s);
 node *get_brackets(const char**s);
 node *get_const_var(const char **s);
 
@@ -30,40 +31,51 @@ node *read_graph(graph *diff_graph, const char **current_el)
 
     return diff_graph->root_node;
 }
-    #define DERIVATIVE(oper, symbols, level, code)                                         \
-    if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)                             \
-    {      \
-        node *old_node = main_node;\
-        \
-        construct_node(&main_node, OPER_TYPE, oper##_OPER, nullptr, old_node);  \
-        *s += strlen(symbols);                                                  \
-        node *val2 = get_brackets(s);\
-\
-        main_node->right_node = val2;\
-    }                                                                           \
-                                                                                \
-    else                                                                        \
+
+#define DERIVATIVE(oper, symbols, level, code)                                      \
+if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)           \
+{                                                                                   \
+    node *old_node = main_node;                                                     \
+                                                                                    \
+    construct_node(&main_node, OPER_TYPE, oper##_OPER);                             \
+                                                                                    \
+    *s += strlen(symbols);                                                          \
+                                                                                    \
+    node *val2 = next_func(s);                                                      \
+                                                                                    \
+    if (strcmp(symbols, "log") == 0)                                                \
+    {                                                                               \
+        old_node = val2;                                                            \
+        val2 = next_func(s);                                                        \
+    }                                                                               \
+                                                                                    \
+    main_node->left_node = old_node;                                                \
+    main_node->right_node = val2;                                                   \
+                                                                                    \
+    break;                                                                          \
+}                                                                                   \
+                                                                                    \
+else                                                                                \
 
 
 node *get_add_sub(const char **s)
 {
-    node* val = get_mul_div(s);
+    node *(*next_func)(const char **) = get_mul_div;
+
+    node* val = next_func(s);
 
     node *main_node = val;
 
     int current_level = 4;
 
-    while (**s == '+' || **s == '-')
-    {        
-        node *old_node = main_node;
-
-        construct_node(&main_node, OPER_TYPE, initializate_function(*s), old_node, nullptr);
-
-        *s += 1;
-
-        node *val2 = get_mul_div(s);
-
-        main_node->right_node = val2;
+    while(true)
+    {
+        #include "derivative.h"
+    
+        //else
+        {   
+            break;
+        }
     }
 
     return main_node;
@@ -71,34 +83,54 @@ node *get_add_sub(const char **s)
 
 node *get_mul_div(const char **s)
 {
-    node* val = get_func(s);
+    node *(*next_func)(const char **) = get_pow;
+
+    node* val = next_func(s);
 
     node *main_node = val;
 
     int current_level = 3;
 
-    while (**s == '*' || **s == '/')
+    while(true)
     {
-        node *old_node = main_node;
-        
-        construct_node(&main_node, OPER_TYPE, initializate_function(*s), old_node, nullptr);
-
-        *s += 1;
-
-        node *val2 = get_func(s);
-
-        main_node->right_node = val2;
+        #include "derivative.h"
+    
+        //else
+        {
+            break;
+        }
     }
+    return main_node;
+}
 
+node *get_pow(const char **s)
+{
+    node *(*next_func)(const char **) = get_func;
+
+    node* val = next_func(s);
+
+    node *main_node = val;
+
+    int current_level = 2;
+
+    while(true)
+    {
+        #include "derivative.h"
+    
+        //else
+        {
+            break;
+        }
+    }
     return main_node;
 }
 
 
 node* get_func(const char **s)
-{
-    node* val = get_brackets(s);
+{        
+    node *(*next_func)(const char **) = get_brackets;
 
-    node *main_node = val;
+    node *main_node = nullptr;
     
     int current_level = 1;
 
@@ -108,21 +140,22 @@ node* get_func(const char **s)
     
         //else
         {
-            val = get_brackets(s);
+            main_node = next_func(s);
             break;
         }
     }
-    return val;
+
+    return main_node;
 }
 
 node *get_brackets(const char **s)
 {
+
     if (**s == '(')
     {
         *s += 1;
 
         node *val = get_add_sub(s);
-
         Require(s, ')');
 
         return val;
@@ -153,17 +186,17 @@ node *get_const_var(const char **s)
         construct_node(&new_node, CONST_TYPE, val);
     }
 
-    else
+    else if ('a' <= **s && **s <= 'z')
     {
         construct_node(&new_node, VAR_TYPE, **s - 'a');
 
         *s += 1;
     }    
-    
+
     if (start == *s)
     {
         assert(0);
     }
-
+    
     return new_node;
 }

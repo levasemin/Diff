@@ -1,16 +1,12 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
-Makefile:18: warning: overriding recipe for target 'obj/main.o'
-Makefile:12: warning: ignoring old recipe for target 'obj/main.o'
- 
 # GNU Make 4.3
 # Built for Windows32
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Tue Nov 30 21:42:10 2021
+# Make data base, printed on Wed Dec 01 17:35:00 2021
 
 # Variables
 
@@ -23,7 +19,7 @@ USERPROFILE = C:\Users\levce
 # environment
 LOCALAPPDATA = C:\Users\levce\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c8eff115-9969-4f13-9c3e-3b7a8f32020f-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-33e2b69d-fbb7-4c09-95f2-967f67b8ea10-sock
 # environment
 VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -39,7 +35,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11880_FYGYHQYATBUZXMQJ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19988_KWEMPLPUEBWBUFZY
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -95,7 +91,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 11880
+VSCODE_PID = 19988
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -213,7 +209,7 @@ CC = g++
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=9/146=6%
+# Load=99/1024=10%, Rehash=0, Collisions=9/147=6%
 
 # Pattern-specific Variable Values
 
@@ -221,9 +217,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638297352): 29 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638369072): 31 files, no impossibilities.
 
-# 29 files, no impossibilities in 1 directories.
+# 31 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -231,12 +227,12 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Files
 
-main.exe: obj/main.o obj/differentiate.o obj/make_graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
+main.exe: obj/main.o obj/differentiate.o obj/simplifier.o obj/make_graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 9):
-	$(CC) -g $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
+	$(CC) -g $(BuildF)main.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
 
 # Not a target:
 make_graph.cpp:
@@ -244,24 +240,31 @@ make_graph.cpp:
 #  Modification time never checked.
 #  File has not been updated.
 
-obj/main.o: main.cpp main.cpp | obj obj
+obj/main.o: main.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 18):
+#  recipe to execute (from 'Makefile', line 12):
 	$(CC) -c $(CFLAGS) main.cpp -o $(BuildF)main.o
 
 obj/make_graph.o: make_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 27):
+#  recipe to execute (from 'Makefile', line 15):
 	$(CC) -c $(CFLAGS) make_graph.cpp -o $(BuildF)make_graph.o
+
+obj/simplifier.o: main.cpp | obj
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 24):
+	$(CC) -c $(CFLAGS) simplifier.cpp -o $(BuildF)simplifier.o
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-30 21:42:02
+#  Last modified 2021-12-01 17:23:54
 #  File has been updated.
 #  Successfully updated.
 
@@ -302,14 +305,14 @@ obj/dump_graph.o: dump_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 24):
+#  recipe to execute (from 'Makefile', line 27):
 	$(CC) -c $(CFLAGS) dump_graph.cpp -o $(BuildF)dump_graph.o
 
 obj/read_graph.o: read_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 15):
+#  recipe to execute (from 'Makefile', line 18):
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
 
 obj/struct.o: struct.cpp | obj
@@ -405,19 +408,19 @@ obj/stack.o: stack.cpp | obj
 	$(CC) -c $(CFLAGS) stack.cpp -o $(BuildF)stack.o
 
 # files hash-table stats:
-# Load=23/1024=2%, Rehash=0, Collisions=0/75=0%
+# Load=24/1024=2%, Rehash=0, Collisions=0/77=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 42 / storage = 505 B / avg = 12 B
-# current buf: size = 8174 B / used = 505 B / count = 42 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 537 B / avg = 12 B
+# current buf: size = 8174 B / used = 537 B / count = 44 / avg = 12 B
 
-# strcache performance: lookups = 91 / hit rate = 53%
+# strcache performance: lookups = 94 / hit rate = 53%
 # hash-table stats:
-# Load=42/8192=1%, Rehash=0, Collisions=0/91=0%
-# Finished Make data base on Tue Nov 30 21:42:10 2021
+# Load=44/8192=1%, Rehash=0, Collisions=0/94=0%
+# Finished Make data base on Wed Dec 01 17:35:00 2021
 
  
