@@ -7,7 +7,7 @@ void differentiate_graph(graph *diff_graph)
 {
     diff_graph->root_node = differentiate_node(diff_graph->root_node);
 
-    DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
+    //DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 
 }
 
@@ -34,20 +34,10 @@ node *differentiate_internal(node* calc_node, node *external_derivative)
 
     node* internal_derivative = differentiate_node(calc_node);
 
-    if (internal_derivative->type == CONST_TYPE && internal_derivative->value == 1)
-    {
-        copy_node_with_childrens(&current_node, &external_derivative);
-    }
+    construct_node(&current_node, OPER_TYPE, MUL_OPER);
 
-    else if (internal_derivative->type == CONST_TYPE && internal_derivative->value == 0)
-    {
-        current_node = nullptr;
-    }
-
-    else
-    {
-        construct_node(&current_node, OPER_TYPE, MUL_OPER, external_derivative, internal_derivative);
-    }
+    copy_node_with_childrens(&current_node->left_node,  &external_derivative);
+    copy_node_with_childrens(&current_node->right_node, &internal_derivative);
 
     return current_node;
 }

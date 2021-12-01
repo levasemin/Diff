@@ -22,16 +22,13 @@ DERIVATIVE(POW, "^", 2,
 
     construct_node(&external_derivative, OPER_TYPE, MUL_OPER, expression, degree);
 
-    if (degree->value - 1 != 1)
-    {
-        node *pow_node = nullptr;
+    node *pow_node = nullptr;
 
-        construct_node(&pow_node, OPER_TYPE, POW_OPER, expression);
-        
-        construct_node(&pow_node->right_node, CONST_TYPE, degree->value - 1);
-        
-        external_derivative->left_node = pow_node;
-    }
+    construct_node(&pow_node, OPER_TYPE, POW_OPER, expression);
+    
+    construct_node(&pow_node->right_node, CONST_TYPE, degree->value - 1);
+    
+    external_derivative->left_node = pow_node;
     
     current_node = differentiate_internal(expression, external_derivative);
 })
@@ -54,30 +51,16 @@ DERIVATIVE(DIV, "/", 3,
     
     copy_node_with_childrens(&default_denumerator, &current_node->right_node);
 
-    if ( false)//current_node->left_node->type == VAR_TYPE && current_node->right_node->type == CONST_TYPE)
-    {
-        node *default_node = nullptr;
+    first_sum = differentiate_internal(default_numerator,    default_denumerator);
 
-        construct_node(&default_node, CONST_TYPE, 1);
-
-        numerator = differentiate_internal(default_numerator, default_node);
-
-        denumerator = default_denumerator;
-    }
-
-    else
-    {
-        first_sum = differentiate_internal(default_numerator,    default_denumerator);
-
-        second_sum = differentiate_internal(default_denumerator, default_numerator);
+    second_sum = differentiate_internal(default_denumerator, default_numerator);
             
 
-        construct_node(&numerator, OPER_TYPE, SUB_OPER, first_sum, second_sum);
+    construct_node(&numerator, OPER_TYPE, SUB_OPER, first_sum, second_sum);
 
-        construct_node(&denumerator, OPER_TYPE, POW_OPER, default_denumerator);
+    construct_node(&denumerator, OPER_TYPE, POW_OPER, default_denumerator);
 
-        construct_node(&denumerator->right_node, CONST_TYPE, 2);
-    }
+    construct_node(&denumerator->right_node, CONST_TYPE, 2);
 
     construct_node(&current_node, OPER_TYPE, DIV_OPER, numerator, denumerator);
 })
@@ -106,9 +89,6 @@ DERIVATIVE(MUL, "*", 3,
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
 
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
-
-
-    make_simple(&current_node);
 }
 )
 

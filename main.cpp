@@ -19,7 +19,20 @@ int main()
 
     get_graph(&diff_graph, file_name);
     
+    dump_graph_graphviz("read_graph.dot", &diff_graph);
+    create_png("read_graph.dot", "read_graph.png");
+
     differentiate_graph(&diff_graph);
 
+    dump_graph_graphviz("diff_graph.dot", &diff_graph);
+    create_png("diff_graph.dot", "dif_graph.png");
+
+    be_simple(&diff_graph);
+
+    dump_graph_graphviz("simple_graph.dot", &diff_graph);
+    create_png("simple_graph.dot", "simple_graph.png");
+    
     dump_graph(save_file_name, &diff_graph);
+
+    //DEBUG_GRAPHVIZ("graph.dot", &diff_graph);
 }

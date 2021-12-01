@@ -12,9 +12,11 @@ const int MAX_LEN_VALUE = 20;
 
 void construct_graph(graph *graph);
 
-bool copy_node(node **new_node, node **old_node);
+
 
 bool construct_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
+
+bool change_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
 
 bool copy_node(node **new_node, node **old_node);
 
@@ -31,7 +33,10 @@ void differentiate_graph(graph *diff_graph);
 
 node *differentiate_node(node *current_node);
 
-void simplifier(node *current_node);
+
+void be_simple(graph *graph);
+
+void simplifier(node **current_node);
 
 void make_simple(node **current_node);
 

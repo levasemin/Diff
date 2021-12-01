@@ -61,6 +61,19 @@ bool construct_node(node **new_node, int type, int value, node *left_node, node*
     return (bool)*new_node;
 }
 
+bool change_node(node **new_node, int type, int value, node *left_node, node* right_node)
+{
+    assert(new_node != nullptr);
+    
+    (*new_node)->value = value;
+
+    (*new_node)->type           = type;
+    (*new_node)->left_node      = left_node;
+    (*new_node)->right_node     = right_node;
+
+    return (bool)*new_node;
+}
+
 void get_graph(graph *diff_graph, const char *file_name)
 {
     char *string;
@@ -71,7 +84,7 @@ void get_graph(graph *diff_graph, const char *file_name)
 
     diff_graph->root_node = read_graph(diff_graph, (const char **)&string);
     
-    DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
+    //DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 }
 
 
