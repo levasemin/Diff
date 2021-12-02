@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed Dec 01 17:35:00 2021
+# Make data base, printed on Thu Dec 02 19:28:45 2021
 
 # Variables
 
@@ -19,7 +20,7 @@ USERPROFILE = C:\Users\levce
 # environment
 LOCALAPPDATA = C:\Users\levce\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-33e2b69d-fbb7-4c09-95f2-967f67b8ea10-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-754034b1-776f-412c-bd4e-775afb77d086-sock
 # environment
 VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -35,7 +36,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19988_KWEMPLPUEBWBUFZY
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11904_GMHKETKKPRXHTIKO
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -91,7 +92,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 19988
+VSCODE_PID = 11904
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -209,7 +210,8 @@ CC = g++
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=9/147=6%
+# Load=99/1024=10%, Rehash= 
+0, Collisions=9/147=6%
 
 # Pattern-specific Variable Values
 
@@ -217,9 +219,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638369072): 31 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638462515): 34 files, no impossibilities.
 
-# 31 files, no impossibilities in 1 directories.
+# 34 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -264,7 +266,7 @@ obj/simplifier.o: main.cpp | obj
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-12-01 17:23:54
+#  Last modified 2021-12-02 19:28:32
 #  File has been updated.
 #  Successfully updated.
 
@@ -393,6 +395,7 @@ obj/differentiate.o: differentiate.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 differentiate.cpp:
@@ -415,12 +418,12 @@ obj/stack.o: stack.cpp | obj
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 44 / storage = 537 B / avg = 12 B
-# current buf: size = 8174 B / used = 537 B / count = 44 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 47 / storage = 590 B / avg = 12 B
+# current buf: size = 8174 B / used = 590 B / count = 47 / avg = 12 B
 
-# strcache performance: lookups = 94 / hit rate = 53%
+# strcache performance: lookups = 97 / hit rate = 51%
 # hash-table stats:
-# Load=44/8192=1%, Rehash=0, Collisions=0/94=0%
-# Finished Make data base on Wed Dec 01 17:35:00 2021
+# Load=47/8192=1%, Rehash=0, Collisions=0/97=0%
+# Finished Make data base on Thu Dec 02 19:28:45 2021
 
  

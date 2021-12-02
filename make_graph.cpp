@@ -18,12 +18,12 @@ bool copy_node_with_childrens(node **new_node, node **old_node)
 
     if ((*old_node)->left_node != nullptr)
     {
-        copy_node(&(*new_node)->left_node,  &(*old_node)->left_node);
+        copy_node_with_childrens(&(*new_node)->left_node,  &(*old_node)->left_node);
     }
 
     if ((*old_node)->right_node != nullptr)
     {
-        copy_node(&(*new_node)->right_node, &(*old_node)->right_node);
+        copy_node_with_childrens(&(*new_node)->right_node, &(*old_node)->right_node);
     }
 }
 

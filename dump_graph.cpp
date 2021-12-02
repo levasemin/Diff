@@ -1,6 +1,14 @@
 #include "differentiator.h"
 
+void write_graph(FILE *dump_file, node *current_node, int *node_level);
+
 void write_graph_graphviz(FILE *file, graph *graph);
+
+void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node);
+
+void write_graph_graphviz(const char *graphviz_name_file, graph *graph);
+
+FILE *create_graphviz_file(const char *graphviz_file_name);
 
 void dump_graph(const char* dump_file_name, graph *graph)
 {
@@ -22,62 +30,74 @@ void dump_graph(FILE *dump_file, graph *graph)
 }
 
 void write_graph(FILE *dump_file, node *current_node)
+{
+    int node_level = -1;
+    write_graph(dump_file, current_node, &node_level);
+
+}
+
+void write_graph(FILE *dump_file, node *current_node, int *node_level)
 {    
     assert(dump_file != nullptr);
     assert(current_node != nullptr);
-    
+        
     if (current_node->left_node == nullptr && current_node->right_node != nullptr)
     {
-        write_node(dump_file, current_node);
-        fprintf(dump_file, "(");
+        write_node_value(dump_file, current_node);
     }
 
     if (current_node->left_node != nullptr)    
     {
-        write_graph(dump_file, current_node->left_node);
+        *node_level = get_level(current_node);
+        
+        if (*node_level < get_level(current_node->left_node) || *node_level < get_level(current_node->left_node))
+        {
+            fprintf(dump_file, "(");
+            
+            write_graph(dump_file, current_node->left_node);
+            
+            fprintf(dump_file, ")");
+        }
+
+        else
+        {
+            write_graph(dump_file, current_node->left_node);
+        }
     } 
 
     if (current_node->left_node != nullptr && current_node->right_node != nullptr)
     {
-        write_node(dump_file, current_node);
-        fprintf(dump_file, "(");
+        write_node_value(dump_file, current_node);
     }
 
     if (current_node->right_node != nullptr)
     {        
         write_graph(dump_file, current_node->right_node);
-        fprintf(dump_file, ")");
     }
 
     if (current_node->left_node == nullptr && current_node->right_node == nullptr)
     {
-        write_node(dump_file, current_node);
+        write_node_value(dump_file, current_node);
     }
-    
-    return;
 }
 
 #define DERIVATIVE(oper, symbols, level, code) \
     case oper##_OPER:                          \
-        fprintf(dump_file, symbols);           \  
+        fprintf(dump_file, symbols);           \
         break;                                 \
 
 
-#define TRY_PRINT_VAR_CONST(current_node)                        \
-    if (current_node->type == CONST_TYPE)                        \
-    {                                                            \
-        fprintf(dump_file, "%d", current_node->value);           \
-    }                                                            \
-                                                                 \
-    else if(current_node->type == VAR_TYPE)                      \
-    {                                                            \
-        fprintf(dump_file, "%c", current_node->value + 'a');     \
-    }                                                            \
-
-
-void write_node(FILE *dump_file, node *current_node)
+void write_node_value(FILE *dump_file, node *current_node)
 {       
-    TRY_PRINT_VAR_CONST(current_node)
+    if (current_node->type == CONST_TYPE)                       
+    {                                                            
+        fprintf(dump_file, "%d", current_node->value);           
+    }                                                            
+                                                                 
+    else if(current_node->type == VAR_TYPE || current_node->type == EXP_TYPE)                      
+    {                                                            
+        fprintf(dump_file, "%c", current_node->value + 'a');     
+    }                                                            
 
     else
     {
@@ -85,7 +105,6 @@ void write_node(FILE *dump_file, node *current_node)
         {
             #include "derivative.h"
             default:
-                printf("%c", current_node->value + 'a');
                 break;
         }
     }
@@ -142,36 +161,15 @@ FILE *create_graphviz_file(const char *graphviz_file_name)
     return graphviz_file;
 }
 
-
-void fprintf_node(FILE *dump_file, node *current_node, node *pre_node)
+void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node)
 {
-    fprintf(dump_file, "\"%x\n", current_node);                             
+    fprintf(dump_file, "\"%p\n", current_node);                             
         
-    TRY_PRINT_VAR_CONST(current_node)
-
-    else
-    {
-        switch(current_node->value)
-        {
-            #include "derivative.h"
-            default:
-                break;
-        }
-    }        
+    write_node_value(dump_file, current_node);
     
-    fprintf(dump_file, "\"->\"%x\n", pre_node);
+    fprintf(dump_file, "\"->\"%p\n", pre_node);
     
-    TRY_PRINT_VAR_CONST(pre_node)
-
-    else
-    {
-        switch(pre_node->value)
-        {
-            #include "derivative.h"
-            default:
-                break;
-        }
-    } 
+    write_node_value(dump_file, pre_node);
 
     fprintf(dump_file, "\";\n");
 }
@@ -180,38 +178,28 @@ void write_node_graphviz(FILE *dump_file, node *current_node)
 {    
     assert(dump_file         != nullptr);
     assert(current_node != nullptr);
-    
-    size_t file_size = 0;
-            
+                
     fseek(dump_file, -1L, SEEK_END);
 
     if (current_node->left_node != nullptr)  
     {
-        fprintf_node(dump_file, current_node, current_node->left_node);
+        fprintf_node_graphviz(dump_file, current_node, current_node->left_node);
     }
 
     if (current_node->right_node != nullptr)
     {
-        fprintf_node(dump_file, current_node, current_node->right_node);
+        fprintf_node_graphviz(dump_file, current_node, current_node->right_node);
     }
+    
     else
     {
-        fprintf(dump_file, "\"%x\n", current_node);
+        fprintf(dump_file, "\"%p\n", current_node);
 
-        TRY_PRINT_VAR_CONST(current_node)
-
-        else
-        {
-            switch(current_node->value)
-            {
-                #include "derivative.h"
-                default:
-                    break;
-            }
-        }
-
+        write_node_value(dump_file, current_node);
+        
         fprintf(dump_file, "\";\n");    
     }
+    
     fprintf(dump_file, "}");
 }
 
@@ -237,7 +225,7 @@ void fill_object_graphviz(FILE *graphviz_file, Stack *stack, char *color)
 
     while (0 < stack->size)
     {
-        fprintf(graphviz_file, "\"%d\"[color=\"%d\" style=filled];\n", pop_stack(stack)->value, color);
+        fprintf(graphviz_file, "\"%d\"[color=\"%s\" style=filled];\n", pop_stack(stack)->value, color);
     }
 
     fprintf(graphviz_file, "}");

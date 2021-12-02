@@ -37,6 +37,7 @@ node *differentiate_internal(node* calc_node, node *external_derivative)
     construct_node(&current_node, OPER_TYPE, MUL_OPER);
 
     copy_node_with_childrens(&current_node->left_node,  &external_derivative);
+
     copy_node_with_childrens(&current_node->right_node, &internal_derivative);
 
     return current_node;
@@ -47,7 +48,7 @@ node *differentiate_node(node *current_node)
 {
     assert(current_node != nullptr);
     
-    if (current_node->type == CONST_TYPE)
+    if (current_node->type == CONST_TYPE || current_node->type == EXP_TYPE)
     {
         construct_node(&current_node, CONST_TYPE, 0);
     }

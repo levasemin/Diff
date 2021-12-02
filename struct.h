@@ -2,7 +2,8 @@ enum types
 {
     CONST_TYPE   = 1,
     VAR_TYPE     = 2,
-    OPER_TYPE    = 3
+    EXP_TYPE     = 3,
+    OPER_TYPE    = 4
 };
 
 enum operations

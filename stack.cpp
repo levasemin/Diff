@@ -275,24 +275,24 @@ void dump(Stack *stack, const char* error_file_name, const char* error_func_name
 
         fprintf(file, "Information about stack\n\n");
 
-        fprintf(file, "excepted first stack canary:   %Illu;           real first stack canary:  %Illu\n", stack->stack_canary, *(unsigned long long *)stack->data);
-        fprintf(file, "excepted second stack canary:  %Illu;           real second stack canary: %Illu\n", stack->stack_canary,
+        fprintf(file, "excepted first stack canary:   %llu;           real first stack canary:  %llu\n", stack->stack_canary, *(unsigned long long *)stack->data);
+        fprintf(file, "excepted second stack canary:  %llu;           real second stack canary: %llu\n", stack->stack_canary,
                 *(unsigned long long *)(stack->data + stack_canary_size + sizeof(stack_type) * stack->capacity));
-        fprintf(file, "excepted stack hash          %Ilu;           real stack hash:        %Ilu\n", stack->stack_hash, calculate_stack_hash(stack));
+        fprintf(file, "excepted stack hash          %llu;           real stack hash:        %llu\n", stack->stack_hash, calculate_stack_hash(stack));
 
-        fprintf(file, "stack size:    %zu\n", stack->size);
-        fprintf(file, "capacity size: %zu\n", stack->capacity);
-        fprintf(file, "stack states   %zu\n", stack->states);
+        fprintf(file, "stack size:    %llu\n", stack->size);
+        fprintf(file, "capacity size: %llu\n", stack->capacity);
+        fprintf(file, "stack states   %llu\n", stack->states);
         fprintf(file, "Stack elements:\n");
 
         for (size_t i = 0; i < stack->size; ++i)
         {
-            fprintf(file, "%Ilu element: %d\n", i, *(stack_type *)(stack->data + stack_canary_size + i * sizeof(stack_type)));
+            fprintf(file, "%llu element: %d\n", i, *(stack_type *)(stack->data + stack_canary_size + i * sizeof(stack_type)));
         }
 
         for (size_t i = stack->size; i < stack->capacity; ++i)
         {
-            fprintf(file, "[%Ilu] element: %Ilu\n", i, (size_t)*(stack_type *)(stack->data + stack_canary_size + i * sizeof(stack_type)));
+            fprintf(file, "[%llu] element: %llu\n", i, (size_t)*(stack_type *)(stack->data + stack_canary_size + i * sizeof(stack_type)));
         }
         fprintf(file, "-------------------------------------------------------------------------------\n\n\n\n");
     }

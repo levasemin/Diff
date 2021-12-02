@@ -12,7 +12,7 @@ const int MAX_LEN_VALUE = 20;
 
 void construct_graph(graph *graph);
 
-
+const char E = 'e' -'a';
 
 bool construct_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
 
@@ -40,6 +40,8 @@ void simplifier(node **current_node);
 
 void make_simple(node **current_node);
 
+int get_level(node *current_node);
+
 
 FILE *open_file(const char *file_name, const char *key);
 
@@ -57,7 +59,7 @@ void dump_graph(FILE *file, graph *graph);
 
 void write_graph(FILE *file, node *current_node);
 
-void write_node(FILE *file, node *current_node);
+void write_node_value(FILE *file, node *current_node);
 
 
 void dump_graph_graphviz(const char* graph_file_name, graph *graph, Stack* characteristics_object = nullptr, char *color = nullptr);

@@ -49,7 +49,7 @@ size_t read_file(FILE *file, char **string)
     
     assert(*string != nullptr);
 
-    size_t count_elements = fread(*string, sizeof(char), file_size, file);
+    fread(*string, sizeof(char), file_size, file);
 
     return file_size;
 }
