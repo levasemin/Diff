@@ -4,15 +4,16 @@
 
 const int MAX_LEN_VALUE = 20;
 
+const char E = 'e' -'a';
+
 #define DEBUG_GRAPHVIZ(graph_file_name, graph)                       \
     getchar();                                                       \
     dump_graph_graphviz(graph_file_name, graph);                     \
     system("dot -T png graph.dot > graph.png");                      \
     system("start graph.png");                                       \
 
-void construct_graph(graph *graph);
 
-const char E = 'e' -'a';
+void construct_graph(graph *graph);
 
 bool construct_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
 

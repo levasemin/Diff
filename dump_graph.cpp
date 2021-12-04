@@ -40,46 +40,87 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 {    
     assert(dump_file != nullptr);
     assert(current_node != nullptr);
-        
-    if (current_node->left_node == nullptr && current_node->right_node != nullptr)
+    
+    *node_level = get_level(current_node);
+
+    if (*node_level == 1)
     {
+        fprintf(dump_file, "\\");
+
         write_node_value(dump_file, current_node);
+        
+        fprintf(dump_file, "{(");
+
+        write_graph(dump_file, current_node->right_node);
+        
+        fprintf(dump_file, ")}");
+        
+        return;
+    }
+
+    if (*node_level == 2)
+    {
+        fprintf(dump_file, "\\frac{");
+        
+        write_graph(dump_file, current_node->left_node);
+        
+        fprintf(dump_file, "}{");
+
+        write_graph(dump_file, current_node->right_node);
+
+        fprintf(dump_file, "}");
+        
+        return;
     }
 
     if (current_node->left_node != nullptr)    
     {
-        *node_level = get_level(current_node);
-        
-        if (*node_level < get_level(current_node->left_node) || *node_level < get_level(current_node->left_node))
+        if (current_node->left_node->type == OPER_TYPE && 
+        (*node_level <= get_level(current_node->left_node) || *node_level <= get_level(current_node->right_node)))
         {
             fprintf(dump_file, "(");
-            
+
             write_graph(dump_file, current_node->left_node);
             
             fprintf(dump_file, ")");
+
+            write_node_value(dump_file, current_node);
         }
 
         else
         {
             write_graph(dump_file, current_node->left_node);
+
+            write_node_value(dump_file, current_node);
         }
     } 
 
-    if (current_node->left_node != nullptr && current_node->right_node != nullptr)
-    {
-        write_node_value(dump_file, current_node);
-    }
-
     if (current_node->right_node != nullptr)
     {        
-        write_graph(dump_file, current_node->right_node);
-    }
+        if (current_node->right_node->type == OPER_TYPE &&
+        (*node_level <= get_level(current_node->left_node) || *node_level <= get_level(current_node->right_node)))
+        {            
+            fprintf(dump_file, "(");
+
+            write_graph(dump_file, current_node->right_node);
+
+            fprintf(dump_file, ")");
+        }
+            
+        else
+        {
+            write_graph(dump_file, current_node->right_node);
+        }
+    } 
 
     if (current_node->left_node == nullptr && current_node->right_node == nullptr)
     {
         write_node_value(dump_file, current_node);
     }
+
+    return;
 }
+
 
 #define DERIVATIVE(oper, symbols, level, code) \
     case oper##_OPER:                          \
@@ -95,7 +136,7 @@ void write_node_value(FILE *dump_file, node *current_node)
     }                                                            
                                                                  
     else if(current_node->type == VAR_TYPE || current_node->type == EXP_TYPE)                      
-    {                                                            
+    {                                                     
         fprintf(dump_file, "%c", current_node->value + 'a');     
     }                                                            
 
@@ -151,7 +192,6 @@ void write_graph_graphviz(FILE *graphviz_file, graph *graph)
 
 }
     
-
 FILE *create_graphviz_file(const char *graphviz_file_name)
 {
     FILE *graphviz_file = fopen(graphviz_file_name, "wb");
@@ -176,7 +216,7 @@ void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node)
 
 void write_node_graphviz(FILE *dump_file, node *current_node)
 {    
-    assert(dump_file         != nullptr);
+    assert(dump_file    != nullptr);
     assert(current_node != nullptr);
                 
     fseek(dump_file, -1L, SEEK_END);

@@ -1,6 +1,7 @@
 #include "differentiator.h"
 
 node *read_graph_bracket(graph *diff_graph, const char **current_el);
+
 void read_value(node *current_node, const char **current_el);
 
 void construct_graph(graph *graph)

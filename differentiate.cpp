@@ -33,7 +33,7 @@ node *differentiate_internal(node* calc_node, node *external_derivative)
     node *current_node = nullptr;
 
     node* internal_derivative = differentiate_node(calc_node);
-
+    
     construct_node(&current_node, OPER_TYPE, MUL_OPER);
 
     copy_node_with_childrens(&current_node->left_node,  &external_derivative);

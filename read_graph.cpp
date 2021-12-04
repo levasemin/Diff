@@ -1,11 +1,12 @@
 #include "differentiator.h"
 
-node *get_add_sub(const char **s);
-node *get_mul_div(const char **s);
-node *get_func(const char **s);
-node *get_pow(const char **s);
-node *get_brackets(const char**s);
-node *get_const_var(const char **s);
+void exponential_function(node **main_node);
+bool get_add_sub(const char **s, node **main_node);
+bool get_mul_div(const char **s, node **main_node);
+bool get_func(const char **s, node **main_node);
+bool get_pow(const char **s, node **main_node);
+bool get_brackets(const char **s, node **main_node);
+bool get_const_var(const char **s, node **main_node);
 
 
 void Require(const char **s, const char expected)
@@ -18,14 +19,17 @@ void Require(const char **s, const char expected)
     else
     {
         printf("expected %c\n", expected);
-        printf("real %s\n", *s);
+        printf("real %c\n", **s);
+
         assert(0);
     }
 }
 
 node *read_graph(graph *diff_graph, const char **current_el)
 {
-    diff_graph->root_node = get_add_sub(current_el);
+    bool is_const = false;
+    
+    is_const = get_add_sub(current_el, &diff_graph->root_node);
 
     Require(current_el, '$');
 
@@ -35,36 +39,35 @@ node *read_graph(graph *diff_graph, const char **current_el)
 #define DERIVATIVE(oper, symbols, level, code)                                      \
 if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)           \
 {                                                                                   \
-    node *old_node = main_node;                                                     \
+    node *old_node = *main_node;                                                    \
                                                                                     \
-    construct_node(&main_node, OPER_TYPE, oper##_OPER);                             \
+    construct_node(main_node, OPER_TYPE, oper##_OPER);                              \
                                                                                     \
     *s += strlen(symbols);                                                          \
                                                                                     \
-    node *val2 = next_func(s);                                                      \
+    node *val2 = nullptr;                                                           \
+    is_const = next_func(s, &val2);                                                 \
                                                                                     \
     if (strcmp(symbols, "log") == 0)                                                \
     {                                                                               \
         old_node = val2;                                                            \
-        val2 = next_func(s);                                                        \
+        is_const = next_func(s, &val2);                                             \
     }                                                                               \
                                                                                     \
-    main_node->left_node = old_node;                                                \
-    main_node->right_node = val2;                                                   \
-                                                                                    \
-    break;                                                                          \
+    (*main_node)->left_node = old_node;                                             \
+    (*main_node)->right_node = val2;                                                \
 }                                                                                   \
                                                                                     \
 else                                                                                \
 
 
-node *get_add_sub(const char **s)
+bool get_add_sub(const char **s, node **main_node)
 {
-    node *(*next_func)(const char **) = get_mul_div;
+    printf("start ge_\n");
 
-    node* val = next_func(s);
+    bool (*next_func)(const char **, node **) = get_mul_div;
 
-    node *main_node = val;
+    bool is_const = next_func(s, main_node);
 
     int current_level = 4;
 
@@ -77,20 +80,23 @@ node *get_add_sub(const char **s)
             break;
         }
     }
+    
+    printf("end ge_\n");
 
-    return main_node;
+    return is_const;
 }
 
-node *get_mul_div(const char **s)
+
+bool get_mul_div(const char **s, node **main_node)
 {
-    node *(*next_func)(const char **) = get_pow;
+    bool (*next_func)(const char **, node **) = get_pow;
 
-    node* val = next_func(s);
-
-    node *main_node = val;
+    bool val = next_func(s, main_node);
 
     int current_level = 3;
 
+    bool is_const = false;
+
     while(true)
     {
         #include "derivative.h"
@@ -100,96 +106,152 @@ node *get_mul_div(const char **s)
             break;
         }
     }
-    return main_node;
+
+    return is_const;
 }
 
-node *get_pow(const char **s)
+
+void exponential_function(node **main_node)
 {
-    node *(*next_func)(const char **) = get_func;
+    node *degree_node = nullptr;
+            
+    construct_node(&degree_node, OPER_TYPE, MUL_OPER);
 
-    node* val = next_func(s);
+    node *ln_node = nullptr;
 
-    node *main_node = val;
+    construct_node(&ln_node, OPER_TYPE, LN_OPER);
+
+    copy_node_with_childrens(&ln_node->right_node, &(*main_node)->left_node);
+
+    copy_node_with_childrens(&degree_node->left_node, &ln_node);
+
+    copy_node_with_childrens(&degree_node->right_node, &(*main_node)->right_node);
+
+    change_node(&(*main_node)->left_node, EXP_TYPE, E);
+
+    (*main_node)->right_node = degree_node;
+}
+
+
+bool get_pow(const char **s, node **main_node)
+{
+    printf("pidor");
+    bool (*next_func)(const char **, node **) = get_func;
+
+    bool is_const = next_func(s, main_node);
 
     int current_level = 2;
-
+    
     while(true)
-    {
+    {   
         #include "derivative.h"
     
         //else
-        {
+        {     
             break;
         }
+
+        if (is_const == false)
+        {   
+            exponential_function(main_node);
+
+            is_const = false;
+
+        }
     }
-    return main_node;
+
+    return is_const;
 }
 
 
-node* get_func(const char **s)
+bool get_func(const char **s, node **main_node)
 {        
-    node *(*next_func)(const char **) = get_brackets;
+    printf("loh");
+    bool (*next_func)(const char **, node **) = get_brackets;
 
-    node *main_node = nullptr;
+    *main_node = nullptr;
     
     int current_level = 1;
 
+    bool is_const = false;
+
     while(true)
     {
         #include "derivative.h"
     
         //else
-        {
-            main_node = next_func(s);
+        {            
             break;
         }
     }
 
-    return main_node;
+    if (*main_node == nullptr)
+    {
+        is_const = next_func(s, main_node);
+    }
+
+    return is_const;
 }
 
-node *get_brackets(const char **s)
+bool get_brackets(const char **s, node **main_node)
 {
-
+    printf("get_brackets\n");
     if (**s == '(')
     {
         *s += 1;
+        
+        bool is_const = false;
 
-        node *val = get_add_sub(s);
+        is_const = get_add_sub(s, main_node);
+
         Require(s, ')');
 
-        return val;
+        printf("GG");
+        
+        return is_const;
     }
 
     else 
     {
-        return get_const_var(s);
+        return get_const_var(s, main_node);
     }
 }
 
-node *get_const_var(const char **s)
+bool get_const_var(const char **s, node **new_node)
 {
+    printf("LEF");
     int val = 0;
 
     const char *start = *s;
 
-    node *new_node = nullptr;
-    
+    *new_node = nullptr;
+
+    bool is_const = false;
+
     if ('0' <= **s && **s <= '9')
     {        
+        is_const = true;
+
         while ('0' <= **s && **s <= '9')
         {
             val = val * 10 + **s - '0';
             *s += 1;
         }
         
-        construct_node(&new_node, CONST_TYPE, val);
+        construct_node(new_node, CONST_TYPE, val);
+    }
+
+    else if ('e' == **s)
+    {
+        construct_node(new_node, EXP_TYPE, E);
+
+        *s += 1;
     }
 
     else if ('a' <= **s && **s <= 'z')
     {
-        construct_node(&new_node, VAR_TYPE, **s - 'a');
-
+        construct_node(new_node, VAR_TYPE, **s - 'a');
+        
         *s += 1;
     }    
 
@@ -198,5 +260,5 @@ node *get_const_var(const char **s)
         assert(0);
     }
     
-    return new_node;
+    return is_const;
 }

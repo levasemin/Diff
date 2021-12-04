@@ -3,10 +3,12 @@ DERIVATIVE(SUM, "+", 4,
     construct_node(&current_node, OPER_TYPE, SUM_OPER, differentiate_node(current_node->left_node), differentiate_node(current_node->right_node));
 })
 
+
 DERIVATIVE(SUB, "-", 4,
 {
     construct_node(&current_node, OPER_TYPE, SUB_OPER, differentiate_node(current_node->left_node), differentiate_node(current_node->right_node));
 })
+
 
 DERIVATIVE(POW, "^", 2,
 {
@@ -18,28 +20,33 @@ DERIVATIVE(POW, "^", 2,
 
     copy_node_with_childrens(&degree, &current_node->right_node);
 
-    node *external_derivative = nullptr;
 
-    construct_node(&external_derivative, OPER_TYPE, MUL_OPER, expression, degree);
+    node *external_derivative = nullptr;
+    
     
     node *pow_node = nullptr;
 
     construct_node(&pow_node, OPER_TYPE, POW_OPER, expression);
-    
-    if (current_node->type == EXP_TYPE)
+
+    if (current_node->left_node->type == EXP_TYPE)
     {
-        copy_node_with_childrens(&pow_node->right_node, &external_derivative);
+        copy_node_with_childrens(&pow_node->right_node, &degree);
+
+        current_node = differentiate_internal(degree, current_node);
     }
 
     else
     {
-        construct_node(&pow_node->right_node, CONST_TYPE, degree->value - 1);
-    }
+        construct_node(&external_derivative, OPER_TYPE, MUL_OPER, expression, degree);
 
-    external_derivative->left_node = pow_node;
+        construct_node(&pow_node->right_node, CONST_TYPE, degree->value - 1);
+
+        external_derivative->left_node = pow_node;
     
-    current_node = differentiate_internal(expression, external_derivative);
+        current_node = differentiate_internal(expression, external_derivative);
+    }
 })
+
 
 DERIVATIVE(DIV, "/", 3,
 {
@@ -53,25 +60,29 @@ DERIVATIVE(DIV, "/", 3,
 
     node *default_numerator = nullptr;
 
+
     copy_node_with_childrens(&default_numerator, &current_node->left_node);
     
     node *default_denumerator = nullptr;
     
     copy_node_with_childrens(&default_denumerator, &current_node->right_node);
 
+
     first_sum = differentiate_internal(default_numerator,    default_denumerator);
 
     second_sum = differentiate_internal(default_denumerator, default_numerator);
             
 
-    construct_node(&numerator, OPER_TYPE, SUB_OPER, first_sum, second_sum);
+    construct_node(&numerator,   OPER_TYPE, SUB_OPER, first_sum, second_sum);
+
 
     construct_node(&denumerator, OPER_TYPE, POW_OPER, default_denumerator);
-    printf("!%p!", default_denumerator);
+
     construct_node(&denumerator->right_node, CONST_TYPE, 2);
 
     construct_node(&current_node, OPER_TYPE, DIV_OPER, numerator, denumerator);
 })
+
 
 DERIVATIVE(MUL, "*", 3,
 {
@@ -95,8 +106,8 @@ DERIVATIVE(MUL, "*", 3,
 
 
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
-}
-)
+})
+
 
 DERIVATIVE(COS, "cos", 1,
 {
@@ -104,21 +115,23 @@ DERIVATIVE(COS, "cos", 1,
 
     construct_node(&external_derivative, OPER_TYPE, MUL_OPER);
 
-    construct_node(&external_derivative->right_node, OPER_TYPE, SIN_OPER, current_node->left_node, nullptr);
+    construct_node(&external_derivative->right_node, OPER_TYPE, SIN_OPER, nullptr, current_node->right_node);
     
-    construct_node(&external_derivative->right_node, CONST_TYPE, -1);
+    construct_node(&external_derivative->left_node, CONST_TYPE, -1);
     
-    current_node = differentiate_internal(current_node->left_node, external_derivative);
+    current_node = differentiate_internal(current_node->right_node, external_derivative);
 })
+
 
 DERIVATIVE(SIN, "sin", 1,
 {
     node *external_derivative = nullptr;
 
-    construct_node(&external_derivative, OPER_TYPE, COS_OPER, current_node->left_node, nullptr);
+    construct_node(&external_derivative, OPER_TYPE, COS_OPER, nullptr, current_node->right_node);
         
-    current_node = differentiate_internal(current_node->left_node, external_derivative);
+    current_node = differentiate_internal(current_node->right_node, external_derivative);
 })
+
 
 DERIVATIVE(TG, "tg", 1,
 {
@@ -143,6 +156,7 @@ DERIVATIVE(TG, "tg", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 })
 
+
 DERIVATIVE(CTG, "ctg", 1,
 {
     node *numerator = nullptr;
@@ -166,6 +180,7 @@ DERIVATIVE(CTG, "ctg", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 })
 
+
 DERIVATIVE(LN, "ln", 1,
 {
     node *numerator = nullptr;
@@ -174,7 +189,7 @@ DERIVATIVE(LN, "ln", 1,
     
     node *denumerator = nullptr;
     
-    construct_node(&denumerator, OPER_TYPE, current_node->right_node->type, current_node->right_node);
+    copy_node_with_childrens(&denumerator, &current_node->right_node);
         
     node *external_derivative = nullptr;
     
@@ -182,6 +197,7 @@ DERIVATIVE(LN, "ln", 1,
 
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 })
+
 
 DERIVATIVE(LOG, "log", 1,
 {
