@@ -45,30 +45,13 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 
     if (*node_level == 1)
     {
-        fprintf(dump_file, "\\");
-
         write_node_value(dump_file, current_node);
         
-        fprintf(dump_file, "{(");
+        fprintf(dump_file, "(");
 
         write_graph(dump_file, current_node->right_node);
         
-        fprintf(dump_file, ")}");
-        
-        return;
-    }
-
-    if (*node_level == 2)
-    {
-        fprintf(dump_file, "\\frac{");
-        
-        write_graph(dump_file, current_node->left_node);
-        
-        fprintf(dump_file, "}{");
-
-        write_graph(dump_file, current_node->right_node);
-
-        fprintf(dump_file, "}");
+        fprintf(dump_file, ")");
         
         return;
     }
@@ -120,7 +103,6 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 
     return;
 }
-
 
 #define DERIVATIVE(oper, symbols, level, code) \
     case oper##_OPER:                          \
