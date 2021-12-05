@@ -1,12 +1,18 @@
 DERIVATIVE(SUM, "+", 4,
 {
     construct_node(&current_node, OPER_TYPE, SUM_OPER, differentiate_node(current_node->left_node), differentiate_node(current_node->right_node));
+},
+{
+    result = val1 + val2;
 })
 
 
 DERIVATIVE(SUB, "-", 4,
 {
     construct_node(&current_node, OPER_TYPE, SUB_OPER, differentiate_node(current_node->left_node), differentiate_node(current_node->right_node));
+},
+{
+    result = val1 - val2;
 })
 
 
@@ -45,6 +51,10 @@ DERIVATIVE(POW, "^", 2,
     
         current_node = differentiate_internal(expression, external_derivative);
     }
+},
+{
+    float degree = val2 / PRECISION;
+    result = pow((float)val1, degree) / pow(PRECISION, (degree - 1));
 })
 
 
@@ -81,6 +91,17 @@ DERIVATIVE(DIV, "/", 3,
     construct_node(&denumerator->right_node, CONST_TYPE, 2);
 
     construct_node(&current_node, OPER_TYPE, DIV_OPER, numerator, denumerator);
+},
+{
+    if (val2 == 0)
+    {
+        *derivative_exist = false;
+    }
+
+    else
+    {
+        result = (float)val1 / (float)val2 * PRECISION;
+    }
 })
 
 
@@ -106,6 +127,9 @@ DERIVATIVE(MUL, "*", 3,
 
 
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
+},
+{
+    result = val1 * val2 / PRECISION;
 })
 
 
@@ -120,6 +144,10 @@ DERIVATIVE(COS, "cos", 1,
     construct_node(&external_derivative->left_node, CONST_TYPE, -1);
     
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+}, 
+{
+    float res = cos(val2 / PRECISION);
+    result = (int)(res * PRECISION);
 })
 
 
@@ -130,6 +158,10 @@ DERIVATIVE(SIN, "sin", 1,
     construct_node(&external_derivative, OPER_TYPE, COS_OPER, nullptr, current_node->right_node);
         
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+},
+{
+    float res = sin((float)val2 / PRECISION);
+    result = (int)(res * PRECISION);
 })
 
 
@@ -154,6 +186,17 @@ DERIVATIVE(TG, "tg", 1,
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+},
+{
+    if (cos(val2) > -cos(1.57) && cos(val2) < cos(1.57))
+    {
+        *derivative_exist = false;
+    }
+    else
+    {
+        float res = sin((float)val2) / cos(float(val2)) / PRECISION;
+        result = (int)(res * PRECISION);
+    }
 })
 
 
@@ -178,6 +221,18 @@ DERIVATIVE(CTG, "ctg", 1,
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+},
+{
+    if (sin((float)val2) > sin(3.15) && sin((float)val2 < sin(3.13)))
+    {
+        *derivative_exist = false;
+    }
+
+    else 
+    {
+        float res = cos((float)val2 / PRECISION) / sin((float)val2 / PRECISION);
+        result = (int)(res * PRECISION);
+    }
 })
 
 
@@ -196,6 +251,18 @@ DERIVATIVE(LN, "ln", 1,
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+},
+{
+    if (-0.001 < val2 && val2 < 0.001)
+    {
+        *derivative_exist = false;
+    }
+
+    else
+    {
+        float res = log((float)val2 / PRECISION);
+        result = (int)(res * PRECISION);
+    }
 })
 
 
@@ -226,4 +293,21 @@ DERIVATIVE(LOG, "log", 1,
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
     current_node = differentiate_internal(current_node->right_node, external_derivative);
+},
+{
+    if (-0.001 < val1 && val1 < 0.001 || -0.001 < val2 && val2 < 0.001)
+    {
+        *derivative_exist = false;
+    }
+
+    else if (-0.001 < log(val1*PRECISION) && log(val1*PRECISION) < 0.001)
+    {
+        *derivative_exist = false;
+    }
+
+    else
+    {
+        float res = log(val2) / log(val1*PRECISION);
+        result = (int)(res * PRECISION);
+    }
 })

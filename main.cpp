@@ -18,7 +18,21 @@ int main()
     construct_graph(&diff_graph);
 
     get_graph(&diff_graph, file_name);
+    be_simple(&diff_graph);
+
+    dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
+    create_png("database_files/read_graph.dot", "database_files/read_graph.png");
+
+
+    int locality = 0;
+    int term     = 4;
+
+    teilor(save_file_name, &diff_graph, locality, term);
     
+    dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
+    create_png("database_files/read_graph.dot", "database_files/graph.png");
+
+    /*
     dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
     create_png("database_files/read_graph.dot", "database_files/read_graph.png");
 
@@ -34,5 +48,5 @@ int main()
     
     dump_graph(save_file_name, &diff_graph);
 
-    //DEBUG_GRAPHVIZ("graph.dot", &diff_graph);
+    //DEBUG_GRAPHVIZ("graph.dot", &diff_graph);*/
 }

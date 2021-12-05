@@ -179,11 +179,11 @@ void read_value(node *current_node, const char **current_el)
     }
 }
 
-#define DERIVATIVE(oper, symbols, level, code)             \
-    if (strncmp(value, symbols, strlen(symbols)) == 0)     \
-    {                                                      \
-        return oper##_OPER;                                \
-    }                                                      \
+#define DERIVATIVE(oper, symbols, level, diff_code, oper_code)             \
+    if (strncmp(value, symbols, strlen(symbols)) == 0)                     \
+    {                                                                      \
+        return oper##_OPER;                                                \
+    }                                                                      \
 
 int initializate_function(const char *value)
 {    

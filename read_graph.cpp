@@ -36,7 +36,7 @@ node *read_graph(graph *diff_graph, const char **current_el)
     return diff_graph->root_node;
 }
 
-#define DERIVATIVE(oper, symbols, level, code)                                      \
+#define DERIVATIVE(oper, symbols, level, oper_code, diff_code)                      \
 if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)           \
 {                                                                                   \
     node *old_node = *main_node;                                                    \
@@ -63,8 +63,6 @@ else                                                                            
 
 bool get_add_sub(const char **s, node **main_node)
 {
-    printf("start ge_\n");
-
     bool (*next_func)(const char **, node **) = get_mul_div;
 
     bool is_const = next_func(s, main_node);
@@ -81,8 +79,6 @@ bool get_add_sub(const char **s, node **main_node)
         }
     }
     
-    printf("end ge_\n");
-
     return is_const;
 }
 
@@ -135,7 +131,6 @@ void exponential_function(node **main_node)
 
 bool get_pow(const char **s, node **main_node)
 {
-    printf("pidor");
     bool (*next_func)(const char **, node **) = get_func;
 
     bool is_const = next_func(s, main_node);
@@ -166,7 +161,6 @@ bool get_pow(const char **s, node **main_node)
 
 bool get_func(const char **s, node **main_node)
 {        
-    printf("loh");
     bool (*next_func)(const char **, node **) = get_brackets;
 
     *main_node = nullptr;
@@ -195,7 +189,6 @@ bool get_func(const char **s, node **main_node)
 
 bool get_brackets(const char **s, node **main_node)
 {
-    printf("get_brackets\n");
     if (**s == '(')
     {
         *s += 1;
@@ -205,8 +198,6 @@ bool get_brackets(const char **s, node **main_node)
         is_const = get_add_sub(s, main_node);
 
         Require(s, ')');
-
-        printf("GG");
         
         return is_const;
     }
@@ -219,7 +210,6 @@ bool get_brackets(const char **s, node **main_node)
 
 bool get_const_var(const char **s, node **new_node)
 {
-    printf("LEF");
     int val = 0;
 
     const char *start = *s;

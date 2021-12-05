@@ -21,9 +21,9 @@ void change_node(node *current_node, int type, int value, node *left_node, node 
 }
 
 
-#define DERIVATIVE(oper, symbols, level, code) \
-    case oper##_OPER:                          \
-        code                                   \
+#define DERIVATIVE(oper, symbols, level, diff_code, oper_code) \
+    case oper##_OPER:                                          \
+        diff_code                                              \
         break;
 
 
@@ -59,7 +59,7 @@ node *differentiate_node(node *current_node)
     }
 
     else
-    {        
+    {   
         switch(current_node->value)
         {
             #include"derivative.h"

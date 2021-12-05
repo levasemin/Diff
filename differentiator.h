@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 #include "stack.h"
 
 const int MAX_LEN_VALUE = 20;
+
+const int SIGN_COUNT = 3;
+const int PRECISION = pow(10, 3);
 
 const char E = 'e' -'a';
 
@@ -33,6 +37,10 @@ int initializate_function(const char *value);
 void differentiate_graph(graph *diff_graph);
 
 node *differentiate_node(node *current_node);
+
+void teilor(const char*name_dump_file, graph *diff_graph, int locality, int term);
+
+void teilor(FILE *dump_file, graph *diff_graph, int locality, int term);
 
 
 void be_simple(graph *graph);
