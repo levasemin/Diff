@@ -12,7 +12,7 @@ void differentiate_graph(graph *diff_graph)
 }
 
 
-void change_node(node *current_node, int type, int value, node *left_node, node *right_node)
+void change_node(node *current_node, int type, float value, node *left_node, node *right_node)
 {
     current_node->type       = type;
     current_node->value      = value;
@@ -22,9 +22,11 @@ void change_node(node *current_node, int type, int value, node *left_node, node 
 
 
 #define DERIVATIVE(oper, symbols, level, diff_code, oper_code) \
-    case oper##_OPER:                                          \
-        diff_code                                              \
-        break;
+    if (current_node->value == oper##_OPER)                                          \
+        {                                                                       \
+            diff_code                                                       \
+        }                                              \
+    else
 
 
 
@@ -60,12 +62,10 @@ node *differentiate_node(node *current_node)
 
     else
     {   
-        switch(current_node->value)
+        #include"derivative.h"
+        //else
         {
-            #include"derivative.h"
-
-            default:
-                assert(0);
+            assert(0);
         }
     }
     

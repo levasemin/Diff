@@ -53,8 +53,7 @@ DERIVATIVE(POW, "^", 2,
     }
 },
 {
-    float degree = val2 / PRECISION;
-    result = pow((float)val1, degree) / pow(PRECISION, (degree - 1));
+    result = pow(val1, val2);
 })
 
 
@@ -100,7 +99,7 @@ DERIVATIVE(DIV, "/", 3,
 
     else
     {
-        result = (float)val1 / (float)val2 * PRECISION;
+        result = val1 / val2;
     }
 })
 
@@ -129,7 +128,7 @@ DERIVATIVE(MUL, "*", 3,
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
 },
 {
-    result = val1 * val2 / PRECISION;
+    result = val1 * val2;
 })
 
 
@@ -146,8 +145,7 @@ DERIVATIVE(COS, "cos", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 }, 
 {
-    float res = cos(val2 / PRECISION);
-    result = (int)(res * PRECISION);
+    result = cos(val2);
 })
 
 
@@ -160,8 +158,7 @@ DERIVATIVE(SIN, "sin", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 },
 {
-    float res = sin((float)val2 / PRECISION);
-    result = (int)(res * PRECISION);
+    result = sin(val2);
 })
 
 
@@ -194,8 +191,7 @@ DERIVATIVE(TG, "tg", 1,
     }
     else
     {
-        float res = sin((float)val2) / cos(float(val2)) / PRECISION;
-        result = (int)(res * PRECISION);
+        result = sin(val2) / cos(val2);
     }
 })
 
@@ -230,8 +226,7 @@ DERIVATIVE(CTG, "ctg", 1,
 
     else 
     {
-        float res = cos((float)val2 / PRECISION) / sin((float)val2 / PRECISION);
-        result = (int)(res * PRECISION);
+        result = cos(val2) / sin(val2);
     }
 })
 
@@ -260,8 +255,7 @@ DERIVATIVE(LN, "ln", 1,
 
     else
     {
-        float res = log((float)val2 / PRECISION);
-        result = (int)(res * PRECISION);
+        result = log(val2);
     }
 })
 
@@ -300,14 +294,13 @@ DERIVATIVE(LOG, "log", 1,
         *derivative_exist = false;
     }
 
-    else if (-0.001 < log(val1*PRECISION) && log(val1*PRECISION) < 0.001)
+    else if (-0.001 < log(val1) && log(val1) < 0.001)
     {
         *derivative_exist = false;
     }
 
     else
     {
-        float res = log(val2) / log(val1*PRECISION);
-        result = (int)(res * PRECISION);
+        result = log(val2) / log(val1);
     }
 })

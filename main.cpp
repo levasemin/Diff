@@ -18,8 +18,9 @@ int main()
     construct_graph(&diff_graph);
 
     get_graph(&diff_graph, file_name);
+        DEBUG_GRAPHVIZ("graph.dot", &diff_graph) 
     be_simple(&diff_graph);
-
+    printf("lefas");
     dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
     create_png("database_files/read_graph.dot", "database_files/read_graph.png");
 

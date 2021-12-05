@@ -5,9 +5,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Dec 05 00:53:39 2021
+# Make data base, printed on Sun Dec 05 23:56:50 2021
 
 # Variables
 
@@ -196,8 +195,7 @@ VSCODE_IPC_HOOK = \\.\pipe\8ed0da0d4bacc2ae6d6f0fa60307f0cf-1.62.3-main-sock
 # automatic
 <F = $(notdir $<)
 # default
-SU 
-FFIXES := 
+SUFFIXES := 
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
@@ -219,9 +217,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638654811): 27 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638737804): 29 files, no impossibilities.
 
-# 27 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -233,7 +231,7 @@ main.exe: obj/main.o obj/teilor.o obj/differentiate.o obj/simplifier.o obj/make_
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
+#  recipe to execute (from 'Makefile', line 11):
 	$(CC) -g $(BuildF)main.o $(BuildF)teilor.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
 
 # Not a target:
@@ -246,29 +244,34 @@ obj/main.o: main.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 12):
+#  recipe to execute (from 'Makefile', line 14):
 	$(CC) -c $(CFLAGS) main.cpp -o $(BuildF)main.o
 
 obj/make_graph.o: make_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 18):
+#  recipe to execute (from 'Makefile', line 20):
 	$(CC) -c $(CFLAGS) make_graph.cpp -o $(BuildF)make_graph.o
 
 obj/simplifier.o: main.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 27):
+#  recipe to execute (from 'Makefile', line 29):
 	$(CC) -c $(CFLAGS) simplifier.cpp -o $(BuildF)simplifier.o
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-12-05 00:52:07
+#  Last modified 2021-12-05 23:56:38
 #  File has been updated.
 #  Successfully updated.
+
+.SILENT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 clean:
 #  Implicit rule search has not been done.
@@ -294,7 +297,7 @@ clean:
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'Makefile', line 45):
+#  recipe to execute (from 'Makefile', line 47):
 	del /q /s obj
 
 # Not a target:
@@ -307,21 +310,21 @@ obj/dump_graph.o: dump_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 30):
+#  recipe to execute (from 'Makefile', line 32):
 	$(CC) -c $(CFLAGS) dump_graph.cpp -o $(BuildF)dump_graph.o
 
 obj/read_graph.o: read_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 21):
+#  recipe to execute (from 'Makefile', line 23):
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
 
 obj/struct.o: struct.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 36):
+#  recipe to execute (from 'Makefile', line 38):
 	$(CC) -c $(CFLAGS) struct.cpp -o $(BuildF)struct.o
 
 # Not a target:
@@ -334,7 +337,7 @@ obj:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 42):
+#  recipe to execute (from 'Makefile', line 44):
 	mkdir $@
 
 # Not a target:
@@ -374,7 +377,7 @@ obj/open.o: open.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
+#  recipe to execute (from 'Makefile', line 35):
 	$(CC) -c $(CFLAGS) open.cpp -o $(BuildF)open.o
 
 # Not a target:
@@ -393,7 +396,7 @@ obj/differentiate.o: differentiate.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 24):
+#  recipe to execute (from 'Makefile', line 26):
 	$(CC) -c $(CFLAGS) differentiate.cpp -o $(BuildF)differentiate.o
 
 # Not a target:
@@ -412,31 +415,30 @@ obj/teilor.o: teilor.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 15):
+#  recipe to execute (from 'Makefile', line 17):
 	$(CC) -c $(CFLAGS) teilor.cpp -o $(BuildF)teilor.o
 
 obj/stack.o: stack.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 39):
+#  recipe to execute (from 'Makefile', line 41):
 	$(CC) -c $(CFLAGS) stack.cpp -o $(BuildF)stack.o
 
 # files hash-table stats:
-# Load=26/1024=3%, Rehash=0, Collisions=0/83=0%
+# Load=27/1024=3%, Rehash=0, Collisions=0/84=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 41 / storage = 487 B  
-/ avg = 11 B
-# current buf: size = 8174 B / used = 487 B / count = 41 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 515 B / avg = 11 B
+# current buf: size = 8174 B / used = 515 B / count = 44 / avg = 11 B
 
-# strcache performance: lookups = 95 / hit rate = 56%
+# strcache performance: lookups = 99 / hit rate = 55%
 # hash-table stats:
-# Load=41/8192=1%, Rehash=0, Collisions=0/95=0%
-# Finished Make data base on Sun Dec 05 00:53:39 2021
+# Load=44/8192=1%, Rehash=0, Collisions=0/99=0%
+# Finished Make data base on Sun Dec 05 23:56:50 2021
 
  

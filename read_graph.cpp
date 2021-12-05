@@ -1,25 +1,33 @@
 #include "differentiator.h"
 
+void Require(const char **string, const char expected);
+
 void exponential_function(node **main_node);
-bool get_add_sub(const char **s, node **main_node);
-bool get_mul_div(const char **s, node **main_node);
-bool get_func(const char **s, node **main_node);
-bool get_pow(const char **s, node **main_node);
-bool get_brackets(const char **s, node **main_node);
-bool get_const_var(const char **s, node **main_node);
+
+bool get_add_sub(const char **string, node **main_node);
+
+bool get_mul_div(const char **string, node **main_node);
+
+bool get_func(const char **string, node **main_node);
+
+bool get_pow(const char **string, node **main_node);
+
+bool get_brackets(const char **string, node **main_node);
+
+bool get_const_var(const char **string, node **main_node);
 
 
-void Require(const char **s, const char expected)
+void Require(const char **string, const char expected)
 {
-    if (**s == expected)
+    if (**string == expected)
     {
-        *s += 1;
+        *string += 1;
     }
 
     else
     {
         printf("expected %c\n", expected);
-        printf("real %c\n", **s);
+        printf("real %c\n", **string);
 
         assert(0);
     }
@@ -37,21 +45,21 @@ node *read_graph(graph *diff_graph, const char **current_el)
 }
 
 #define DERIVATIVE(oper, symbols, level, oper_code, diff_code)                      \
-if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)           \
+if (strncmp(*string, symbols, strlen(symbols)) == 0 && current_level == level)      \
 {                                                                                   \
     node *old_node = *main_node;                                                    \
                                                                                     \
     construct_node(main_node, OPER_TYPE, oper##_OPER);                              \
                                                                                     \
-    *s += strlen(symbols);                                                          \
+    *string += strlen(symbols);                                                     \
                                                                                     \
     node *val2 = nullptr;                                                           \
-    is_const = next_func(s, &val2);                                                 \
+    is_const = next_func(string, &val2);                                            \
                                                                                     \
     if (strcmp(symbols, "log") == 0)                                                \
     {                                                                               \
         old_node = val2;                                                            \
-        is_const = next_func(s, &val2);                                             \
+        is_const = next_func(string, &val2);                                        \
     }                                                                               \
                                                                                     \
     (*main_node)->left_node = old_node;                                             \
@@ -60,19 +68,28 @@ if (strncmp(*s, symbols, strlen(symbols)) == 0 && current_level == level)       
                                                                                     \
 else                                                                                \
 
+void skip_spaces(const char **string)
+{
+    while (**string == ' ')
+    {
+        *string += 1;
+    }
+}
 
-bool get_add_sub(const char **s, node **main_node)
+bool get_add_sub(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_mul_div;
 
-    bool is_const = next_func(s, main_node);
+    bool is_const = next_func(string, main_node);
 
     int current_level = 4;
 
     while(true)
     {
+        skip_spaces(string);
+
         #include "derivative.h"
-    
+
         //else
         {   
             break;
@@ -83,11 +100,11 @@ bool get_add_sub(const char **s, node **main_node)
 }
 
 
-bool get_mul_div(const char **s, node **main_node)
+bool get_mul_div(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_pow;
 
-    bool val = next_func(s, main_node);
+    bool val = next_func(string, main_node);
 
     int current_level = 3;
 
@@ -95,6 +112,8 @@ bool get_mul_div(const char **s, node **main_node)
 
     while(true)
     {
+        skip_spaces(string);
+
         #include "derivative.h"
     
         //else
@@ -129,16 +148,18 @@ void exponential_function(node **main_node)
 }
 
 
-bool get_pow(const char **s, node **main_node)
+bool get_pow(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_func;
 
-    bool is_const = next_func(s, main_node);
+    bool is_const = next_func(string, main_node);
 
     int current_level = 2;
     
     while(true)
     {   
+        skip_spaces(string);
+
         #include "derivative.h"
     
         //else
@@ -159,7 +180,7 @@ bool get_pow(const char **s, node **main_node)
 }
 
 
-bool get_func(const char **s, node **main_node)
+bool get_func(const char **string, node **main_node)
 {        
     bool (*next_func)(const char **, node **) = get_brackets;
 
@@ -171,6 +192,8 @@ bool get_func(const char **s, node **main_node)
 
     while(true)
     {
+        skip_spaces(string);
+
         #include "derivative.h"
     
         //else
@@ -181,71 +204,87 @@ bool get_func(const char **s, node **main_node)
 
     if (*main_node == nullptr)
     {
-        is_const = next_func(s, main_node);
+        is_const = next_func(string, main_node);
     }
 
     return is_const;
 }
 
-bool get_brackets(const char **s, node **main_node)
+bool get_brackets(const char **string, node **main_node)
 {
-    if (**s == '(')
+    if (**string == '(')
     {
-        *s += 1;
+        *string += 1;
         
         bool is_const = false;
 
-        is_const = get_add_sub(s, main_node);
+        is_const = get_add_sub(string, main_node);
 
-        Require(s, ')');
+        Require(string, ')');
         
         return is_const;
     }
 
     else 
     {
-        return get_const_var(s, main_node);
+        return get_const_var(string, main_node);
     }
 }
 
-bool get_const_var(const char **s, node **new_node)
+bool get_const_var(const char **string, node **new_node)
 {
-    int val = 0;
+    float val = 0;
 
-    const char *start = *s;
+    const char *start = *string;
 
     *new_node = nullptr;
 
     bool is_const = false;
 
-    if ('0' <= **s && **s <= '9')
+    skip_spaces(string);
+
+    if ('0' <= **string && **string <= '9')
     {        
         is_const = true;
 
-        while ('0' <= **s && **s <= '9')
+        while ('0' <= **string && **string <= '9')
         {
-            val = val * 10 + **s - '0';
-            *s += 1;
+            val = val * 10 + **string - '0';
+            *string += 1;
         }
         
+        if (**string == '.' || **string == ',')
+        {
+            *string += 1;
+
+            float fractional_val = 0;
+
+            while ('0' <= **string && **string <= '9')
+            {
+                fractional_val = fractional_val * 0.1 + (**string - '0')* 0.1;
+                *string += 1;
+            }
+
+            val += fractional_val; 
+        }
         construct_node(new_node, CONST_TYPE, val);
     }
 
-    else if ('e' == **s)
+    else if ('e' == **string)
     {
         construct_node(new_node, EXP_TYPE, E);
 
-        *s += 1;
+        *string += 1;
     }
 
-    else if ('a' <= **s && **s <= 'z')
+    else if ('a' <= **string && **string <= 'z')
     {
-        construct_node(new_node, VAR_TYPE, **s - 'a');
+        construct_node(new_node, VAR_TYPE, (float)(**string - 'a'));
         
-        *s += 1;
+        *string += 1;
     }    
 
-    if (start == *s)
+    if (start == *string)
     {
         assert(0);
     }

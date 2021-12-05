@@ -6,30 +6,27 @@ enum types
     OPER_TYPE    = 4
 };
 
-enum operations
-{
-    COS_OPER = 1,
-    SIN_OPER,
-    TG_OPER,
-    CTG_OPER,
-    LN_OPER,
-    LOG_OPER,
+const float COS_OPER = 1;
+const float SIN_OPER = 2;
+const float TG_OPER  = 3;
+const float CTG_OPER = 4;
+const float LN_OPER  = 5;
+const float LOG_OPER = 6;
 
 
-    POW_OPER,
+const float POW_OPER = 7;
     
 
-    DIV_OPER,
-    MUL_OPER,
+const float DIV_OPER = 8;
+const float MUL_OPER = 9;
     
-    SUM_OPER,
-    SUB_OPER,
-};
+const float SUM_OPER = 10;
+const float SUB_OPER = 11;
 
 struct node
 {
     int type;
-    int value;
+    float value;
 
     node *left_node;
     node *right_node;

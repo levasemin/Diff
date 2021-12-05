@@ -6,7 +6,6 @@
 const int MAX_LEN_VALUE = 20;
 
 const int SIGN_COUNT = 3;
-const int PRECISION = pow(10, 3);
 
 const char E = 'e' -'a';
 
@@ -17,11 +16,13 @@ const char E = 'e' -'a';
     system("start graph.png");                                       \
 
 
+bool compare_floats(float val1, float val2);
+
 void construct_graph(graph *graph);
 
-bool construct_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
+bool construct_node(node **new_node, int type, float value, node *left_node = nullptr, node* right_node = nullptr);
 
-bool change_node(node **new_node, int type, int value, node *left_node = nullptr, node* right_node = nullptr);
+bool change_node(node **new_node, int type, float value, node *left_node = nullptr, node* right_node = nullptr);
 
 bool copy_node(node **new_node, node **old_node);
 
@@ -32,15 +33,15 @@ void get_graph(graph *diff_graph, const char *string);
 
 node *read_graph(graph *diff_graph, const char **current_el);
 
-int initializate_function(const char *value);
+float initializate_function(const char *value);
 
 void differentiate_graph(graph *diff_graph);
 
 node *differentiate_node(node *current_node);
 
-void teilor(const char*name_dump_file, graph *diff_graph, int locality, int term);
+void teilor(const char*name_dump_file, graph *diff_graph, float locality, int term);
 
-void teilor(FILE *dump_file, graph *diff_graph, int locality, int term);
+void teilor(FILE *dump_file, graph *diff_graph, float locality, int term);
 
 
 void be_simple(graph *graph);

@@ -52,7 +52,8 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node)
 
 bool simplify_exponential_function(node **current_node)
 {
-    if ((*current_node)->right_node->right_node->type == OPER_TYPE && (*current_node)->right_node->right_node->value == LN_OPER)
+    if ((*current_node)->right_node->right_node->type == OPER_TYPE && 
+    compare_floats((*current_node)->right_node->right_node->value, LN_OPER))
     {
         node *ln_node = (*current_node)->right_node->right_node;
         
@@ -60,7 +61,8 @@ bool simplify_exponential_function(node **current_node)
         (*current_node)->left_node  = ln_node->right_node;
     }
     
-    else if ((*current_node)->right_node->left_node->type == OPER_TYPE && (*current_node)->right_node->left_node->value == LN_OPER)
+    else if ((*current_node)->right_node->left_node->type == OPER_TYPE && \ 
+             compare_floats((*current_node)->right_node->left_node->value, LN_OPER))
     {
         node *ln_node = (*current_node)->right_node->left_node;
 
@@ -76,19 +78,19 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     
     *node_level = get_level(current_node);
 
-    if ((current_node)->left_node->type == EXP_TYPE && 
-        (current_node)->right_node->type == OPER_TYPE && (current_node)->right_node->value == LN_OPER)
+    if ((current_node)->left_node->type == EXP_TYPE   && 
+        (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, LN_OPER))
     {
         current_node = (current_node)->right_node->right_node;
     }
 
     else if ((current_node)->left_node->type  == EXP_TYPE && 
-             (current_node)->right_node->type == OPER_TYPE && (current_node)->right_node->value == MUL_OPER)
+             (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, MUL_OPER))
     {
         simplify_exponential_function(&current_node);
     }
 
-    if (current_node->type == OPER_TYPE && current_node->value == LOG_OPER)
+    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, LOG_OPER))
     {
         fprintf(dump_file, "\\log");
         
@@ -111,7 +113,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     }
 
 
-    if (current_node->type == OPER_TYPE && current_node->value == DIV_OPER)
+    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, DIV_OPER))
     {
         fprintf(dump_file, "\\frac");
         
@@ -172,31 +174,33 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 }
 
 
-#define DERIVATIVE(oper, symbols, level, diff_code, oper_code) \
-    case oper##_OPER:                          \
-        fprintf(dump_file, symbols);           \
-        break;                                 \
-
+#define DERIVATIVE(oper, symbols, level, diff_code, oper_code)      \
+    if(compare_floats(current_node->value, oper##_OPER))                          \
+        {                                                           \
+            fprintf(dump_file, symbols);                            \
+        }                                                           \
+                                                                    \
+    else
 
 void write_node_value(FILE *dump_file, node *current_node)
 {
     if (current_node->type == CONST_TYPE)
     {                                                            
-        fprintf(dump_file, "%d", current_node->value);           
+        fprintf(dump_file, "%f", current_node->value);           
     }                                                            
 
     else if(current_node->type == VAR_TYPE || current_node->type == EXP_TYPE)                      
     {
-        fprintf(dump_file, "%c", current_node->value + 'a');     
+        fprintf(dump_file, "%c", (int)current_node->value + 'a');     
     }                                                            
 
     else
     {
-        switch(current_node->value)
+        #include "derivative.h"
+        
+        //else
         {
-            #include "derivative.h"
-            default:
-                break;
+            assert(0);
         }
     }
 }
@@ -314,7 +318,7 @@ void fill_object_graphviz(FILE *graphviz_file, Stack *stack, char *color)
 
     while (0 < stack->size)
     {
-        fprintf(graphviz_file, "\"%d\"[color=\"%s\" style=filled];\n", pop_stack(stack)->value, color);
+        fprintf(graphviz_file, "\"%f\"[color=\"%s\" style=filled];\n", pop_stack(stack)->value, color);
     }
 
     fprintf(graphviz_file, "}");
