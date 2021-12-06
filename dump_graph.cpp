@@ -1,5 +1,9 @@
 #include "differentiator.h"
 
+void fprintf_expression_inside(FILE *dump_file, node *current_node);
+
+void simplify_exponential_function(node **current_node);
+
 void write_graph(FILE *dump_file, node *current_node, int *node_level);
 
 void write_graph_graphviz(FILE *file, graph *graph);
@@ -9,6 +13,7 @@ void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node);
 void write_graph_graphviz(const char *graphviz_name_file, graph *graph);
 
 FILE *create_graphviz_file(const char *graphviz_file_name);
+
 
 void dump_graph(const char* dump_file_name, graph *graph)
 {
@@ -21,6 +26,7 @@ void dump_graph(const char* dump_file_name, graph *graph)
     fclose(dump_file);
 }
 
+
 void dump_graph(FILE *dump_file, graph *graph)
 {
     assert(dump_file  != nullptr);
@@ -28,6 +34,7 @@ void dump_graph(FILE *dump_file, graph *graph)
     
     write_graph(dump_file, graph->root_node);
 }
+
 
 void write_graph(FILE *dump_file, node *current_node)
 {
@@ -50,10 +57,11 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node)
     fprintf(dump_file, ")}");
 }
 
-bool simplify_exponential_function(node **current_node)
+
+void simplify_exponential_function(node **current_node)
 {
     if ((*current_node)->right_node->right_node->type == OPER_TYPE && 
-    compare_floats((*current_node)->right_node->right_node->value, LN_OPER))
+        compare_floats((*current_node)->right_node->right_node->value, LN_OPER) == 0)
     {
         node *ln_node = (*current_node)->right_node->right_node;
         
@@ -62,7 +70,7 @@ bool simplify_exponential_function(node **current_node)
     }
     
     else if ((*current_node)->right_node->left_node->type == OPER_TYPE && \ 
-             compare_floats((*current_node)->right_node->left_node->value, LN_OPER))
+             compare_floats((*current_node)->right_node->left_node->value, LN_OPER) == 0)
     {
         node *ln_node = (*current_node)->right_node->left_node;
 
@@ -71,6 +79,7 @@ bool simplify_exponential_function(node **current_node)
     }
 }
 
+
 void write_graph(FILE *dump_file, node *current_node, int *node_level)
 {    
     assert(dump_file != nullptr);
@@ -78,19 +87,22 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     
     *node_level = get_level(current_node);
 
-    if ((current_node)->left_node->type == EXP_TYPE   && 
-        (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, LN_OPER))
+    if (current_node->left_node !=  nullptr && current_node->right_node != nullptr)
     {
-        current_node = (current_node)->right_node->right_node;
+        if ((current_node)->left_node->type == EXP_TYPE   && 
+            (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, LN_OPER) == 0)
+        {
+            current_node = (current_node)->right_node->right_node;
+        }
+
+        else if ((current_node)->left_node->type  == EXP_TYPE && 
+                (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, MUL_OPER) == 0)
+        {
+            simplify_exponential_function(&current_node);
+        }
     }
 
-    else if ((current_node)->left_node->type  == EXP_TYPE && 
-             (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, MUL_OPER))
-    {
-        simplify_exponential_function(&current_node);
-    }
-
-    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, LOG_OPER))
+    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, LOG_OPER) == 0)
     {
         fprintf(dump_file, "\\log");
         
@@ -98,6 +110,17 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 
         fprintf_expression_inside(dump_file, current_node->right_node);        
         
+        return;
+    }
+    
+    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, DIV_OPER) == 0)
+    {
+        fprintf(dump_file, "\\frac");
+        
+        fprintf_expression_inside(dump_file, current_node->left_node);        
+        
+        fprintf_expression_inside(dump_file, current_node->right_node);        
+
         return;
     }
 
@@ -112,31 +135,10 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
         return;
     }
 
-
-    if (current_node->type == OPER_TYPE && compare_floats(current_node->value, DIV_OPER))
-    {
-        fprintf(dump_file, "\\frac");
-        
-        fprintf(dump_file, "{");
-
-        write_graph(dump_file, current_node->left_node);
-    
-        fprintf(dump_file, "}");
-        
-        fprintf(dump_file, "{");
-
-        write_graph(dump_file, current_node->right_node);
-    
-        fprintf(dump_file, "}");   
-
-        return;
-    }
-
-
     if (current_node->left_node != nullptr)    
     {
         if (current_node->left_node->type == OPER_TYPE && 
-        (*node_level < get_level(current_node->left_node) || *node_level < get_level(current_node->right_node)))
+        (*node_level < get_level(current_node->left_node)))
         {
             fprintf_expression_inside(dump_file, current_node->left_node);
 
@@ -154,11 +156,11 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     if (current_node->right_node != nullptr)
     {
         if (current_node->right_node->type == OPER_TYPE &&
-        (*node_level < get_level(current_node->left_node) || *node_level < get_level(current_node->right_node)))
+        (*node_level < get_level(current_node->right_node)))
         {            
             fprintf_expression_inside(dump_file, current_node->right_node);
         }
-            
+           
         else
         {
             write_graph(dump_file, current_node->right_node);
@@ -175,7 +177,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 
 
 #define DERIVATIVE(oper, symbols, level, diff_code, oper_code)      \
-    if(compare_floats(current_node->value, oper##_OPER))                          \
+    if(compare_floats(current_node->value, oper##_OPER) == 0)            \
         {                                                           \
             fprintf(dump_file, symbols);                            \
         }                                                           \
@@ -186,12 +188,12 @@ void write_node_value(FILE *dump_file, node *current_node)
 {
     if (current_node->type == CONST_TYPE)
     {                                                            
-        fprintf(dump_file, "%f", current_node->value);           
+        fprintf(dump_file, "{%.*f}", SIGN_COUNT, current_node->value);           
     }                                                            
 
     else if(current_node->type == VAR_TYPE || current_node->type == EXP_TYPE)                      
     {
-        fprintf(dump_file, "%c", (int)current_node->value + 'a');     
+        fprintf(dump_file, "%c", (int)current_node->value + 'a'); 
     }                                                            
 
     else

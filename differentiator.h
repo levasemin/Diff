@@ -16,7 +16,7 @@ const char E = 'e' -'a';
     system("start graph.png");                                       \
 
 
-bool compare_floats(float val1, float val2);
+int compare_floats(float val1, float val2);
 
 void construct_graph(graph *graph);
 
@@ -24,10 +24,15 @@ bool construct_node(node **new_node, int type, float value, node *left_node = nu
 
 bool change_node(node **new_node, int type, float value, node *left_node = nullptr, node* right_node = nullptr);
 
-bool copy_node(node **new_node, node **old_node);
+void copy_node(node **new_node, node **old_node);
 
-bool copy_node_with_childrens(node **new_node, node **old_node);
+void copy_node_with_childrens(node **new_node, node **old_node);
 
+void change_node(node *current_node, int type, float value, node *left_node, node *right_node);
+
+int get_count_params(node *current_node);
+
+int factorial(int number);
 
 void get_graph(graph *diff_graph, const char *string);
 
@@ -35,7 +40,7 @@ node *read_graph(graph *diff_graph, const char **current_el);
 
 float initializate_function(const char *value);
 
-void differentiate_graph(graph *diff_graph);
+void differentiate_graph(graph *diff_graph, int num, const char *graph_file_name = nullptr, const char *png_file_name = nullptr);
 
 node *differentiate_node(node *current_node);
 

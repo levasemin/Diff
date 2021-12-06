@@ -48,7 +48,7 @@ DERIVATIVE(POW, "^", 2,
         construct_node(&pow_node->right_node, CONST_TYPE, degree->value - 1);
 
         external_derivative->left_node = pow_node;
-    
+
         current_node = differentiate_internal(expression, external_derivative);
     }
 },
@@ -92,7 +92,7 @@ DERIVATIVE(DIV, "/", 3,
     construct_node(&current_node, OPER_TYPE, DIV_OPER, numerator, denumerator);
 },
 {
-    if (val2 == 0)
+    if (compare_floats(val2, 0) == 0)
     {
         *derivative_exist = false;
     }
@@ -106,7 +106,6 @@ DERIVATIVE(DIV, "/", 3,
 
 DERIVATIVE(MUL, "*", 3,
 {
-
     node *first_factor = nullptr;
 
     copy_node_with_childrens(&first_factor, &current_node->left_node);
@@ -185,7 +184,7 @@ DERIVATIVE(TG, "tg", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 },
 {
-    if (cos(val2) > -cos(1.57) && cos(val2) < cos(1.57))
+    if (compare_floats(cos(val2), 0) == 0)
     {
         *derivative_exist = false;
     }
@@ -219,7 +218,7 @@ DERIVATIVE(CTG, "ctg", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 },
 {
-    if (sin((float)val2) > sin(3.15) && sin((float)val2 < sin(3.13)))
+    if (compare_floats(sin(val2), 0) == 0)
     {
         *derivative_exist = false;
     }
@@ -248,7 +247,7 @@ DERIVATIVE(LN, "ln", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 },
 {
-    if (-0.001 < val2 && val2 < 0.001)
+    if (compare_floats(val2, 0) == 0)
     {
         *derivative_exist = false;
     }
@@ -289,12 +288,12 @@ DERIVATIVE(LOG, "log", 1,
     current_node = differentiate_internal(current_node->right_node, external_derivative);
 },
 {
-    if (-0.001 < val1 && val1 < 0.001 || -0.001 < val2 && val2 < 0.001)
+    if (compare_floats(val1, 0) == 0 || compare_floats(val2, 0) == 0)
     {
         *derivative_exist = false;
     }
 
-    else if (-0.001 < log(val1) && log(val1) < 0.001)
+    else if (compare_floats(log(val1), 0) == 0)
     {
         *derivative_exist = false;
     }

@@ -4,9 +4,22 @@ node *read_graph_bracket(graph *diff_graph, const char **current_el);
 
 void read_value(node *current_node, const char **current_el);
 
-bool compare_floats(float val1, float val2)
+int compare_floats(float val1, float val2)
 {
-    return fabs(val1 - val2) < 0.001;
+    if (val1 - val2 > 0.001)
+    {
+        return 1;
+    }
+
+    else if (val1 - val2 < -0.001)
+    {
+        return -1;
+    }
+    
+    else
+    {
+        return 0;
+    }
 }
 
 void construct_graph(graph *graph)
@@ -18,7 +31,7 @@ void construct_graph(graph *graph)
     graph->count_nodes = 1;
 }
 
-bool copy_node_with_childrens(node **new_node, node **old_node) 
+void copy_node_with_childrens(node **new_node, node **old_node) 
 {
     copy_node(new_node, old_node);
 
@@ -33,7 +46,7 @@ bool copy_node_with_childrens(node **new_node, node **old_node)
     }
 }
 
-bool copy_node(node **new_node, node **old_node)
+void copy_node(node **new_node, node **old_node)
 {
     assert(new_node != nullptr);
 
@@ -46,8 +59,6 @@ bool copy_node(node **new_node, node **old_node)
     
     (*new_node)->left_node  = (*old_node)->left_node;
     (*new_node)->right_node = (*old_node)->right_node;
-
-    return (bool)*new_node;
 }
 
 bool construct_node(node **new_node, int type, float value, node *left_node, node* right_node)
@@ -85,10 +96,12 @@ void get_graph(graph *diff_graph, const char *file_name)
     char *string;
 
     read_file(file_name, &string);
-
+    
     assert(string != nullptr);
 
-    diff_graph->root_node = read_graph(diff_graph, (const char **)&string);
+    const char * read_string = string;
+
+    diff_graph->root_node = read_graph(diff_graph, &read_string);
     
     //DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 }

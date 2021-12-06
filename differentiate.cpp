@@ -3,9 +3,20 @@
 node *differentiate_internal(node* calc_node, node *external_derivative);
 
 
-void differentiate_graph(graph *diff_graph)
+void differentiate_graph(graph *diff_graph, int num, const char *graph_file_name, const char *png_file_name)
 {
-    diff_graph->root_node = differentiate_node(diff_graph->root_node);
+    for (int i; i < num; ++i)
+    {
+        diff_graph->root_node = differentiate_node(diff_graph->root_node);
+        
+        be_simple(diff_graph);
+
+        if (graph_file_name != nullptr && png_file_name != nullptr)
+        {
+            dump_graph_graphviz(graph_file_name, diff_graph);
+            create_png(graph_file_name, png_file_name);
+        }
+    }
 
     //DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 
@@ -22,10 +33,10 @@ void change_node(node *current_node, int type, float value, node *left_node, nod
 
 
 #define DERIVATIVE(oper, symbols, level, diff_code, oper_code) \
-    if (current_node->value == oper##_OPER)                                          \
-        {                                                                       \
-            diff_code                                                       \
-        }                                              \
+    if (compare_floats(current_node->value, oper##_OPER) == 0)                                          \
+        {                                                                     \
+            diff_code                                                               \
+        }                                                       \
     else
 
 
@@ -41,7 +52,7 @@ node *differentiate_internal(node* calc_node, node *external_derivative)
     copy_node_with_childrens(&current_node->left_node,  &external_derivative);
 
     copy_node_with_childrens(&current_node->right_node, &internal_derivative);
-
+    
     return current_node;
 }
 

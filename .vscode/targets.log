@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sun Dec 05 23:56:50 2021
+# Make data base, printed on Mon Dec 06 10:35:21 2021
 
 # Variables
 
@@ -19,7 +20,7 @@ USERPROFILE = C:\Users\levce
 # environment
 LOCALAPPDATA = C:\Users\levce\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-754034b1-776f-412c-bd4e-775afb77d086-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c2286277-ba02-45fa-ba11-089ababc8863-sock
 # environment
 VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -35,7 +36,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11904_GMHKETKKPRXHTIKO
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_21676_APZRTICEKHGEPHPD
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -91,7 +92,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 11904
+VSCODE_PID = 21676
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -217,7 +218,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638737804): 29 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638744675): 29 files, no impossibilities.
 
 # 29 files, no impossibilities in 1 directories.
 
@@ -317,7 +318,8 @@ obj/read_graph.o: read_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 23):
+#  recipe to execute (from 'Makefile',  
+line 23):
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
 
 obj/struct.o: struct.cpp | obj
@@ -439,6 +441,6 @@ obj/stack.o: stack.cpp | obj
 # strcache performance: lookups = 99 / hit rate = 55%
 # hash-table stats:
 # Load=44/8192=1%, Rehash=0, Collisions=0/99=0%
-# Finished Make data base on Sun Dec 05 23:56:50 2021
+# Finished Make data base on Mon Dec 06 10:35:21 2021
 
  

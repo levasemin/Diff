@@ -104,11 +104,9 @@ bool get_mul_div(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_pow;
 
-    bool val = next_func(string, main_node);
+    bool is_const = next_func(string, main_node);
 
     int current_level = 3;
-
-    bool is_const = false;
 
     while(true)
     {
@@ -151,7 +149,7 @@ void exponential_function(node **main_node)
 bool get_pow(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_func;
-
+    
     bool is_const = next_func(string, main_node);
 
     int current_level = 2;
@@ -170,9 +168,6 @@ bool get_pow(const char **string, node **main_node)
         if (is_const == false)
         {   
             exponential_function(main_node);
-
-            is_const = false;
-
         }
     }
 
@@ -216,9 +211,7 @@ bool get_brackets(const char **string, node **main_node)
     {
         *string += 1;
         
-        bool is_const = false;
-
-        is_const = get_add_sub(string, main_node);
+        bool is_const = get_add_sub(string, main_node);
 
         Require(string, ')');
         
@@ -267,11 +260,14 @@ bool get_const_var(const char **string, node **new_node)
 
             val += fractional_val; 
         }
+
         construct_node(new_node, CONST_TYPE, val);
     }
 
     else if ('e' == **string)
     {
+        is_const = true;
+
         construct_node(new_node, EXP_TYPE, E);
 
         *string += 1;
@@ -288,6 +284,5 @@ bool get_const_var(const char **string, node **new_node)
     {
         assert(0);
     }
-    
     return is_const;
 }

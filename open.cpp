@@ -32,7 +32,7 @@ size_t read_file(const char *file_name, char **string)
     assert(string != nullptr);
 
     char key[] = "rb";
-
+    
     FILE *file = open_file(file_name, key);
     
     return read_file(file, string);

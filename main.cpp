@@ -1,53 +1,81 @@
 #include "differentiator.h"
 
-const char *file_name = "database_files/expression.txt";
-const char *default_database_file_name   = "database_files/tree.database";
-const char *default_save_file_name       = "database_files/save.database";
-const char *default_graph_file_name      = "database_files/graph.dot";
-const char *default_png_file_name        = "database_files/graph.png";
+const char *default_expression_file_name = "database_files/expression.txt";
+const char *default_save_file_name       = "database_files/result.txt";
+const char *default_graph_file_name      = "database_files/derivative.dot";
+const char *default_png_file_name        = "database_files/diff_graph.png";
 
-int main()
+int main(int argc, const char *argv[])
 {
-    const char *database_file_name = default_database_file_name;
-    const char *save_file_name     = default_save_file_name;
-    const char *graph_file_name    = default_graph_file_name;
-    const char *png_file_name      = default_png_file_name;
+    const char *expression_file_name = default_expression_file_name;
+    const char *save_file_name       = default_save_file_name;
+    const char *graph_file_name      = default_graph_file_name;
+    const char *png_file_name        = default_png_file_name;    
 
-    graph diff_graph = {};
+    graph graph = {};
 
-    construct_graph(&diff_graph);
+    construct_graph(&graph);
 
-    get_graph(&diff_graph, file_name);
-        DEBUG_GRAPHVIZ("graph.dot", &diff_graph) 
-    be_simple(&diff_graph);
-    printf("lefas");
-    dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
-    create_png("database_files/read_graph.dot", "database_files/read_graph.png");
+    if (argc >= 3)
+    {
 
+        if (strcmp(argv[1], "derivative") == 0)
+        {
+            switch(argc)
+            {
+                case 4:
+                    expression_file_name = argv[3];
+                case 5:
+                    save_file_name       = argv[4];
+                case 6:
+                    graph_file_name      = argv[5];
+                case 7:   
+                    graph_file_name      = argv[6];
+                default:
+                    break;
+            }
 
-    int locality = 0;
-    int term     = 4;
+            get_graph(&graph, expression_file_name);
 
-    teilor(save_file_name, &diff_graph, locality, term);
-    
-    dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
-    create_png("database_files/read_graph.dot", "database_files/graph.png");
+            be_simple(&graph);
 
-    /*
-    dump_graph_graphviz("database_files/read_graph.dot", &diff_graph);
-    create_png("database_files/read_graph.dot", "database_files/read_graph.png");
+            differentiate_graph(&graph, atoi(argv[2]));
 
-    differentiate_graph(&diff_graph);
+            dump_graph_graphviz(graph_file_name, &graph);
+            create_png(graph_file_name, png_file_name);
 
-    dump_graph_graphviz("database_files/diff_graph.dot", &diff_graph);
-    create_png("database_files/diff_graph.dot", "database_files/dif_graph.png");
+            dump_graph(save_file_name, &graph);
+        }
 
-    be_simple(&diff_graph);
-    
-    dump_graph_graphviz("database_files/simple_graph.dot", &diff_graph);
-    create_png("database_files/simple_graph.dot", "database_files/simple_graph.png");
-    
-    dump_graph(save_file_name, &diff_graph);
+        else if (strcmp(argv[1], "teilor") == 0)
+        {
+            switch(argc)
+            {
+                case 5:
+                    expression_file_name = argv[4];
+                case 6:
+                    save_file_name       = argv[5];
+                case 7:
+                    graph_file_name      = argv[6];
+                case 8:   
+                    graph_file_name      = argv[7];
+                default:
+                    break;
+            }
 
-    //DEBUG_GRAPHVIZ("graph.dot", &diff_graph);*/
+            get_graph(&graph, expression_file_name);
+
+            be_simple(&graph);
+
+            float locality = (float)atoi(argv[2]);
+            int term       = (float)atoi(argv[3]);
+
+            teilor(save_file_name, &graph, locality, term);
+            
+            be_simple(&graph);
+
+            dump_graph_graphviz(graph_file_name, &graph);
+            create_png(graph_file_name, png_file_name);
+        }
+    }
 }
