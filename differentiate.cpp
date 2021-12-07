@@ -23,20 +23,11 @@ void differentiate_graph(graph *diff_graph, int num, const char *graph_file_name
 }
 
 
-void change_node(node *current_node, int type, float value, node *left_node, node *right_node)
-{
-    current_node->type       = type;
-    current_node->value      = value;
-    current_node->left_node  = left_node;
-    current_node->right_node = right_node;
-}
-
-
-#define DERIVATIVE(oper, symbols, level, diff_code, oper_code) \
-    if (compare_floats(current_node->value, oper##_OPER) == 0)                                          \
-        {                                                                     \
-            diff_code                                                               \
-        }                                                       \
+#define DERIVATIVE(oper, symbols, level, diff_code, oper_code)              \
+    if (compare_floats(current_node->value, oper##_OPER) == 0)              \
+        {                                                                   \
+            diff_code                                                       \
+        }                                                                   \
     else
 
 

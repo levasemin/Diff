@@ -184,6 +184,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
                                                                     \
     else
 
+
 void write_node_value(FILE *dump_file, node *current_node)
 {
     if (current_node->type == CONST_TYPE)
@@ -207,6 +208,7 @@ void write_node_value(FILE *dump_file, node *current_node)
     }
 }
 
+
 void write_graph_graphviz(const char *graphviz_name_file, graph *graph)
 {
     assert(graph != nullptr);
@@ -217,6 +219,7 @@ void write_graph_graphviz(const char *graphviz_name_file, graph *graph)
 
     fclose(graphviz_file);
 }
+
 
 void write_graph_graphviz(FILE *graphviz_file, graph *graph)
 {
@@ -246,6 +249,7 @@ void write_graph_graphviz(FILE *graphviz_file, graph *graph)
         }
     }
 }
+
     
 FILE *create_graphviz_file(const char *graphviz_file_name)
 {
@@ -255,6 +259,7 @@ FILE *create_graphviz_file(const char *graphviz_file_name)
 
     return graphviz_file;
 }
+
 
 void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node)
 {
@@ -268,6 +273,7 @@ void fprintf_node_graphviz(FILE *dump_file, node *current_node, node *pre_node)
 
     fprintf(dump_file, "\";\n");
 }
+
 
 void write_node_graphviz(FILE *dump_file, node *current_node)
 {    
@@ -298,6 +304,7 @@ void write_node_graphviz(FILE *dump_file, node *current_node)
     fprintf(dump_file, "}");
 }
 
+
 void fill_object_graphviz(const char *graphviz_file_name, Stack *stack, char *color)
 {
     assert(stack != nullptr);
@@ -309,6 +316,7 @@ void fill_object_graphviz(const char *graphviz_file_name, Stack *stack, char *co
 
     fclose(file);
 }
+
 
 void fill_object_graphviz(FILE *graphviz_file, Stack *stack, char *color)
 {
@@ -328,6 +336,7 @@ void fill_object_graphviz(FILE *graphviz_file, Stack *stack, char *color)
     fclose(graphviz_file);
 }
 
+
 void dump_graph_graphviz(const char* graphviz_file_name, graph *graph, Stack* characteristics_object, char *color)
 {
     assert(graphviz_file_name != nullptr);
@@ -339,6 +348,7 @@ void dump_graph_graphviz(const char* graphviz_file_name, graph *graph, Stack* ch
 
     fclose(graphviz_file);
 }
+
 
 void dump_graph_graphviz(FILE* graphviz_file, graph *graph, Stack* characteristics_object, char *color)
 {
@@ -352,6 +362,7 @@ void dump_graph_graphviz(FILE* graphviz_file, graph *graph, Stack* characteristi
         fill_object_graphviz(graphviz_file, characteristics_object, color);
     }
 }
+
 
 void create_png(const char *graph_file_name, const char* png_file_name)
 {

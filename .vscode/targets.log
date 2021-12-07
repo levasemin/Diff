@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Mon Dec 06 10:35:21 2021
+# Make data base, printed on Tue Dec 07 15:04:21 2021
 
 # Variables
 
@@ -27,7 +27,8 @@ VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
-# environment
+# e 
+nvironment
 PROCESSOR_LEVEL = 6
 # environment
 PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
@@ -144,7 +145,8 @@ VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = levce
 # environment
-COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+COMMONPROGRAMFILES = C:\Program Files (x86)\C 
+ommon Files
 # automatic
 ?F = $(notdir $?)
 # environment
@@ -210,7 +212,7 @@ CC = g++
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=9/149=6%
+# Load=99/1024=10%, Rehash=0, Collisions=9/151=6%
 
 # Pattern-specific Variable Values
 
@@ -218,9 +220,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638744675): 29 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638878600): 22 files, no impossibilities.
 
-# 29 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -228,18 +230,19 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Files
 
-main.exe: obj/main.o obj/teilor.o obj/differentiate.o obj/simplifier.o obj/make_graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
+main.exe: obj/main.o obj/teilor.o obj/graph_functions.o obj/differentiate.o obj/simplifier.o obj/make_graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
-	$(CC) -g $(BuildF)main.o $(BuildF)teilor.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
+	$(CC) -g $(BuildF)main.o $(BuildF)teilor.o $(BuildF)graph_functions.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
 
 # Not a target:
 make_graph.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#  File has not been updated.
+#  File has not bee 
+n updated.
 
 obj/main.o: main.cpp | obj
 #  Implicit rule search has not been done.
@@ -259,15 +262,21 @@ obj/simplifier.o: main.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 29):
+#  recipe to execute (from 'Makefile', line 32):
 	$(CC) -c $(CFLAGS) simplifier.cpp -o $(BuildF)simplifier.o
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-12-05 23:56:38
+#  Last modified 2021-12-07 15:04:13
 #  File has been updated.
 #  Successfully updated.
+
+# Not a target:
+graph_functions.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 .SILENT:
 #  Implicit rule search has not been done.
@@ -298,7 +307,7 @@ clean:
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'Makefile', line 47):
+#  recipe to execute (from 'Makefile', line 50):
 	del /q /s obj
 
 # Not a target:
@@ -311,22 +320,21 @@ obj/dump_graph.o: dump_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 32):
+#  recipe to execute (from 'Makefile', line 35):
 	$(CC) -c $(CFLAGS) dump_graph.cpp -o $(BuildF)dump_graph.o
 
 obj/read_graph.o: read_graph.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile',  
-line 23):
+#  recipe to execute (from 'Makefile', line 26):
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
 
 obj/struct.o: struct.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 38):
+#  recipe to execute (from 'Makefile', line 41):
 	$(CC) -c $(CFLAGS) struct.cpp -o $(BuildF)struct.o
 
 # Not a target:
@@ -339,7 +347,7 @@ obj:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 44):
+#  recipe to execute (from 'Makefile', line 47):
 	mkdir $@
 
 # Not a target:
@@ -369,6 +377,13 @@ all: clean main.exe
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
+obj/graph_functions.o: graph_functions.cpp | obj
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 23):
+	$(CC) -c $(CFLAGS) graph_functions.cpp -o $(BuildF)graph_functions.o
+
 # Not a target:
 main.cpp:
 #  Implicit rule search has not been done.
@@ -379,7 +394,7 @@ obj/open.o: open.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 35):
+#  recipe to execute (from 'Makefile', line 38):
 	$(CC) -c $(CFLAGS) open.cpp -o $(BuildF)open.o
 
 # Not a target:
@@ -398,7 +413,7 @@ obj/differentiate.o: differentiate.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
+#  recipe to execute (from 'Makefile', line 29):
 	$(CC) -c $(CFLAGS) differentiate.cpp -o $(BuildF)differentiate.o
 
 # Not a target:
@@ -424,23 +439,24 @@ obj/stack.o: stack.cpp | obj
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 41):
+#  recipe to execute (from 'Makefile', line 44):
 	$(CC) -c $(CFLAGS) stack.cpp -o $(BuildF)stack.o
 
 # files hash-table stats:
-# Load=27/1024=3%, Rehash=0, Collisions=0/84=0%
+# Load=29/1024=3%, Rehash=0, Collisions=2/90=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
-# No general ('VPATH' variable) search path.
+# No general ('VPATH' v 
+ariable) search path.
 
-# strcache buffers: 1 (0) / strings = 44 / storage = 515 B / avg = 11 B
-# current buf: size = 8174 B / used = 515 B / count = 44 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 39 / storage = 457 B / avg = 11 B
+# current buf: size = 8174 B / used = 457 B / count = 39 / avg = 11 B
 
-# strcache performance: lookups = 99 / hit rate = 55%
+# strcache performance: lookups = 97 / hit rate = 59%
 # hash-table stats:
-# Load=44/8192=1%, Rehash=0, Collisions=0/99=0%
-# Finished Make data base on Mon Dec 06 10:35:21 2021
+# Load=39/8192=0%, Rehash=0, Collisions=0/97=0%
+# Finished Make data base on Tue Dec 07 15:04:21 2021
 
  

@@ -7,8 +7,8 @@ BuildF = obj/
 
 all: clean main.exe
 
-main.exe :	 $(BuildF)main.o $(BuildF)teilor.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o 
-	$(CC) -g $(BuildF)main.o $(BuildF)teilor.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
+main.exe :	 $(BuildF)main.o $(BuildF)teilor.o $(BuildF)graph_functions.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o 
+	$(CC) -g $(BuildF)main.o $(BuildF)teilor.o $(BuildF)graph_functions.o $(BuildF)differentiate.o $(BuildF)simplifier.o $(BuildF)make_graph.o $(BuildF)read_graph.o $(BuildF)dump_graph.o $(BuildF)stack.o $(BuildF)struct.o $(BuildF)open.o -o main.exe
 
 $(BuildF)main.o : main.cpp | obj
 	$(CC) -c $(CFLAGS) main.cpp -o $(BuildF)main.o
@@ -18,6 +18,9 @@ $(BuildF)teilor.o : teilor.cpp | obj
 
 $(BuildF)make_graph.o : make_graph.cpp | obj
 	$(CC) -c $(CFLAGS) make_graph.cpp -o $(BuildF)make_graph.o
+
+$(BuildF)graph_functions.o : graph_functions.cpp | obj
+	$(CC) -c $(CFLAGS) graph_functions.cpp -o $(BuildF)graph_functions.o
 
 $(BuildF)read_graph.o : read_graph.cpp | obj
 	$(CC) -c $(CFLAGS) read_graph.cpp -o $(BuildF)read_graph.o
