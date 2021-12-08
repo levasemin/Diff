@@ -26,13 +26,47 @@ void dump_graph(const char* dump_file_name, graph *graph)
     fclose(dump_file);
 }
 
+void fprintf_title_latex(const char *dump_file_name, const char *title)
+{
+    FILE *dump_file = open_file(dump_file_name, "wb");
+
+    fprintf_title_latex(dump_file, title);
+}
+
+void fprintf_title_latex(FILE *dump_file, const char *title)
+{
+    fprintf(dump_file, "\\documentclass[a4paper, 12pt]{article}\n");
+    fprintf(dump_file, "\\DeclareUnicodeCharacter{2212}{-}\n");
+    fprintf(dump_file, "\\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=0cm]{geometry}\n");
+    fprintf(dump_file, "\\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}\n");
+    fprintf(dump_file, "\\title{%s}\n", title); 
+    fprintf(dump_file, "\\begin{document}\n");                                                            
+    fprintf(dump_file, "\\maketitle \n$");
+}
+
+void fprintf_end_latex(const char *dump_file_name)
+{
+    FILE *dump_file = open_file(dump_file_name, "wb");
+
+    fprintf_end_latex(dump_file);
+}
+
+void fprintf_end_latex(FILE *dump_file)
+{
+    fprintf(dump_file, "$\n\\end{document}");
+}
+
 
 void dump_graph(FILE *dump_file, graph *graph)
 {
+    fprintf_title_latex(dump_file, "Derivative");
+
     assert(dump_file  != nullptr);
     assert(graph != nullptr);
     
     write_graph(dump_file, graph->root_node);
+    
+    fprintf_end_latex(dump_file);
 }
 
 
@@ -60,25 +94,43 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node)
 
 void simplify_exponential_function(node **current_node)
 {
-    if ((*current_node)->right_node->right_node->type == OPER_TYPE && 
-        compare_floats((*current_node)->right_node->right_node->value, LN_OPER) == 0)
+    if ((*current_node)->left_node->type == EXP_TYPE && (*current_node)->right_node->type == OPER_TYPE &&
+        compare_floats((*current_node)->right_node->value, LN_OPER) == 0)
     {
-        node *ln_node = (*current_node)->right_node->right_node;
-        
-        (*current_node)->right_node = (*current_node)->right_node->left_node;
-        (*current_node)->left_node  = ln_node->right_node;
+        *current_node = (*current_node)->right_node->right_node;
     }
-    
-    else if ((*current_node)->right_node->left_node->type == OPER_TYPE && \ 
-             compare_floats((*current_node)->right_node->left_node->value, LN_OPER) == 0)
-    {
-        node *ln_node = (*current_node)->right_node->left_node;
 
-        (*current_node)->left_node  = ln_node->right_node;
-        (*current_node)->right_node = (*current_node)->right_node->right_node;
+    else if ((*current_node)->left_node->type  == EXP_TYPE && 
+             (*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, MUL_OPER) == 0)
+    {
+        if ((*current_node)->right_node->right_node->type == OPER_TYPE && 
+            compare_floats((*current_node)->right_node->right_node->value, LN_OPER) == 0)
+        {
+            node *ln_node = (*current_node)->right_node->right_node;
+            
+            (*current_node)->right_node = (*current_node)->right_node->left_node;
+            (*current_node)->left_node  = ln_node->right_node;
+        }
+        
+        else if ((*current_node)->right_node->left_node->type == OPER_TYPE && \ 
+                compare_floats((*current_node)->right_node->left_node->value, LN_OPER) == 0)
+        {
+            node *ln_node = (*current_node)->right_node->left_node;
+
+            (*current_node)->left_node  = ln_node->right_node;
+            (*current_node)->right_node = (*current_node)->right_node->right_node;
+        }
     }
 }
 
+void fprintf_double_arg(FILE *dump_file, node *current_node, const char *type)
+{
+    fprintf(dump_file, "\\%s", type);
+        
+    fprintf_expression_inside(dump_file, current_node->left_node);        
+
+    fprintf_expression_inside(dump_file, current_node->right_node);
+}
 
 void write_graph(FILE *dump_file, node *current_node, int *node_level)
 {    
@@ -87,39 +139,21 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     
     *node_level = get_level(current_node);
 
-    if (current_node->left_node !=  nullptr && current_node->right_node != nullptr)
+    if (current_node->left_node != nullptr && current_node->right_node != nullptr)
     {
-        if ((current_node)->left_node->type == EXP_TYPE   && 
-            (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, LN_OPER) == 0)
-        {
-            current_node = (current_node)->right_node->right_node;
-        }
-
-        else if ((current_node)->left_node->type  == EXP_TYPE && 
-                (current_node)->right_node->type == OPER_TYPE && compare_floats((current_node)->right_node->value, MUL_OPER) == 0)
-        {
-            simplify_exponential_function(&current_node);
-        }
+        simplify_exponential_function(&current_node);
     }
 
     if (current_node->type == OPER_TYPE && compare_floats(current_node->value, LOG_OPER) == 0)
     {
-        fprintf(dump_file, "\\log");
-        
-        fprintf_expression_inside(dump_file, current_node->left_node);        
+        fprintf_double_arg(dump_file, current_node, "log");
 
-        fprintf_expression_inside(dump_file, current_node->right_node);        
-        
         return;
     }
     
     if (current_node->type == OPER_TYPE && compare_floats(current_node->value, DIV_OPER) == 0)
     {
-        fprintf(dump_file, "\\frac");
-        
-        fprintf_expression_inside(dump_file, current_node->left_node);        
-        
-        fprintf_expression_inside(dump_file, current_node->right_node);        
+        fprintf_double_arg(dump_file, current_node, "frac");       
 
         return;
     }

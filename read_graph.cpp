@@ -34,10 +34,8 @@ void Require(const char **string, const char expected)
 }
 
 node *read_graph(graph *diff_graph, const char **current_el)
-{
-    bool is_const = false;
-    
-    is_const = get_add_sub(current_el, &diff_graph->root_node);
+{    
+    bool is_const = get_add_sub(current_el, &diff_graph->root_node);
 
     Require(current_el, '$');
 
@@ -54,12 +52,13 @@ if (strncmp(*string, symbols, strlen(symbols)) == 0 && current_level == level)  
     *string += strlen(symbols);                                                     \
                                                                                     \
     node *val2 = nullptr;                                                           \
-    is_const = next_func(string, &val2);                                            \
+                                                                                    \
+    is_const *= next_func(string, &val2);                                           \
                                                                                     \
     if (strcmp(symbols, "log") == 0)                                                \
     {                                                                               \
         old_node = val2;                                                            \
-        is_const = next_func(string, &val2);                                        \
+        is_const *= next_func(string, &val2);                                       \
     }                                                                               \
                                                                                     \
     (*main_node)->left_node = old_node;                                             \
@@ -95,6 +94,8 @@ bool get_add_sub(const char **string, node **main_node)
             break;
         }
     }
+
+    printf("sum %d\n", is_const);
     
     return is_const;
 }
@@ -149,24 +150,33 @@ void exponential_function(node **main_node)
 bool get_pow(const char **string, node **main_node)
 {
     bool (*next_func)(const char **, node **) = get_func;
-    
+
     bool is_const = next_func(string, main_node);
 
     int current_level = 2;
     
     while(true)
     {   
+        printf("pow %d ||| %s\n", is_const, *string);
+
         skip_spaces(string);
 
-        #include "derivative.h"
-    
-        //else
-        {     
-            break;
+        if (**string == '^')
+        {
+            is_const = true;
+
+            #include "derivative.h"
+            {}
         }
 
+        else
+        {     
+            printf("BREAK\n");
+            break;
+        }
+        
         if (is_const == false)
-        {   
+        {   printf("exponential function %s\n", *string);
             exponential_function(main_node);
         }
     }
@@ -183,7 +193,7 @@ bool get_func(const char **string, node **main_node)
     
     int current_level = 1;
 
-    bool is_const = false;
+    bool is_const = true;
 
     while(true)
     {
@@ -201,26 +211,32 @@ bool get_func(const char **string, node **main_node)
     {
         is_const = next_func(string, main_node);
     }
-
+    printf("func %d\n", is_const);
     return is_const;
 }
 
 bool get_brackets(const char **string, node **main_node)
 {
+    bool is_const = true;
+
     if (**string == '(')
     {
         *string += 1;
         
-        bool is_const = get_add_sub(string, main_node);
+        is_const = get_add_sub(string, main_node);
 
         Require(string, ')');
         
+        printf("brackets %d\n", is_const);
+
         return is_const;
     }
 
     else 
     {
-        return get_const_var(string, main_node);
+        is_const = get_const_var(string, main_node);
+        printf("no brackets %d\n", is_const);
+        return is_const;
     }
 }
 
@@ -284,5 +300,6 @@ bool get_const_var(const char **string, node **new_node)
     {
         assert(0);
     }
+    printf("-%d-\n", is_const);
     return is_const;
 }

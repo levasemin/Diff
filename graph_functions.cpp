@@ -1,5 +1,18 @@
 #include "differentiator.h"
 
+
+void DEBUG_GRAPHVIZ_NODE(char *graph_file_name, node *graph_node)             
+{
+    getchar();                                                       
+    graph debug_graph = {};                                          
+    construct_graph(&debug_graph);                                   
+    debug_graph.root_node = graph_node;                              
+    dump_graph_graphviz(graph_file_name, &debug_graph);              
+    system("dot -T png graph.dot > graph.png");                      
+    system("start graph.png");                                       
+}
+
+
 int get_level(node *current_node)
 {
     assert(current_node != nullptr);

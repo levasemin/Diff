@@ -16,6 +16,8 @@ void check_POW(node **current_node);
 
 void check_node_nullptrs(node **current_node);
 
+void simplifier(node **current_node);
+
 
 void be_simple(graph *graph)
 {
@@ -108,7 +110,7 @@ void check_MUL(node **current_node)
     //printf("mul");
 
     assert(*current_node != nullptr);
-
+    
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, MUL_OPER) == 0)
     {   
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
@@ -119,7 +121,11 @@ void check_MUL(node **current_node)
         else if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, DIV_OPER) == 0 &&
             compare_floats((*current_node)->left_node->left_node->value, 1) == 0)
         {
+            //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
+            printf("lol, %p", *current_node);
             change_node(current_node, OPER_TYPE, DIV_OPER, (*current_node)->right_node, (*current_node)->left_node->right_node);
+            //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
+
         }
 
         else if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, DIV_OPER) == 0 &&
@@ -127,7 +133,7 @@ void check_MUL(node **current_node)
         {
             change_node(current_node, OPER_TYPE, DIV_OPER, (*current_node)->left_node, (*current_node)->right_node->right_node);
         }
-
+        
         else if ((*current_node)->left_node->type == CONST_TYPE)
         {
             if (compare_floats((*current_node)->left_node->value, 1) == 0)
@@ -165,8 +171,7 @@ void check_DIV(node **current_node)
 
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, DIV_OPER) == 0)
     {   
-        if ((compare_floats((*current_node)->left_node->value, 0)  && (*current_node)->left_node->type == CONST_TYPE)  == 0 || 
-            (compare_floats((*current_node)->right_node->value, 0) && (*current_node)->right_node->type == CONST_TYPE) == 0)
+        if (compare_floats((*current_node)->left_node->value, 0) == 0 && (*current_node)->left_node->type  == CONST_TYPE)        
         {
             change_node(current_node, CONST_TYPE, 0);
         }
