@@ -5,15 +5,18 @@ void derivative_teilor(node **current_node, float locality, bool *derivative_exi
 void do_operation(node **current_node, float val1, float val2, bool *derivative_exist);
 
 void fprintf_teilor(FILE *dump_file, graph calc_graph, float locality, int term_count, int num_term);
+
 void fprintf_float(FILE *dump_file, float number, int sign_count);
 
-#define DERIVATIVE(oper, symbols, level, diff_code, oper_code)      \
-    if (compare_floats(((*current_node)->value), (oper##_OPER)) == 0)                  \
-        {                                                           \
-            oper_code                                               \
-        }                                                           \
-                                                                    \
+
+#define DERIVATIVE(oper, symbols, level, diff_code, oper_code)          \
+    if (compare_floats(((*current_node)->value), (oper##_OPER)) == 0)   \
+        {                                                               \
+            oper_code                                                   \
+        }                                                               \
+                                                                        \
     else
+
 
 void derivative_teilor(node **current_node, float locality, bool *derivative_exist)
 {
@@ -67,6 +70,7 @@ void derivative_teilor(node **current_node, float locality, bool *derivative_exi
     }
 }
 
+
 void do_operation(node **current_node, float val1, float val2, bool *derivative_exist)
 {
     float result = 0;
@@ -106,12 +110,7 @@ void fprintf_teilor(FILE *dump_file, graph calc_graph, float locality, int term_
 {
         calc_graph.root_node->value /= (float)factorial(num_term+1);
 
-        if (compare_floats(calc_graph.root_node->value, 1) == 0)
-        {
-            fprintf(dump_file, "+");
-        }
-        
-        else if (calc_graph.root_node->value < 0)
+        if (calc_graph.root_node->value < 0)
         {
             fprintf(dump_file, "-");
             fprintf_float(dump_file, calc_graph.root_node->value * -1, SIGN_COUNT);
@@ -146,6 +145,7 @@ void fprintf_teilor(FILE *dump_file, graph calc_graph, float locality, int term_
         }
 }
 
+
 void teilor(const char *name_dump_file, graph *diff_graph, float locality, int term_count)
 {    
     FILE *dump_file = open_file(name_dump_file, "wb");
@@ -159,6 +159,7 @@ void teilor(const char *name_dump_file, graph *diff_graph, float locality, int t
     fclose(dump_file);
 }
 
+
 void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
 {   
     bool derivative_exist = true;
@@ -167,9 +168,9 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
     
     construct_graph(&calc_graph);
 
-    be_simple(&calc_graph);
-
     copy_node_with_childrens(&calc_graph.root_node, &diff_graph->root_node);
+    
+    be_simple(&calc_graph, simplify_exponential_function);
     
     derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
     
@@ -178,8 +179,8 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
         fprintf_float(dump_file,  calc_graph.root_node->value, SIGN_COUNT);
     }
 
-    DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
-    DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
+    //DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
+    //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
     
     for (int num_term = 0; num_term < term_count; ++num_term)
@@ -188,15 +189,17 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
 
         differentiate_graph(diff_graph, 1);
     
-        be_simple(diff_graph);
-
-        DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
+        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
 
         copy_node_with_childrens(&calc_graph.root_node, &diff_graph->root_node);
-        
+
+        be_simple(&calc_graph, simplify_exponential_function);
+
+        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
+
         derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
 
-        DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
+        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
         if (derivative_exist == false)
         {

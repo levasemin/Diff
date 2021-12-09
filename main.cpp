@@ -47,6 +47,8 @@ int main(int argc, const char *argv[])
 
             differentiate_graph(&graph, atoi(argv[2]), "diff_expression.tex");
 
+            be_simple(&graph, simplify_exponential_function);
+
             dump_graph_graphviz(graph_file_name, &graph);
             
             create_png(graph_file_name, png_file_name);
@@ -79,7 +81,7 @@ int main(int argc, const char *argv[])
 
             teilor(save_file_name, &graph, locality, term);
             
-            be_simple(&graph);
+            be_simple(&graph, simplify_exponential_function);
 
             dump_graph_graphviz(graph_file_name, &graph);
             create_png(graph_file_name, png_file_name);

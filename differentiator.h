@@ -33,6 +33,8 @@ void teilor(const char*name_dump_file, graph *diff_graph, float locality, int te
 void teilor(FILE *dump_file, graph *diff_graph, float locality, int term);
 
 
-void be_simple(graph *graph);
+void be_simple(graph *graph, void (*simplify_exp)(node **) = nullptr);
 
 void make_simple(node **current_node);
+
+void simplify_exponential_function(node **current_node);

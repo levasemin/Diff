@@ -94,8 +94,6 @@ bool get_add_sub(const char **string, node **main_node)
             break;
         }
     }
-
-    printf("sum %d\n", is_const);
     
     return is_const;
 }
@@ -157,8 +155,6 @@ bool get_pow(const char **string, node **main_node)
     
     while(true)
     {   
-        printf("pow %d ||| %s\n", is_const, *string);
-
         skip_spaces(string);
 
         if (**string == '^')
@@ -171,12 +167,11 @@ bool get_pow(const char **string, node **main_node)
 
         else
         {     
-            printf("BREAK\n");
             break;
         }
         
         if (is_const == false)
-        {   printf("exponential function %s\n", *string);
+        {
             exponential_function(main_node);
         }
     }
@@ -211,7 +206,7 @@ bool get_func(const char **string, node **main_node)
     {
         is_const = next_func(string, main_node);
     }
-    printf("func %d\n", is_const);
+
     return is_const;
 }
 
@@ -227,15 +222,13 @@ bool get_brackets(const char **string, node **main_node)
 
         Require(string, ')');
         
-        printf("brackets %d\n", is_const);
-
         return is_const;
     }
 
     else 
     {
         is_const = get_const_var(string, main_node);
-        printf("no brackets %d\n", is_const);
+
         return is_const;
     }
 }
@@ -300,6 +293,6 @@ bool get_const_var(const char **string, node **new_node)
     {
         assert(0);
     }
-    printf("-%d-\n", is_const);
+
     return is_const;
 }
