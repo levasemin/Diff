@@ -199,7 +199,7 @@ DERIVATIVE(SIN, "sin", 1,
 })
 
 
-DERIVATIVE(TG, "tg", 1,
+DERIVATIVE(TG, "tan", 1,
 {
     //push_stack(func_stack, current_node);
 

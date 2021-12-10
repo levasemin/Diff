@@ -139,7 +139,7 @@ void exponential_function(node **main_node)
 
     copy_node_with_childrens(&degree_node->right_node, &(*main_node)->right_node);
 
-    change_node(&(*main_node)->left_node, EXP_TYPE, E);
+    change_node((*main_node)->left_node, EXP_TYPE, E);
 
     (*main_node)->right_node = degree_node;
 }

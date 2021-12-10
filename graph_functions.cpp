@@ -107,26 +107,51 @@ bool construct_node(node **new_node, int type, float value, node *left_node, nod
 }
 
 
-bool change_node(node **new_node, int type, float value, node *left_node, node* right_node)
-{
-    assert(new_node != nullptr);
-    
-    (*new_node)->value = value;
-
-    (*new_node)->type           = type;
-    (*new_node)->left_node      = left_node;
-    (*new_node)->right_node     = right_node;
-
-    return (bool)*new_node;
-}
-
-
 void change_node(node *current_node, int type, float value, node *left_node, node *right_node)
 {
     current_node->type       = type;
     current_node->value      = value;
     current_node->left_node  = left_node;
     current_node->right_node = right_node;
+}
+
+
+void destruct_graph(graph *current_graph)
+{
+    assert(current_graph != nullptr);
+
+    Stack stack = {};
+
+    stack_constructor(&stack);
+
+    push_stack(&stack, &current_graph->root_node);
+
+    while (stack.size != 0)
+    {
+        node *current_node = pop_stack(&stack);
+        
+        if (current_node->right_node != nullptr)  
+        {
+            push_stack(&stack, &(current_node->right_node));
+        }
+        
+        if (current_node->left_node != nullptr)
+        {
+            push_stack(&stack, &(current_node->left_node));
+        }
+        
+        destruct_node(current_node);
+
+    }
+
+}
+
+
+void destruct_node(node *current_node)
+{ 
+    assert(current_node != nullptr);
+
+    free(current_node);
 }
 
 

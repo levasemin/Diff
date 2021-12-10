@@ -4,7 +4,7 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node);
 
 void simplify_exponential_function(node **current_node);
 
-void write_graph(FILE *dump_file, node *current_node, int *node_level);
+void write_graph_rec(FILE *dump_file, node *current_node);
 
 void write_graph_graphviz(FILE *file, graph *graph);
 
@@ -15,23 +15,13 @@ void write_graph_graphviz(const char *graphviz_name_file, graph *graph);
 FILE *create_graphviz_file(const char *graphviz_file_name);
 
 
-void dump_graph(const char* dump_file_name, graph *graph)
-{
-    assert(graph != nullptr);
-    
-    FILE *dump_file = open_file(dump_file_name, "wb");
-
-    dump_graph(dump_file, graph);
-
-    fclose(dump_file);
-}
-
-
 void fprintf_title_latex(const char *dump_file_name, const char *title)
 {
     FILE *dump_file = open_file(dump_file_name, "wb");
 
     fprintf_title_latex(dump_file, title);
+
+    fclose(dump_file);
 }
 
 
@@ -43,46 +33,51 @@ void fprintf_title_latex(FILE *dump_file, const char *title)
     fprintf(dump_file, "\\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}\n");
     fprintf(dump_file, "\\title{%s}\n", title); 
     fprintf(dump_file, "\\begin{document}\n");                                                            
-    fprintf(dump_file, "\\maketitle \n$");
+    fprintf(dump_file, "\\maketitle \n");
 }
 
 
 void fprintf_end_latex(const char *dump_file_name)
 {
-    FILE *dump_file = open_file(dump_file_name, "wb");
+    FILE *dump_file = open_file(dump_file_name, "ab");
 
     fprintf_end_latex(dump_file);
+
+    fclose(dump_file);    
 }
 
 
 void fprintf_end_latex(FILE *dump_file)
 {
-    fprintf(dump_file, "$\n\\end{document}");
+    printf("2222");
+    fprintf(dump_file, "\n\\end{document}");
+        printf("3333");
+
+    fclose(dump_file);
 }
 
 
-void dump_graph(FILE *dump_file, graph *graph)
+void write_graph(const char *dump_file_name, node *current_node)
 {
-    fprintf_title_latex(dump_file, "Derivative");
+    FILE *dump_file = open_file(dump_file_name, "ab");
 
-    assert(dump_file  != nullptr);
-    assert(graph != nullptr);
-    
-    write_graph(dump_file, graph->root_node);
-    
-    fprintf_end_latex(dump_file);
+    write_graph(dump_file, current_node);
+
+    fclose(dump_file);
 }
 
 
 void write_graph(FILE *dump_file, node *current_node)
 {
-    int node_level = -1;
+    fprintf(dump_file, "$");
 
     node *copy_root_node = nullptr;
 
     copy_node_with_childrens(&copy_root_node, &current_node);
 
-    write_graph(dump_file, copy_root_node, &node_level);
+    write_graph_rec(dump_file, copy_root_node);
+    
+    fprintf(dump_file, "$\\\\\n");
 }
 
 
@@ -90,10 +85,11 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node)
 {
     fprintf(dump_file, "{(");
 
-    write_graph(dump_file, current_node);
+    write_graph_rec(dump_file, current_node);
     
     fprintf(dump_file, ")}");
 }
+
 
 void fprintf_double_arg(FILE *dump_file, node *current_node, const char *type)
 {
@@ -104,12 +100,13 @@ void fprintf_double_arg(FILE *dump_file, node *current_node, const char *type)
     fprintf_expression_inside(dump_file, current_node->right_node);
 }
 
-void write_graph(FILE *dump_file, node *current_node, int *node_level)
+
+void write_graph_rec(FILE *dump_file, node *current_node)
 {    
     assert(dump_file != nullptr);
     assert(current_node != nullptr);
     
-    *node_level = get_level(current_node);
+    int node_level = get_level(current_node);
 
     if (current_node->type == OPER_TYPE && compare_floats(current_node->value, LOG_OPER) == 0)
     {
@@ -125,7 +122,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
         return;
     }
 
-    if (*node_level == 1)
+    if (node_level == 1)
     {
         fprintf(dump_file, "\\");
 
@@ -139,7 +136,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     if (current_node->left_node != nullptr)    
     {
         if (current_node->left_node->type == OPER_TYPE && 
-        (*node_level < get_level(current_node->left_node)))
+        (node_level < get_level(current_node->left_node)))
         {
             fprintf_expression_inside(dump_file, current_node->left_node);
 
@@ -148,7 +145,7 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
 
         else
         {
-            write_graph(dump_file, current_node->left_node);
+            write_graph_rec(dump_file, current_node->left_node);
 
             write_node_value(dump_file, current_node);
         }
@@ -157,14 +154,14 @@ void write_graph(FILE *dump_file, node *current_node, int *node_level)
     if (current_node->right_node != nullptr)
     {
         if (current_node->right_node->type == OPER_TYPE &&
-        (*node_level < get_level(current_node->right_node)))
+        (node_level < get_level(current_node->right_node)))
         {            
             fprintf_expression_inside(dump_file, current_node->right_node);
         }
            
         else
         {
-            write_graph(dump_file, current_node->right_node);
+            write_graph_rec(dump_file, current_node->right_node);
         }
     } 
 
@@ -311,11 +308,11 @@ void fill_object_graphviz(const char *graphviz_file_name, Stack *stack, char *co
     assert(stack != nullptr);
     assert(color != nullptr);
 
-    FILE *file = open_file(graphviz_file_name, "rb+");
+    FILE *graphviz_file = open_file(graphviz_file_name, "rb+");
 
-    fill_object_graphviz(file, stack, color);
+    fill_object_graphviz(graphviz_file, stack, color);
 
-    fclose(file);
+    fclose(graphviz_file);
 }
 
 
@@ -333,8 +330,6 @@ void fill_object_graphviz(FILE *graphviz_file, Stack *stack, char *color)
     }
 
     fprintf(graphviz_file, "}");
-    
-    fclose(graphviz_file);
 }
 
 

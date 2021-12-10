@@ -53,7 +53,11 @@ int main(int argc, const char *argv[])
             
             create_png(graph_file_name, png_file_name);
 
-            dump_graph(save_file_name, &graph);
+            fprintf_title_latex(save_file_name, "Derivative");
+
+            write_graph(save_file_name, graph.root_node);
+
+            fprintf_end_latex(save_file_name);
         }
 
         else if (strcmp(argv[1], "teilor") == 0)

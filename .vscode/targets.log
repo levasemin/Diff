@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed Dec 08 11:19:03 2021
+# Make data base, printed on Fri Dec 10 22:16:45 2021
 
 # Variables
 
@@ -19,14 +20,15 @@ USERPROFILE = C:\Users\levce
 # environment
 LOCALAPPDATA = C:\Users\levce\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c858f780-9659-4f73-99b9-e95d2dea7887-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e0636d4b-cb37-426d-a8eb-69aecfbda191-sock
 # environment
 VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
-# environment
+# e 
+nvironment
 PROCESSOR_LEVEL = 6
 # environment
 PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
@@ -35,7 +37,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_16528_LQAZZEOEYVERCNDZ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_22052_RHGSBRKYIAQTBZNX
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -49,7 +51,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\levce\AppData\Roaming\Code\CachedData\ccbaa2d27e38e5afa3e5c21c1c7bef4657064247
+VSCODE_CODE_CACHE_PATH = C:\Users\levce\AppData\Roaming\Code\CachedData\7db1a2b88f7557e0a43fec75b6ba7e50b3e9f77e
 # environment
 LANG = C
 # default
@@ -91,7 +93,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 16528
+VSCODE_PID = 22052
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -160,6 +162,8 @@ USERDOMAIN = MSI
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
+# environment
+__COMPAT_LAYER = DetectorsAppHealth
 # makefile
 .DEFAULT_GOAL := all
 # default
@@ -189,7 +193,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\levce\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\8ed0da0d4bacc2ae6d6f0fa60307f0cf-1.62.3-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\8ed0da0d4bacc2ae6d6f0fa60307f0cf-1.63.0-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -205,11 +209,12 @@ SESSIONNAME = Console
 # environment
 PROCESSOR_REVISION = 8e0c
 # makefile (from 'Makefile', line 1)
-CC = g++
+CC = g+ 
++
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=9/151=6%
+# Load=100/1024=10%, Rehash=0, Collisions=9/152=6%
 
 # Pattern-specific Variable Values
 
@@ -217,9 +222,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1638951049): 23 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1639010196): 31 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 31 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -421,7 +426,8 @@ obj/differentiate.o: differentiate.cpp | obj
 # Not a target:
 differentiate.cpp:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
+#  Modification time never ch 
+ecked.
 #  File has not been updated.
 
 obj/teilor.o: teilor.cpp | obj
@@ -446,12 +452,12 @@ obj/stack.o: stack.cpp | obj
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 457 B / avg = 11 B
-# current buf: size = 8174 B / used = 457 B / count = 39 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 47 / storage = 562 B / avg = 11 B
+# current buf: size = 8174 B / used = 562 B / count = 47 / avg = 11 B
 
-# strcache performance: lookups = 98 / hit rate = 60%
+# strcache performance: lookups = 106 / hit rate = 55%
 # hash-table stats:
-# Load=39/8192=0%, Rehash=0, Collisions=0/98=0%
-# Finished Make data base on Wed Dec 08 11:19:03 2021
+# Load=47/8192=1%, Rehash=0, Collisions=0/106=0%
+# Finished Make data base on Fri Dec 10 22:16:45 2021
 
  

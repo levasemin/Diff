@@ -98,7 +98,7 @@ void check_SUM(node **current_node)
     {
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
-            change_node(current_node, CONST_TYPE, (*current_node)->left_node->value + (*current_node)->right_node->value);
+            change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value + (*current_node)->right_node->value);
         }
 
         else if (compare_floats((*current_node)->left_node->value, 0) == 0 && (*current_node)->left_node->type == CONST_TYPE)
@@ -124,7 +124,7 @@ void check_SUB(node **current_node)
     {
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
-            change_node(current_node, CONST_TYPE, (*current_node)->left_node->value - (*current_node)->right_node->value);
+            change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value - (*current_node)->right_node->value);
         }
 
         else if (compare_floats((*current_node)->right_node->value, 0) == 0 && (*current_node)->right_node->type == CONST_TYPE)
@@ -145,14 +145,14 @@ void check_MUL(node **current_node)
     {   
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
-            change_node(current_node, CONST_TYPE, (*current_node)->left_node->value * (*current_node)->right_node->value);
+            change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value * (*current_node)->right_node->value);
         }
         
         else if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, DIV_OPER) == 0 &&
             compare_floats((*current_node)->left_node->left_node->value, 1) == 0)
         {
             //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
-            change_node(current_node, OPER_TYPE, DIV_OPER, (*current_node)->right_node, (*current_node)->left_node->right_node);
+            change_node(*current_node, OPER_TYPE, DIV_OPER, (*current_node)->right_node, (*current_node)->left_node->right_node);
             //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
 
         }
@@ -160,7 +160,7 @@ void check_MUL(node **current_node)
         else if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, DIV_OPER) == 0 &&
             compare_floats((*current_node)->right_node->left_node->value, 1) == 0)
         {
-            change_node(current_node, OPER_TYPE, DIV_OPER, (*current_node)->left_node, (*current_node)->right_node->right_node);
+            change_node(*current_node, OPER_TYPE, DIV_OPER, (*current_node)->left_node, (*current_node)->right_node->right_node);
         }
         
         else if ((*current_node)->left_node->type == CONST_TYPE)
@@ -172,7 +172,7 @@ void check_MUL(node **current_node)
 
             else if (compare_floats((*current_node)->left_node->value, 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
         }
 
@@ -185,7 +185,7 @@ void check_MUL(node **current_node)
 
             else if (compare_floats((*current_node)->right_node->value, 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
         }
     }
@@ -202,7 +202,7 @@ void check_DIV(node **current_node)
     {   
         if (compare_floats((*current_node)->left_node->value, 0) == 0 && (*current_node)->left_node->type  == CONST_TYPE)        
         {
-            change_node(current_node, CONST_TYPE, 0);
+            change_node(*current_node, CONST_TYPE, 0);
         }
 
         else if (compare_floats((*current_node)->right_node->value, 1) == 0 && (*current_node)->right_node->type == CONST_TYPE)
@@ -212,7 +212,7 @@ void check_DIV(node **current_node)
 
         else if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
-            change_node(current_node, CONST_TYPE, (*current_node)->left_node->value / (*current_node)->right_node->value);
+            change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value / (*current_node)->right_node->value);
         }
     }
 }
@@ -245,7 +245,7 @@ void check_POW(node **current_node, void (* simplify_exp)(node **))
             node *mul_degrees = nullptr;
             
             construct_node(&mul_degrees, OPER_TYPE, MUL_OPER, (*current_node)->left_node->right_node, (*current_node)->right_node);
-            change_node(current_node, OPER_TYPE, POW_OPER, (*current_node)->left_node->left_node, mul_degrees);
+            change_node(*current_node, OPER_TYPE, POW_OPER, (*current_node)->left_node->left_node, mul_degrees);
         }
     }
 }
@@ -261,12 +261,12 @@ void check_LN(node **current_node)
     { 
         if (compare_floats((*current_node)->right_node->value, 1) == 0 && (*current_node)->right_node->type == CONST_TYPE)
         {
-            change_node(current_node, CONST_TYPE, 0);
+            change_node(*current_node, CONST_TYPE, 0);
         }
 
         else if (compare_floats((*current_node)->right_node->value, (float)E) == 0 && (*current_node)->right_node->type == EXP_TYPE)
         {
-            change_node(current_node, CONST_TYPE, 1);
+            change_node(*current_node, CONST_TYPE, 1);
         }
     }
 }
@@ -284,13 +284,13 @@ void check_LOG(node **current_node)
         {
             if (compare_floats((*current_node)->right_node->value, 1) == 0 && (*current_node)->right_node->type == CONST_TYPE)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
             
             else if (compare_floats((*current_node)->right_node->value, (*current_node)->left_node->value) == 0 && 
                     (*current_node)->right_node->type == CONST_TYPE && (*current_node)->left_node->type == CONST_TYPE)
             {
-                change_node(current_node, CONST_TYPE, 1);
+                change_node(*current_node, CONST_TYPE, 1);
             }
         }
     }
@@ -309,12 +309,12 @@ void check_SIN(node **current_node)
         {
             if (compare_floats(sin((*current_node)->right_node->value), 1) == 0)
             {
-                change_node(current_node, CONST_TYPE, 1);
+                change_node(*current_node, CONST_TYPE, 1);
             }
             
             else if (compare_floats(sin((*current_node)->right_node->value), 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
         }
     }
@@ -333,12 +333,12 @@ void check_COS(node **current_node)
         {
             if (compare_floats(cos((*current_node)->right_node->value), 1) == 0)
             {
-                change_node(current_node, CONST_TYPE, 1);
+                change_node(*current_node, CONST_TYPE, 1);
             }
 
             else if (compare_floats(cos((*current_node)->right_node->value), 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
         }
     }
@@ -359,12 +359,12 @@ void check_TG(node **current_node)
         {
             if (compare_floats(tg_val, 1) == 0)
             {
-                change_node(current_node, CONST_TYPE, 1);
+                change_node(*current_node, CONST_TYPE, 1);
             }
 
             else if (compare_floats(tg_val, 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
         }
     }
@@ -383,12 +383,12 @@ void check_CTG(node **current_node)
             
             if (compare_floats(ctg_val, 0) == 0)
             {
-                change_node(current_node, CONST_TYPE, 0);
+                change_node(*current_node, CONST_TYPE, 0);
             }
             
             else if (compare_floats(ctg_val, 1) == 0)
             {
-                change_node(current_node, CONST_TYPE, 1);
+                change_node(*current_node, CONST_TYPE, 1);
             }
         }
     }
