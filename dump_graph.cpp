@@ -29,7 +29,7 @@ void fprintf_title_latex(FILE *dump_file, const char *title)
 {
     fprintf(dump_file, "\\documentclass[a4paper, 12pt]{article}\n");
     fprintf(dump_file, "\\DeclareUnicodeCharacter{2212}{-}\n");
-    fprintf(dump_file, "\\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=0cm]{geometry}\n");
+    fprintf(dump_file, "\\usepackage[left=0.5cm,right=0.5cm,top=0.5cm,bottom=0.5cm,bindingoffset=0cm]{geometry}\n");
     fprintf(dump_file, "\\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}\n");
     fprintf(dump_file, "\\title{%s}\n", title); 
     fprintf(dump_file, "\\begin{document}\n");                                                            
@@ -49,9 +49,7 @@ void fprintf_end_latex(const char *dump_file_name)
 
 void fprintf_end_latex(FILE *dump_file)
 {
-    printf("2222");
     fprintf(dump_file, "\n\\end{document}");
-        printf("3333");
 
     fclose(dump_file);
 }
@@ -77,7 +75,7 @@ void write_graph(FILE *dump_file, node *current_node)
 
     write_graph_rec(dump_file, copy_root_node);
     
-    fprintf(dump_file, "$\\\\\n");
+    fprintf(dump_file, "$");
 }
 
 

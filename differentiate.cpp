@@ -1,31 +1,47 @@
 #include "differentiator.h"
 
-#define EQUATION(expression_file, current_node)     \
-    fprintf(expression_file, "$(");                  \
-    write_graph(expression_file, current_node);      \
-    fprintf(expression_file, ") =");                \
-
-
-#define DER_EQUATION(expression_file, current_node)       \
-    write_graph(expression_file, current_node);      \
-    fprintf(expression_file, "$ \\ \n");             \
-
-
-node *differentiate_internal(node* calc_node, node *external_derivative, const char *expression_file_name);
-
-
-void differentiate_graph(graph *diff_graph, int num, const char *expression_file_name, const char *graph_file_name, const char *png_file_name)
+void fprintf_default_derivative(FILE *dump_file, node **default_node, node **derivative_node, int num_derivative)   
 {
-    FILE *expression_file = nullptr;
+    DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
+    make_simple_node(derivative_node);
+    make_simple_node(default_node);
+    DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
 
-    if (expression_file_name != nullptr)
+    fprintf(dump_file, "(");                                    
+    write_graph(dump_file, *default_node);                        
+    fprintf(dump_file, ")$^{(%d)}$ = ", num_derivative);                                   
+                                                                       
+    write_graph(dump_file, *derivative_node);                        
+    fprintf(dump_file, "\\\\ \n");                               
+}
+
+node *differentiate_internal(node* calc_node, node *external_derivative, const char *dump_file_name);
+
+
+void differentiate_graph(graph *diff_graph, int count_derivative, const char *dump_file_name, const char *graph_file_name, const char *png_file_name)
+{
+    
+    FILE *dump_file = nullptr;
+
+    if (dump_file_name != nullptr)
     {
-        expression_file = open_file(expression_file_name, "wb");
+        dump_file = open_file(dump_file_name, "ab");
     }
+    
+    graph default_graph = {};
 
-    for (int i; i < num; ++i)
+    construct_graph(&default_graph);
+
+    copy_node_with_childrens(&(default_graph.root_node), &diff_graph->root_node);
+
+    for (int num_derivative; num_derivative < count_derivative; ++num_derivative)
     {
-        diff_graph->root_node = differentiate_node(diff_graph->root_node, expression_file);
+        if (dump_file_name != nullptr)
+        {
+            fprintf(dump_file, "Calculations %d derivative:\\\\ \n", num_derivative + 1);
+        }
+        
+        diff_graph->root_node = differentiate_node(diff_graph->root_node, dump_file, 1);
         
         be_simple(diff_graph);
         
@@ -34,7 +50,21 @@ void differentiate_graph(graph *diff_graph, int num, const char *expression_file
             dump_graph_graphviz(graph_file_name, diff_graph);
             create_png(graph_file_name, png_file_name);
         }
+
+        if (dump_file_name != nullptr)
+        {
+            fprintf(dump_file, "%d Derivative : \\\\ \n", num_derivative + 1);
+        }
+
+        if (dump_file_name != nullptr)
+        {
+            fprintf_default_derivative(dump_file, &(default_graph.root_node), &(diff_graph->root_node), num_derivative + 1);        
+        }
+
+        fprintf(dump_file, "\\\\");
     }
+
+    fclose(dump_file);
 }
 
 
@@ -47,11 +77,11 @@ void differentiate_graph(graph *diff_graph, int num, const char *expression_file
 
 
 
-node *differentiate_internal(node* calc_node, node *external_derivative, FILE *expression_file)
+node *differentiate_internal(node* calc_node, node *external_derivative, FILE *dump_file)
 {
     node *current_node = nullptr;
 
-    node* internal_derivative = differentiate_node(calc_node, expression_file);
+    node* internal_derivative = differentiate_node(calc_node, dump_file);
     
     construct_node(&current_node, OPER_TYPE, MUL_OPER);
 
@@ -63,7 +93,7 @@ node *differentiate_internal(node* calc_node, node *external_derivative, FILE *e
 }
 
 
-node *differentiate_node(node *current_node, FILE *expression_file)
+node *differentiate_node(node *current_node, FILE *dump_file, int num_derivative)
 {
     assert(current_node != nullptr);
     

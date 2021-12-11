@@ -96,8 +96,6 @@ void sprintf_float(char *dump_string, float number, int sign_count)
     sprintf(str_number, "{%.*f}", sign_count, number);
     
     strcat(dump_string, str_number);
-
-    printf("L %s L\n", dump_string);
 }
 
 
@@ -156,30 +154,28 @@ void sprintf_teilor(char *dump_string, graph calc_graph, float locality, int ter
             sprintf(str_locality, "^%d", num_term + 1);
             strcat(dump_string, str_locality);
         }
-
-    printf("! %s !\n", dump_string);
 }
 
 
 void teilor(const char *name_dump_file, graph *diff_graph, float locality, int term_count)
 {    
     FILE *dump_file = open_file(name_dump_file, "wb");
-    
+
     fprintf_title_latex(dump_file, "Teilor");
-    
+
     teilor(dump_file, diff_graph, locality, term_count);
 
     fprintf_end_latex(dump_file);
 }
 
-void strcat_increase()
-{
-    
-}
 
 void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
 {   
+    fprintf(dump_file, "Default equation :");
+
     write_graph(dump_file, diff_graph->root_node);
+
+    fprintf(dump_file, "\\\\");
 
     char equation_string[300] = {};
 
@@ -189,15 +185,19 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
     
     construct_graph(&calc_graph);
 
-    copy_node_with_childrens(&calc_graph.root_node, &diff_graph->root_node);
+    copy_node_with_childrens(&(calc_graph.root_node), &diff_graph->root_node);
     
     be_simple(&calc_graph, simplify_exponential_function);
 
-    derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
-
-    fprintf(dump_file, "%d Производная:", 0);
+    fprintf(dump_file, "%d Derivative:", 0);
     
-    write_graph(dump_file, diff_graph->root_node);
+    be_simple(&calc_graph, simplify_exponential_function);
+
+    write_graph(dump_file, calc_graph.root_node);
+
+    fprintf(dump_file, "\\\\ \n");                               
+
+    derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
 
     if (derivative_exist && compare_floats(calc_graph.root_node->value, 0) != 0)
     {
@@ -214,18 +214,17 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
         
         differentiate_graph(diff_graph, 1);
         
-        be_simple(diff_graph);
-        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph)
-        fprintf(dump_file, "%d Производная:", num_term + 1);
-
-        write_graph(dump_file, diff_graph->root_node);
-
         //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
-        copy_node_with_childrens(&calc_graph.root_node, &diff_graph->root_node);
+        copy_node_with_childrens(&(calc_graph.root_node), &diff_graph->root_node);
 
         be_simple(&calc_graph, simplify_exponential_function);
          
+        fprintf(dump_file, "%d Derivative:", num_term + 1);
+
+        write_graph(dump_file, calc_graph.root_node);
+
+        fprintf(dump_file, "\\\\ \n");
         //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
         derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
@@ -234,34 +233,32 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
 
         if (derivative_exist == false)
         {
-            printf("%d derivaitive does not exist\n", num_term);
             continue;
         }
 
         else if(compare_floats(calc_graph.root_node->value, 0) == 0) 
         {
-             printf("%d derivaitive is 0\n", num_term);
             continue;
         }
         
         sprintf_teilor(equation_string, calc_graph, locality, term_count, num_term);
     }
 
-    fprintf(dump_file, equation_string);
+    fprintf(dump_file, "$%s", equation_string);
 
     if (compare_floats(locality, 0) == 0)
     {
-        fprintf(dump_file, "+o(x^%d)", term_count);
+        fprintf(dump_file, "+o(x^%d)$", term_count);
     }
 
     else if (locality < 0)
     {
-        fprintf(dump_file, "+o((x + %f)^%d)", locality * -1, term_count);
+        fprintf(dump_file, "+o((x + %f)^%d)$", locality * -1, term_count);
     }
 
     else 
     {
-        fprintf(dump_file, "+o((x - %f)^%d)", locality, term_count);
+        fprintf(dump_file, "+o((x - %f)^%d)$", locality, term_count);
     }
     
     destruct_graph(&calc_graph);

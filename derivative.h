@@ -1,10 +1,22 @@
 DERIVATIVE(SUM, "+", 4,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
     construct_node(&current_node, OPER_TYPE, SUM_OPER, differentiate_node(current_node->left_node),
                                                        differentiate_node(current_node->right_node));
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 },
 {
     result = val1 + val2;
@@ -13,12 +25,24 @@ DERIVATIVE(SUM, "+", 4,
 
 DERIVATIVE(SUB, "-", 4,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
 
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
+    
     construct_node(&current_node, OPER_TYPE, SUB_OPER, differentiate_node(current_node->left_node), 
                                                        differentiate_node(current_node->right_node));
-    //push_stack(div_func_stack, current_node);
 
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 },
 {
     result = val1 - val2;
@@ -27,7 +51,14 @@ DERIVATIVE(SUB, "-", 4,
 
 DERIVATIVE(POW, "^", 2,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *expression = nullptr;
@@ -50,7 +81,7 @@ DERIVATIVE(POW, "^", 2,
     {
         copy_node_with_childrens(&pow_node->right_node, &degree);
 
-        current_node = differentiate_internal(degree, current_node, expression_file);
+        current_node = differentiate_internal(degree, current_node, dump_file);
     }
 
     else
@@ -61,10 +92,15 @@ DERIVATIVE(POW, "^", 2,
 
         external_derivative->left_node = pow_node;
 
-        current_node = differentiate_internal(expression, external_derivative, expression_file);
+        current_node = differentiate_internal(expression, external_derivative, dump_file);
     }
     
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -74,7 +110,14 @@ DERIVATIVE(POW, "^", 2,
 
 DERIVATIVE(DIV, "/", 3,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
     node *numerator = nullptr;
     
@@ -94,9 +137,9 @@ DERIVATIVE(DIV, "/", 3,
     copy_node_with_childrens(&default_denumerator, &current_node->right_node);
 
 
-    first_sum = differentiate_internal(default_numerator, default_denumerator, expression_file);
+    first_sum = differentiate_internal(default_numerator, default_denumerator, dump_file);
 
-    second_sum = differentiate_internal(default_denumerator, default_numerator, expression_file);
+    second_sum = differentiate_internal(default_denumerator, default_numerator, dump_file);
             
 
     construct_node(&numerator,   OPER_TYPE, SUB_OPER, first_sum, second_sum);
@@ -108,7 +151,12 @@ DERIVATIVE(DIV, "/", 3,
 
     construct_node(&current_node, OPER_TYPE, DIV_OPER, numerator, denumerator);
     
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -126,7 +174,14 @@ DERIVATIVE(DIV, "/", 3,
 
 DERIVATIVE(MUL, "*", 3,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *first_factor = nullptr;
@@ -140,15 +195,20 @@ DERIVATIVE(MUL, "*", 3,
 
     node *first_sum = nullptr;
 
-    first_sum = differentiate_internal(first_factor, second_factor, expression_file);
+    first_sum = differentiate_internal(first_factor, second_factor, dump_file);
         
     node *second_sum = nullptr;
 
-    second_sum = differentiate_internal(second_factor, first_factor, expression_file);
+    second_sum = differentiate_internal(second_factor, first_factor, dump_file);
 
     construct_node(&current_node, OPER_TYPE, SUM_OPER, first_sum, second_sum);
 
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -158,7 +218,14 @@ DERIVATIVE(MUL, "*", 3,
 
 DERIVATIVE(COS, "cos", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *external_derivative = nullptr;
@@ -169,10 +236,14 @@ DERIVATIVE(COS, "cos", 1,
     
     construct_node(&external_derivative->left_node, CONST_TYPE, -1);
     
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
-
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 }, 
 {
@@ -182,16 +253,27 @@ DERIVATIVE(COS, "cos", 1,
 
 DERIVATIVE(SIN, "sin", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
 
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
     node *external_derivative = nullptr;
 
     construct_node(&external_derivative, OPER_TYPE, COS_OPER, nullptr, current_node->right_node);
         
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -201,7 +283,14 @@ DERIVATIVE(SIN, "sin", 1,
 
 DERIVATIVE(TG, "tan", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *numerator = nullptr;
@@ -222,9 +311,14 @@ DERIVATIVE(TG, "tan", 1,
     
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -241,7 +335,14 @@ DERIVATIVE(TG, "tan", 1,
 
 DERIVATIVE(CTG, "ctg", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *numerator = nullptr;
@@ -262,9 +363,15 @@ DERIVATIVE(CTG, "ctg", 1,
     
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
+
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {
@@ -282,7 +389,14 @@ DERIVATIVE(CTG, "ctg", 1,
 
 DERIVATIVE(LN, "ln", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *numerator = nullptr;
@@ -297,10 +411,14 @@ DERIVATIVE(LN, "ln", 1,
     
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
-
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 },
 {
     if (compare_floats(val2, 0) == 0)
@@ -317,7 +435,14 @@ DERIVATIVE(LN, "ln", 1,
 
 DERIVATIVE(LOG, "log", 1,
 {
-    //push_stack(func_stack, current_node);
+    graph default_equation = {};
+    
+    if (dump_file != nullptr)
+    {
+        construct_graph(&default_equation);
+    
+        copy_node_with_childrens(&default_equation.root_node, &current_node);
+    }
 
 
     node *numerator = nullptr;
@@ -344,9 +469,14 @@ DERIVATIVE(LOG, "log", 1,
     
     construct_node(&external_derivative, OPER_TYPE, DIV_OPER, numerator, denumerator);
 
-    current_node = differentiate_internal(current_node->right_node, external_derivative, expression_file);
+    current_node = differentiate_internal(current_node->right_node, external_derivative, dump_file);
 
-    //push_stack(div_func_stack, current_node);
+    if (dump_file != nullptr)
+    {
+        fprintf_default_derivative(dump_file, &(default_equation.root_node), &(current_node), num_derivative);
+    
+        destruct_graph(&default_equation);
+    }
 
 },
 {

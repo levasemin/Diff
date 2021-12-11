@@ -16,7 +16,72 @@ void check_POW(node **current_node, void (* simplify_exp)(node **) = nullptr);
 
 void check_node_nullptrs(node **current_node);
 
-void simplifier(node **current_node, void (* simplify_exp)(node **) = nullptr);
+bool useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2));
+
+float mul(float val1, float val2);
+float sum(float val1, float val2);
+
+
+
+bool useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2))
+{
+    if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
+    {
+        change_node(*current_node, CONST_TYPE, operation((*current_node)->left_node->value, (*current_node)->right_node->value));
+        
+        return true;
+    }
+     
+        
+    else if ((*current_node)->right_node->type == CONST_TYPE && (*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
+    {
+        if ((*current_node)->left_node->left_node->type == CONST_TYPE)
+        {
+            (*current_node)->right_node->value = operation((*current_node)->right_node->value, (*current_node)->left_node->left_node->value);
+            (*current_node)->left_node = (*current_node)->left_node->right_node;
+        }
+
+        else if ((*current_node)->left_node->right_node->type == CONST_TYPE)
+        {
+            (*current_node)->right_node->value = operation((*current_node)->right_node->value, (*current_node)->left_node->right_node->value);
+            (*current_node)->left_node = (*current_node)->left_node->left_node;
+        }
+
+        return true;
+    }
+
+    else if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
+    {        
+        if ((*current_node)->right_node->left_node->type == CONST_TYPE)
+        {
+            (*current_node)->left_node->value *= (*current_node)->right_node->left_node->value;
+            (*current_node)->right_node = (*current_node)->right_node->right_node;
+        }
+
+        else if ((*current_node)->right_node->right_node->type == CONST_TYPE)
+        {
+            (*current_node)->left_node->value *= (*current_node)->right_node->right_node->value;
+            (*current_node)->right_node = (*current_node)->right_node->left_node;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+
+float mul(float val1, float val2)
+{
+    return val1 * val2;
+}
+
+
+float sum(float val1, float val2)
+{
+    return val1 + val2;
+}
+
 
 void simplify_exponential_function(node **current_node)
 {
@@ -47,13 +112,6 @@ void simplify_exponential_function(node **current_node)
             (*current_node)->right_node = (*current_node)->right_node->right_node;
         }
     }
-}
-
-void be_simple(graph *graph, void (* simplify_exp)(node **))
-{
-    assert(graph != nullptr);
-
-    simplifier(&graph->root_node, simplify_exp);
 }
 
 
@@ -96,6 +154,11 @@ void check_SUM(node **current_node)
     
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, SUM_OPER) == 0)
     {
+        //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
+        if (useless_constants(current_node, SUM_OPER, sum))
+        {
+            return;
+        }
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
             change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value + (*current_node)->right_node->value);
@@ -131,6 +194,15 @@ void check_SUB(node **current_node)
         {
             *current_node = (*current_node)->left_node;
         }
+
+        else if (compare_floats((*current_node)->left_node->value, 0) == 0 && (*current_node)->left_node->type == CONST_TYPE)
+        {
+            node *minus_one = nullptr;
+
+            construct_node(&minus_one, CONST_TYPE, -1);
+            
+            change_node(*current_node, OPER_TYPE, MUL_OPER, minus_one, (*current_node)->right_node);
+        }
     }
 }
 
@@ -143,12 +215,12 @@ void check_MUL(node **current_node)
     
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, MUL_OPER) == 0)
     {   
-        if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
+        if (useless_constants(current_node, MUL_OPER, mul))
         {
-            change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value * (*current_node)->right_node->value);
+            return;
         }
-        
-        else if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, DIV_OPER) == 0 &&
+
+        if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, DIV_OPER) == 0 &&
             compare_floats((*current_node)->left_node->left_node->value, 1) == 0)
         {
             //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
@@ -413,6 +485,14 @@ void check_useless_operations(node **current_node, void (* simplify_exp)(node **
 }
 
 
+void be_simple(graph *graph, void (* simplify_exp)(node **))
+{
+    assert(graph != nullptr);
+
+    make_simple_node(&graph->root_node, simplify_exp);
+}
+
+
 void make_simple(node **current_node, void (* simplify_exp)(node **))
 {
     assert(*current_node != nullptr);
@@ -423,7 +503,7 @@ void make_simple(node **current_node, void (* simplify_exp)(node **))
 }
 
 
-void simplifier(node **current_node, void (* simplify_exp)(node **))
+void make_simple_node(node **current_node, void (* simplify_exp)(node **))
 {    
     assert(*current_node != nullptr);
 
@@ -431,14 +511,14 @@ void simplifier(node **current_node, void (* simplify_exp)(node **))
 
     if ((*current_node)->left_node != nullptr)
     {  
-        simplifier(&(*current_node)->left_node, simplify_exp);
+        make_simple_node(&(*current_node)->left_node, simplify_exp);
 
         make_simple(current_node, simplify_exp);
     }
 
     if ((*current_node)->right_node != nullptr)
     {
-        simplifier(&(*current_node)->right_node, simplify_exp);
+        make_simple_node(&(*current_node)->right_node, simplify_exp);
 
         make_simple(current_node, simplify_exp);
     }

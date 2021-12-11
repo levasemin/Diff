@@ -41,23 +41,21 @@ int main(int argc, const char *argv[])
             create_png("database_files/read.dot", "database_files/read.png");
 
             be_simple(&graph);
-
+            
             dump_graph_graphviz("database_files/read_s.dot", &graph);
             create_png("database_files/read_s.dot", "database_files/read_s.png");
 
-            differentiate_graph(&graph, atoi(argv[2]), "diff_expression.tex");
+            fprintf_title_latex(save_file_name, "Derivative");
+
+            differentiate_graph(&graph, atoi(argv[2]), save_file_name);
+
+            fprintf_end_latex(save_file_name);
 
             be_simple(&graph, simplify_exponential_function);
 
             dump_graph_graphviz(graph_file_name, &graph);
             
-            create_png(graph_file_name, png_file_name);
-
-            fprintf_title_latex(save_file_name, "Derivative");
-
-            write_graph(save_file_name, graph.root_node);
-
-            fprintf_end_latex(save_file_name);
+            create_png(graph_file_name, png_file_name);            
         }
 
         else if (strcmp(argv[1], "teilor") == 0)
