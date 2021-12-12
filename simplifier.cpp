@@ -16,58 +16,191 @@ void check_POW(node **current_node, void (* simplify_exp)(node **) = nullptr);
 
 void check_node_nullptrs(node **current_node);
 
-bool useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2));
+void useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2));
+
+node *rec(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2));
 
 float mul(float val1, float val2);
 float sum(float val1, float val2);
 
-
-
-bool useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2))
+node *rec(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2))
 {
     if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
     {
         change_node(*current_node, CONST_TYPE, operation((*current_node)->left_node->value, (*current_node)->right_node->value));
         
-        return true;
+        return *current_node;    
     }
-     
-        
-    else if ((*current_node)->right_node->type == CONST_TYPE && (*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
+
+    else if ((*current_node)->left_node->type == CONST_TYPE)
     {
-        if ((*current_node)->left_node->left_node->type == CONST_TYPE)
+                printf("!!L %p\n", *current_node);
+                printf("!%p! %d\n", *current_node, (int)((*current_node)->left_node->type == CONST_TYPE));
+
+        if ((*main_node)->right_node->type == CONST_TYPE)
         {
-            (*current_node)->right_node->value = operation((*current_node)->right_node->value, (*current_node)->left_node->left_node->value);
-            (*current_node)->left_node = (*current_node)->left_node->right_node;
+            printf("1\n");
+            (*main_node)->right_node->value = operation((*main_node)->right_node->value, (*current_node)->left_node->value);
         }
 
-        else if ((*current_node)->left_node->right_node->type == CONST_TYPE)
+        else if ((*main_node)->left_node->type == CONST_TYPE)
         {
-            (*current_node)->right_node->value = operation((*current_node)->right_node->value, (*current_node)->left_node->right_node->value);
-            (*current_node)->left_node = (*current_node)->left_node->left_node;
+                        printf("2\n");
+
+            (*main_node)->left_node->value = operation((*main_node)->left_node->value, (*current_node)->left_node->value);
         }
 
-        return true;
+        else
+        {
+            node *new_node = nullptr;
+
+            if (*current_node != (*main_node)->right_node)
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->right_node, (*main_node)->right_node);
+            }
+
+            else
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->right_node, (*main_node)->left_node);
+            }
+
+            (*main_node)->left_node = (*current_node)->left_node;
+
+            (*main_node)->right_node = new_node;
+            printf("O %p\n", *main_node);
+            DEBUG_GRAPHVIZ_NODE("graph.dot", (*main_node));
+
+            return rec(main_node, &(*main_node)->right_node, type_oper, operation);
+        }
+
+        return (*current_node)->right_node;    
     }
 
-    else if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
-    {        
-        if ((*current_node)->right_node->left_node->type == CONST_TYPE)
+    else if ((*current_node)->right_node->type == CONST_TYPE)
+    {
+                printf("R\n");
+
+        if ((*main_node)->right_node->type == CONST_TYPE)
         {
-            (*current_node)->left_node->value *= (*current_node)->right_node->left_node->value;
-            (*current_node)->right_node = (*current_node)->right_node->right_node;
+            printf("1\n");
+            (*main_node)->right_node->value = operation((*main_node)->right_node->value, (*current_node)->right_node->value);
         }
 
-        else if ((*current_node)->right_node->right_node->type == CONST_TYPE)
+        else if ((*main_node)->left_node->type == CONST_TYPE)
         {
-            (*current_node)->left_node->value *= (*current_node)->right_node->right_node->value;
-            (*current_node)->right_node = (*current_node)->right_node->left_node;
+                        printf("2\n");
+
+            (*main_node)->left_node->value = operation((*main_node)->left_node->value, (*current_node)->right_node->value);
         }
 
-        return true;
+        else
+        {
+            node *new_node = nullptr;
+
+            if (*current_node != (*main_node)->right_node)
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->left_node, (*main_node)->right_node);
+            }
+
+            else
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->left_node, (*main_node)->left_node);
+            }
+
+            (*main_node)->left_node = (*current_node)->right_node;
+
+            (*main_node)->right_node = new_node;
+
+            printf("O %p\n", *main_node);
+            DEBUG_GRAPHVIZ_NODE("graph.dot", (*main_node));
+
+            return rec(main_node, &(*main_node)->right_node, type_oper, operation);
+        }
+
+        return (*current_node)->left_node;    
     }
 
-    return false;
+    if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
+    {
+        node *result_node = rec(current_node, &(*current_node)->left_node, type_oper, operation);
+        
+        if (result_node != nullptr)
+        {
+                    printf("LEFT\n");
+
+            printf("L %p\n", (*current_node)->left_node);
+            (*current_node)->left_node = result_node; 
+                        DEBUG_GRAPHVIZ_NODE("graph.dot", *main_node);
+
+        }
+    }
+        
+    if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
+    {
+        printf("RIGHT\n");
+        node *result_node = rec(current_node, &(*current_node)->right_node, type_oper, operation);
+        
+        if (result_node != nullptr)
+        {
+            printf("R %p\n", (*current_node)->right_node);
+
+            (*current_node)->right_node = result_node; 
+                        DEBUG_GRAPHVIZ_NODE("graph.dot", *main_node);
+
+        }
+    }
+
+    return nullptr;
+}
+
+void useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2))
+{
+    if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
+    {
+        change_node(*current_node, CONST_TYPE, operation((*current_node)->left_node->value, (*current_node)->right_node->value));
+    }
+
+    else if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, type_oper) == 0)
+    {           
+        if ((*current_node)->left_node->type  == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper)  == 0 &&
+            (*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
+        {
+            printf("all\n");
+            rec(current_node, current_node, type_oper, operation);
+        }
+        
+        else if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
+        {
+                    printf("left\n");
+
+        node *result_node = rec(current_node, &(*current_node)->left_node, type_oper, operation);
+        
+        if (result_node != nullptr)
+        {
+                    printf("LEFT\n");
+
+            printf("LI %p\n", (*current_node)->left_node);
+            (*current_node)->left_node = result_node; 
+            DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
+
+        }
+        }
+
+        else if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
+        {
+            printf("right\n");
+            node *result_node = rec(current_node, &(*current_node)->right_node, type_oper, operation);
+            printf("result %p\n", result_node);
+            if (result_node != nullptr)
+        {
+            printf("RI %p\n", (*current_node)->right_node);
+
+            (*current_node)->right_node = result_node; 
+                        DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
+
+        }
+        }
+    }
 }
 
 
@@ -155,10 +288,6 @@ void check_SUM(node **current_node)
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, SUM_OPER) == 0)
     {
         //DEBUG_GRAPHVIZ_NODE("graph.dot", *current_node);
-        if (useless_constants(current_node, SUM_OPER, sum))
-        {
-            return;
-        }
         if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
         {
             change_node(*current_node, CONST_TYPE, (*current_node)->left_node->value + (*current_node)->right_node->value);
@@ -172,6 +301,11 @@ void check_SUM(node **current_node)
         else if (compare_floats((*current_node)->right_node->value, 0) == 0 && (*current_node)->right_node->type == CONST_TYPE)
         {
             *current_node = (*current_node)->left_node;
+        }
+
+        else
+        {
+            useless_constants(current_node, SUM_OPER, sum);
         }
     }
 }
@@ -209,17 +343,10 @@ void check_SUB(node **current_node)
 
 void check_MUL(node **current_node)
 {
-    //printf("mul");
-
     assert(*current_node != nullptr);
     
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, MUL_OPER) == 0)
     {   
-        if (useless_constants(current_node, MUL_OPER, mul))
-        {
-            return;
-        }
-
         if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, DIV_OPER) == 0 &&
             compare_floats((*current_node)->left_node->left_node->value, 1) == 0)
         {
@@ -246,6 +373,11 @@ void check_MUL(node **current_node)
             {
                 change_node(*current_node, CONST_TYPE, 0);
             }
+            
+            else
+            {
+                useless_constants(current_node, MUL_OPER, mul);
+            }
         }
 
         else if ((*current_node)->right_node->type == CONST_TYPE)
@@ -259,6 +391,16 @@ void check_MUL(node **current_node)
             {
                 change_node(*current_node, CONST_TYPE, 0);
             }
+
+            else
+            {
+                useless_constants(current_node, MUL_OPER, mul);
+            }
+        }
+        
+        else
+        {
+            useless_constants(current_node, MUL_OPER, mul);
         }
     }
 }

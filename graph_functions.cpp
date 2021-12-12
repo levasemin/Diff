@@ -3,8 +3,10 @@
 
 void DEBUG_GRAPHVIZ_NODE(char *graph_file_name, node *graph_node)             
 {
+    assert(graph_node != nullptr);
     getchar();                                                       
     graph debug_graph = {};                                          
+    
     construct_graph(&debug_graph);                                   
     debug_graph.root_node = graph_node;                              
     dump_graph_graphviz(graph_file_name, &debug_graph);              

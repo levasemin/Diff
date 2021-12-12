@@ -2,9 +2,12 @@
 
 void fprintf_default_derivative(FILE *dump_file, node **default_node, node **derivative_node, int num_derivative)   
 {
+    printf("START BE SIMPLE DERIVATIVE\n");
     DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
     make_simple_node(derivative_node);
-    make_simple_node(default_node);
+    // printf("START BE SIMPLE DERFAULT\n");
+
+    //make_simple_node(default_node);
     DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
 
     fprintf(dump_file, "(");                                    
