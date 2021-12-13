@@ -1,5 +1,8 @@
 #include "differentiator.h"
 
+void fprintf_default_derivative(FILE *dump_file, node **default_node, node **derivative_node, int num_derivative);   
+
+
 void fprintf_default_derivative(FILE *dump_file, node **default_node, node **derivative_node, int num_derivative)   
 {
     make_simple_node(derivative_node);

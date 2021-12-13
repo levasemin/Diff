@@ -2,7 +2,7 @@
 
 void fprintf_expression_inside(FILE *dump_file, node *current_node);
 
-void simplify_exponential_function(node **current_node);
+void fprintf_double_arg(FILE *dump_file, node *current_node, const char *type);
 
 void write_graph_rec(FILE *dump_file, node *current_node);
 
@@ -173,7 +173,7 @@ void write_graph_rec(FILE *dump_file, node *current_node)
 
 
 #define DERIVATIVE(oper, symbols, level, diff_code, oper_code)      \
-    if(compare_floats(current_node->value, oper##_OPER) == 0)            \
+    if(compare_floats(current_node->value, oper##_OPER) == 0)       \
         {                                                           \
             fprintf(dump_file, symbols);                            \
         }                                                           \

@@ -16,6 +16,8 @@ bool get_brackets(const char **string, node **main_node);
 
 bool get_const_var(const char **string, node **main_node);
 
+void skip_spaces(const char **string);
+
 
 void Require(const char **string, const char expected)
 {
@@ -35,34 +37,39 @@ void Require(const char **string, const char expected)
 
 node *read_graph(graph *diff_graph, const char **current_el)
 {    
-    bool is_const = get_add_sub(current_el, &diff_graph->root_node);
+    get_add_sub(current_el, &diff_graph->root_node);
 
     Require(current_el, '$');
 
     return diff_graph->root_node;
 }
 
+void read(node **main_node, float oper_type, const char **string, char *symbols, bool *is_const, bool (*next_func)(const char **, node **))
+{
+    node *old_node = *main_node;                                                    
+                                                                                    
+    construct_node(main_node, OPER_TYPE, oper_type);                              
+                                                                                    
+    *string += strlen(symbols);                                                     
+                                                                                    
+    node *val2 = nullptr;                                                           
+                                                                                    
+    *is_const *= next_func(string, &val2);                                           
+                                                                                    
+    if (strcmp(symbols, "log") == 0)                                                
+    {                                                                               
+        old_node = val2;                                                            
+        *is_const *= next_func(string, &val2);                                       
+    }                                                                               
+                                                                                    
+    (*main_node)->left_node = old_node;                                             
+    (*main_node)->right_node = val2;                                                
+}
+
 #define DERIVATIVE(oper, symbols, level, oper_code, diff_code)                      \
 if (strncmp(*string, symbols, strlen(symbols)) == 0 && current_level == level)      \
 {                                                                                   \
-    node *old_node = *main_node;                                                    \
-                                                                                    \
-    construct_node(main_node, OPER_TYPE, oper##_OPER);                              \
-                                                                                    \
-    *string += strlen(symbols);                                                     \
-                                                                                    \
-    node *val2 = nullptr;                                                           \
-                                                                                    \
-    is_const *= next_func(string, &val2);                                           \
-                                                                                    \
-    if (strcmp(symbols, "log") == 0)                                                \
-    {                                                                               \
-        old_node = val2;                                                            \
-        is_const *= next_func(string, &val2);                                       \
-    }                                                                               \
-                                                                                    \
-    (*main_node)->left_node = old_node;                                             \
-    (*main_node)->right_node = val2;                                                \
+    read(main_node, oper##_OPER, string, symbols, &is_const, next_func);            \
 }                                                                                   \
                                                                                     \
 else                                                                                \
@@ -162,7 +169,10 @@ bool get_pow(const char **string, node **main_node)
             is_const = true;
 
             #include "derivative.h"
-            {}
+            //else 
+            {
+
+            }
         }
 
         else

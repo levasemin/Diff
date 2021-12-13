@@ -1,6 +1,6 @@
 #include "differentiator.h"
 
-void check_useless_operations(node **current_node);
+void check_useless_operations(node **current_node, void (* simplify_exp)(node **));
 
 void check_SUM(node **current_node);
 void check_SUB(node **current_node);
@@ -18,12 +18,64 @@ void check_node_nullptrs(node **current_node);
 
 void useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2));
 
-node *rec(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2));
+void make_simple(node **current_node, void (* simplify_exp)(node **));
+
+node *remake_const(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2));
+
+node * remake_const_node(node **main_node, node **current_node, node *const_node, node *oper_node, float type_oper, float (*operation)(float val1, float val2));
 
 float mul(float val1, float val2);
 float sum(float val1, float val2);
 
-node *rec(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2))
+float mul(float val1, float val2)
+{
+    return val1 * val2;
+}
+
+
+float sum(float val1, float val2)
+{
+    return val1 + val2;
+}
+
+node *remake_const_node(node **main_node, node **current_node, node *const_node, node *oper_node, float type_oper, float (*operation)(float val1, float val2))
+{
+    if ((*main_node)->right_node->type == CONST_TYPE)
+        {
+            (*main_node)->right_node->value = operation((*main_node)->right_node->value, const_node->value);
+        }
+
+        else if ((*main_node)->left_node->type == CONST_TYPE)
+        {
+            (*main_node)->left_node->value = operation((*main_node)->left_node->value, const_node->value);
+        }
+
+        else
+        {
+            node *new_node = nullptr;
+
+            if (*current_node != (*main_node)->right_node)
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, oper_node, (*main_node)->right_node);
+            }
+
+            else
+            {
+                construct_node(&new_node, OPER_TYPE, type_oper, oper_node, (*main_node)->left_node);
+            }
+
+            (*main_node)->left_node = const_node;
+
+            (*main_node)->right_node = new_node;
+
+            return remake_const(main_node, &(*main_node)->right_node, type_oper, operation);
+        }
+
+        return oper_node; 
+}
+
+
+node *remake_const(node **main_node, node **current_node, float type_oper, float (*operation)(float val1, float val2))
 {
     if ((*current_node)->left_node->type == CONST_TYPE && (*current_node)->right_node->type == CONST_TYPE)
     {
@@ -34,81 +86,21 @@ node *rec(node **main_node, node **current_node, float type_oper, float (*operat
 
     else if ((*current_node)->left_node->type == CONST_TYPE)
     {
+        node *result = remake_const_node(main_node, current_node, (*current_node)->left_node, (*current_node)->right_node, type_oper, operation);
 
-        if ((*main_node)->right_node->type == CONST_TYPE)
-        {
-            (*main_node)->right_node->value = operation((*main_node)->right_node->value, (*current_node)->left_node->value);
-        }
-
-        else if ((*main_node)->left_node->type == CONST_TYPE)
-        {
-            (*main_node)->left_node->value = operation((*main_node)->left_node->value, (*current_node)->left_node->value);
-        }
-
-        else
-        {
-            node *new_node = nullptr;
-
-            if (*current_node != (*main_node)->right_node)
-            {
-                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->right_node, (*main_node)->right_node);
-            }
-
-            else
-            {
-                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->right_node, (*main_node)->left_node);
-            }
-
-            (*main_node)->left_node = (*current_node)->left_node;
-
-            (*main_node)->right_node = new_node;
-
-            return rec(main_node, &(*main_node)->right_node, type_oper, operation);
-        }
-
-        return (*current_node)->right_node;    
+        return result;
     }
 
     else if ((*current_node)->right_node->type == CONST_TYPE)
     {
-
-        if ((*main_node)->right_node->type == CONST_TYPE)
-        {
-            (*main_node)->right_node->value = operation((*main_node)->right_node->value, (*current_node)->right_node->value);
-        }
-
-        else if ((*main_node)->left_node->type == CONST_TYPE)
-        {
-            (*main_node)->left_node->value = operation((*main_node)->left_node->value, (*current_node)->right_node->value);
-        }
-
-        else
-        {
-            node *new_node = nullptr;
-
-            if (*current_node != (*main_node)->right_node)
-            {
-                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->left_node, (*main_node)->right_node);
-            }
-
-            else
-            {
-                construct_node(&new_node, OPER_TYPE, type_oper, (*current_node)->left_node, (*main_node)->left_node);
-            }
-
-            (*main_node)->left_node = (*current_node)->right_node;
-
-            (*main_node)->right_node = new_node;
-
-            return rec(main_node, &(*main_node)->right_node, type_oper, operation);
-        }
-
-        return (*current_node)->left_node;    
+        node *result = remake_const_node(main_node, current_node, (*current_node)->right_node, (*current_node)->left_node, type_oper, operation);
+        
+        return result;
     }
 
     if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
     {
-        node *result_node = rec(current_node, &(*current_node)->left_node, type_oper, operation);
+        node *result_node = remake_const(current_node, &(*current_node)->left_node, type_oper, operation);
         
         if (result_node != nullptr)
         {
@@ -118,7 +110,7 @@ node *rec(node **main_node, node **current_node, float type_oper, float (*operat
         
     if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
     {
-        node *result_node = rec(current_node, &(*current_node)->right_node, type_oper, operation);
+        node *result_node = remake_const(current_node, &(*current_node)->right_node, type_oper, operation);
         
         if (result_node != nullptr)
         {
@@ -128,6 +120,7 @@ node *rec(node **main_node, node **current_node, float type_oper, float (*operat
 
     return nullptr;
 }
+
 
 void useless_constants(node **current_node, float type_oper, float (*operation)(float val1, float val2))
 {
@@ -141,41 +134,29 @@ void useless_constants(node **current_node, float type_oper, float (*operation)(
         if ((*current_node)->left_node->type  == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper)  == 0 &&
             (*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
         {
-            rec(current_node, current_node, type_oper, operation);
+            remake_const(current_node, current_node, type_oper, operation);
         }
         
         else if ((*current_node)->left_node->type == OPER_TYPE && compare_floats((*current_node)->left_node->value, type_oper) == 0)
         {
-            node *result_node = rec(current_node, &(*current_node)->left_node, type_oper, operation);
+            node *result_node = remake_const(current_node, &(*current_node)->left_node, type_oper, operation);
             
             if (result_node != nullptr)
             {
                 (*current_node)->left_node = result_node; 
             }
-    }
+        }
 
-    else if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
-    {
-        node *result_node = rec(current_node, &(*current_node)->right_node, type_oper, operation);
-
-        if (result_node != nullptr)
+        else if ((*current_node)->right_node->type == OPER_TYPE && compare_floats((*current_node)->right_node->value, type_oper) == 0)
         {
-            (*current_node)->right_node = result_node; 
+            node *result_node = remake_const(current_node, &(*current_node)->right_node, type_oper, operation);
+
+            if (result_node != nullptr)
+            {
+                (*current_node)->right_node = result_node; 
+            }
         }
     }
-    }
-}
-
-
-float mul(float val1, float val2)
-{
-    return val1 * val2;
-}
-
-
-float sum(float val1, float val2)
-{
-    return val1 + val2;
 }
 
 
@@ -199,7 +180,7 @@ void simplify_exponential_function(node **current_node)
             (*current_node)->left_node  = ln_node->right_node;
         }
         
-        else if ((*current_node)->right_node->left_node->type == OPER_TYPE && \ 
+        else if ((*current_node)->right_node->left_node->type == OPER_TYPE && 
                 compare_floats((*current_node)->right_node->left_node->value, LN_OPER) == 0)
         {
             node *ln_node = (*current_node)->right_node->left_node;
@@ -531,8 +512,6 @@ void check_TG(node **current_node)
 
 void check_CTG(node **current_node)
 {    
-    ////printf("ctg");
-
     if ((*current_node)->type == OPER_TYPE && compare_floats((*current_node)->value, CTG_OPER) == 0)
     {   
         if ((*current_node)->right_node->type == CONST_TYPE)

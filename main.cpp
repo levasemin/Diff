@@ -29,21 +29,13 @@ int main(int argc, const char *argv[])
                     save_file_name       = argv[4];
                 case 6:
                     graph_file_name      = argv[5];
-                case 7:   
-                    graph_file_name      = argv[6];
                 default:
                     break;
             }
 
             get_graph(&graph, expression_file_name);
-            
-            dump_graph_graphviz("database_files/read.dot", &graph);
-            create_png("database_files/read.dot", "database_files/read.png");
-
+            //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &graph);
             be_simple(&graph);
-
-            dump_graph_graphviz("database_files/read_s.dot", &graph);
-            create_png("database_files/read_s.dot", "database_files/read_s.png");
 
             fprintf_title_latex(save_file_name, "Derivative");
 
@@ -62,8 +54,6 @@ int main(int argc, const char *argv[])
                     save_file_name       = argv[5];
                 case 7:
                     graph_file_name      = argv[6];
-                case 8:   
-                    graph_file_name      = argv[7];
                 default:
                     break;
             }
