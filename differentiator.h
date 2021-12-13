@@ -12,12 +12,7 @@ const int SIGN_COUNT = 3;
 
 const char E = 'e' -'a';
 
-#define DEBUG_GRAPHVIZ_GRAPH(graph_file_name, graph)                 \
-    getchar();                                                       \
-    dump_graph_graphviz(graph_file_name, graph);                     \
-    system("dot -T png graph.dot > graph.png");                      \
-    system("start graph.png");                                       \
-
+void DEBUG_GRAPHVIZ_GRAPH(char *graph_file_name, graph *graph);
 
 void DEBUG_GRAPHVIZ_NODE(char *graph_file_name, node *graph_node);
 

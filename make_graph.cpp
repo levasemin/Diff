@@ -15,8 +15,6 @@ void get_graph(graph *diff_graph, const char *file_name)
     const char * read_string = string;
 
     diff_graph->root_node = read_graph(diff_graph, &read_string);
-    
-    //DEBUG_GRAPHVIZ("graph.dot", diff_graph) 
 }
 
 #define DERIVATIVE(oper, symbols, level, diff_code, oper_code)             \

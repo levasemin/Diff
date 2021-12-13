@@ -4,8 +4,7 @@ void fprintf_default_derivative(FILE *dump_file, node **default_node, node **der
 {
     make_simple_node(derivative_node);
 
-    //make_simple_node(default_node);
-    //DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
+    make_simple_node(default_node);
 
     fprintf(dump_file, "(");                                    
     write_graph(dump_file, *default_node);                        

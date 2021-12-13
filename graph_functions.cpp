@@ -3,17 +3,24 @@
 
 void DEBUG_GRAPHVIZ_NODE(char *graph_file_name, node *graph_node)             
 {
-    // assert(graph_node != nullptr);
-    // getchar();                                                       
-    // graph debug_graph = {};                                          
+    assert(graph_node != nullptr);
+    getchar();                                                       
+    graph debug_graph = {};                                          
     
-    // construct_graph(&debug_graph);                                   
-    // debug_graph.root_node = graph_node;                              
-    // dump_graph_graphviz(graph_file_name, &debug_graph);              
-    // system("dot -T png graph.dot > graph.png");                      
-    // system("start graph.png");                                       
+    construct_graph(&debug_graph);                                   
+    debug_graph.root_node = graph_node;                              
+    dump_graph_graphviz(graph_file_name, &debug_graph);              
+    system("dot -T png graph.dot > graph.png");                      
+    system("start graph.png");                                       
 }
 
+void DEBUG_GRAPHVIZ_GRAPH(char *graph_file_name, graph *graph)
+{                 
+    getchar();                                                       
+    dump_graph_graphviz(graph_file_name, graph);                     
+    system("dot -T png graph.dot > graph.png");                      
+    system("start graph.png");                                       
+}
 
 int get_level(node *current_node)
 {
