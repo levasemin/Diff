@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
             create_png("database_files/read.dot", "database_files/read.png");
 
             be_simple(&graph);
-            
+
             dump_graph_graphviz("database_files/read_s.dot", &graph);
             create_png("database_files/read_s.dot", "database_files/read_s.png");
 
@@ -50,12 +50,6 @@ int main(int argc, const char *argv[])
             differentiate_graph(&graph, atoi(argv[2]), save_file_name);
 
             fprintf_end_latex(save_file_name);
-
-            be_simple(&graph, simplify_exponential_function);
-
-            dump_graph_graphviz(graph_file_name, &graph);
-            
-            create_png(graph_file_name, png_file_name);            
         }
 
         else if (strcmp(argv[1], "teilor") == 0)
@@ -82,14 +76,8 @@ int main(int argc, const char *argv[])
             int term       = atoi(argv[3]);
 
             teilor(save_file_name, &graph, locality, term);
-            
-            be_simple(&graph, simplify_exponential_function);
-
-            dump_graph_graphviz(graph_file_name, &graph);
-            create_png(graph_file_name, png_file_name);
         }
     }
-    
     system("pdflatex --interaction=nonstopmode database_files/result.tex");
 
 }

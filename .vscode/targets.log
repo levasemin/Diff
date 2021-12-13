@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat Dec 11 19:25:12 2021
+# Make data base, printed on Mon Dec 13 10:34:28 2021
 
 # Variables
 
@@ -20,7 +20,7 @@ USERPROFILE = C:\Users\levce
 # environment
 LOCALAPPDATA = C:\Users\levce\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e063119c-a663-4467-888b-f724a87d5dd2-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-8145b141-10de-499d-90d7-adf71b721151-sock
 # environment
 VSCODE_CWD = C:\Users\levce\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -36,7 +36,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17420_VQMAEFZTTKIOTPMF
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_8940_UNTOANQXPOZJIFSZ
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -92,7 +92,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 17420
+VSCODE_PID = 8940
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -140,7 +140,8 @@ CHOCOLATEYLASTPATHUPDATE = 132834223692411109
 # environment
 LOGONSERVER = \\MSI
 # environment
-VSCODE_LOG_NATIVE = false
+VSCODE_LOG_NATIV 
+E = false
 # environment
 USERNAME = levce
 # environment
@@ -218,9 +219,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/levce/CLionProjects/Diff, mtime 1639178191): 31 files, no impossibilities.
+# . (key c:/Users/levce/CLionProjects/Diff, mtime 1639353993): 32 files, no impossibilities.
 
-# 31 files, no impossibilities in 1 directories.
+# 32 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -228,8 +229,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 
 # Files
 
-main.exe: obj/main.o obj/teilor.o obj/graph_functions.o obj/differentiate.o obj/simplifier.o obj/make_ 
-graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
+main.exe: obj/main.o obj/teilor.o obj/graph_functions.o obj/differentiate.o obj/simplifier.o obj/make_graph.o obj/read_graph.o obj/dump_graph.o obj/stack.o obj/struct.o obj/open.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -408,7 +408,8 @@ teilor.cpp:
 #  File has not been updated.
 
 obj/differentiate.o: differentiate.cpp | obj
-#  Implicit rule search has not been done.
+#  Implici 
+t rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 29):
@@ -448,12 +449,12 @@ obj/stack.o: stack.cpp | obj
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 47 / storage = 562 B / avg = 11 B
-# current buf: size = 8174 B / used = 562 B / count = 47 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 48 / storage = 562 B / avg = 11 B
+# current buf: size = 8174 B / used = 562 B / count = 48 / avg = 11 B
 
-# strcache performance: lookups = 106 / hit rate = 55%
+# strcache performance: lookups = 107 / hit rate = 55%
 # hash-table stats:
-# Load=47/8192=1%, Rehash=0, Collisions=0/106=0%
-# Finished Make data base on Sat Dec 11 19:25:12 2021
+# Load=48/8192=1%, Rehash=0, Collisions=0/107=0%
+# Finished Make data base on Mon Dec 13 10:34:28 2021
 
  

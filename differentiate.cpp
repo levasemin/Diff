@@ -2,13 +2,10 @@
 
 void fprintf_default_derivative(FILE *dump_file, node **default_node, node **derivative_node, int num_derivative)   
 {
-    printf("START BE SIMPLE DERIVATIVE\n");
-    DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
     make_simple_node(derivative_node);
-    // printf("START BE SIMPLE DERFAULT\n");
 
     //make_simple_node(default_node);
-    DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
+    //DEBUG_GRAPHVIZ_NODE("graph.dot", *derivative_node);
 
     fprintf(dump_file, "(");                                    
     write_graph(dump_file, *default_node);                        
@@ -18,7 +15,7 @@ void fprintf_default_derivative(FILE *dump_file, node **default_node, node **der
     fprintf(dump_file, "\\\\ \n");                               
 }
 
-node *differentiate_internal(node* calc_node, node *external_derivative, const char *dump_file_name);
+node *differentiate_internal(node* calc_node, node *external_derivative, FILE *dump_file_name = nullptr);
 
 
 void differentiate_graph(graph *diff_graph, int count_derivative, const char *dump_file_name, const char *graph_file_name, const char *png_file_name)
@@ -30,7 +27,7 @@ void differentiate_graph(graph *diff_graph, int count_derivative, const char *du
     {
         dump_file = open_file(dump_file_name, "ab");
     }
-    
+
     graph default_graph = {};
 
     construct_graph(&default_graph);
@@ -57,17 +54,19 @@ void differentiate_graph(graph *diff_graph, int count_derivative, const char *du
         if (dump_file_name != nullptr)
         {
             fprintf(dump_file, "%d Derivative : \\\\ \n", num_derivative + 1);
-        }
-
-        if (dump_file_name != nullptr)
-        {
+        
             fprintf_default_derivative(dump_file, &(default_graph.root_node), &(diff_graph->root_node), num_derivative + 1);        
+        
+            fprintf(dump_file, "\\\\");
         }
-
-        fprintf(dump_file, "\\\\");
     }
 
-    fclose(dump_file);
+    if (dump_file_name != nullptr)
+    {
+        fclose(dump_file);
+    }
+
+    destruct_graph(&default_graph);
 }
 
 
@@ -129,6 +128,5 @@ node *differentiate_node(node *current_node, FILE *dump_file, int num_derivative
             assert(0);
         }
     }
-    
     return current_node;
 }

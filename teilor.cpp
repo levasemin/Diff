@@ -204,32 +204,24 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
         sprintf_float(equation_string,  calc_graph.root_node->value, SIGN_COUNT);
     }
 
-    //DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
-    //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
-
     for (int num_term = 0; num_term < term_count; ++num_term)
     {   
+        
         derivative_exist = true;
-                        //    DEBUG_GRAPHVIZ_GRAPH("graph.dot", diff_graph) 
         
-        differentiate_graph(diff_graph, 1);
-        
-        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
+        diff_graph->root_node = differentiate_node(diff_graph->root_node);
+                        
+        be_simple(diff_graph);
 
         copy_node_with_childrens(&(calc_graph.root_node), &diff_graph->root_node);
-
-        be_simple(&calc_graph, simplify_exponential_function);
-         
+        
         fprintf(dump_file, "%d Derivative:", num_term + 1);
 
         write_graph(dump_file, calc_graph.root_node);
 
         fprintf(dump_file, "\\\\ \n");
-        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
         derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
-
-        //DEBUG_GRAPHVIZ_GRAPH("graph.dot", &calc_graph) 
 
         if (derivative_exist == false)
         {
@@ -242,6 +234,9 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
         }
         
         sprintf_teilor(equation_string, calc_graph, locality, term_count, num_term);
+
+        destruct_graph(&calc_graph);
+        construct_graph(&calc_graph);
     }
 
     fprintf(dump_file, "$%s", equation_string);
