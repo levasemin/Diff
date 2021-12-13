@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.12.8)  13 DEC 2021 14:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.12.8)  13 DEC 2021 15:06
 entering extended mode
 **./database_files/result.tex
 (database_files/result.tex
@@ -279,41 +279,1094 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Warning: No \author given.
 
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-Overfull \hbox (1251.69217pt too wide) in paragraph at lines 8--15
-\OT1/cmr/m/n/12 4 Derivative:$[]$ 
- []
+! Missing } inserted.
+<inserted text> 
+                }
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-Overfull \hbox (8614.96245pt too wide) in paragraph at lines 8--15
-\OT1/cmr/m/n/12 5 Derivative:$[]$ 
- []
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+Things are pretty mixed up, but I think the worst is over.
 
-[1
+! Missing $ inserted.
+<inserted text> 
+                $
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-{C:/Users/levce/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] (result.aux) ) 
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.12 ${(x)}*\cos{(x)})}{(\cos{(x)}^{8.000})}
+                                            $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  +{-4.000}*\sin {(x)}*\cos ...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  -{-8.000}$\\ $*{(\sin {(x)...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...x)}+{-1.000}*\sin {(x)}*\sin {(x)})}
+                                                  )})}-{-8.000}*\sin {(x)}*\...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  )}-{-8.000}*\sin {(x)}*\co...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...{-1.000}*\sin {(x)}*\sin {(x)})})})}
+                                                  -{-8.000}*\sin {(x)}*\cos ...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...-1.000}*$\\ $\sin {(x)}*\sin {(x)})}
+                                                  *\cos {(x)}^{4.000}-{-8.00...
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...(x)}^{3.000}*\sin {(x)}*\cos {(x)})}
+                                                  )
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+Things are pretty mixed up, but I think the worst is over.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.17 ...n{(x)}*\cos{(x)})})}{(\cos{(x)}^{16.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...({-1.000}*\sin {(x)}*\cos {(x$\\ $)}
+                                                  +{-1.000}*\sin {(x)}*\cos ...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  +{-4.000}*\sin {(x)}*\cos ...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...\cos {(x)}^{3.000}*{(\cos {(x$\\ $)}
+                                                  *\cos {(x)}+{-1.000}*\sin ...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...x)}+{-1.000}*\sin {(x)}*\sin {(x)})}
+                                                  )}-{-8.000}*{(\sin {(x)}*\...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  -{-8.000}*{(\sin {(x)}*\co...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...+{-3.000}*\sin {(x)}*\cos {(x$\\ $)}
+                                                  ^{2.000}*\sin {(x)})}+\sin...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...\cos {(x$\\ $)}^{2.000}*\sin {(x)})}
+                                                  +\sin {(x)}*\cos {(x)}^{3....
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  )}+\cos {(x)}^{8.000}*{({2...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...{-1.000}*\sin {(x)}*\sin {(x)})})})}
+                                                  +\cos {(x)}^{8.000}*{({2.0...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ... $\sin {(x)}+\cos {(x)}*\sin {(x)})}
+                                                  )}+\cos {(x)}^{4.000}*{({-...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  +\cos {(x)}^{4.000}*{({-1....
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...x)}+{-1.000}*\sin {(x)}*\sin {(x)})}
+                                                  +{-1.000}*{({-1.000}*\sin ...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...+{-1.000}*\sin {(x)}*\sin {(x$\\ $)}
+                                                  +\cos {(x)}*\cos {(x)})})}...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...n {(x$\\ $)}+\cos {(x)}*\cos {(x)})}
+                                                  )}+{-4.000}*{({(\cos {(x)}...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...{(x$\\ $)}+\cos {(x)}*\cos {(x)})})}
+                                                  +{-4.000}*{({(\cos {(x)}*\...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...x)}^{3.000}+{-3.000}*\sin {(x$\\ $)}
+                                                  *\cos {(x)}^{2.000}*\sin {...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ... $)}*\cos {(x)}^{2.000}*\sin {(x)})}
+                                                  +\sin {(x)}*\cos {(x)}^{3....
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  )})}-{-8.000}*{({(\cos {(x...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...in {(x)}+\cos {(x)}*\sin {(x)})})})}
+                                                  )}-{-8.000}*{({(\cos {(x)}...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ... {(x)}+\cos {(x)}*\sin {(x)})})})})}
+                                                  -{-8.000}*{({(\cos {(x)}*\...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...\sin $\\ ${(x)}*\cos {(x)}^{2.000})}
+                                                  )}+{(\cos {(x)}*\cos {(x)}...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...in $\\ ${(x)}*\cos {(x)}^{2.000})})}
+                                                  +{(\cos {(x)}*\cos {(x)}+{...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...+{-3.000}*\sin {(x)}*\cos {(x$\\ $)}
+                                                  ^{2.000}*\sin {(x)})}+\sin...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...\cos {(x$\\ $)}^{2.000}*\sin {(x)})}
+                                                  +\sin {(x)}*\cos {(x)}^{3....
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...}*\sin {(x)}+\cos {(x)}*\sin {(x)})}
+                                                  )})})}-{-8.000}*{({({2.000...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  )})}-{-8.000}*{({({2.000}*...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...in {(x)}+\cos {(x)}*\sin {(x)})})})}
+                                                  )}-{-8.000}*{({({2.000}*{(...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ... {(x)}+\cos {(x)}*\sin {(x)})})})})}
+                                                  -{-8.000}*{({({2.000}*{(\c...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...(x)}^{3.000}*\sin {(x)}*\cos {(x)})}
+                                                  *{(\cos {(x)}*\cos {(x)}^{...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...\sin {(x)}+\cos {(x)}*\sin {(x)})})}
+                                                  +{-4.000}*\sin {(x)}*\cos ...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  -{-8.000}$\\ $*{(\sin {(x)...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten $.
+<argument> ...x)}+{-1.000}*\sin {(x)}*\sin {(x)})}
+                                                  )})})})}-{-16.000}*\sin {(...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...}+{-1.000}*\sin {(x)}*\sin {(x)})})}
+                                                  )})})}-{-16.000}*\sin {(x)...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...{-1.000}*\sin {(x)}*\sin {(x)})})})}
+                                                  )})}-{-16.000}*\sin {(x)}*...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...1.000}*\sin {(x)}*\sin {(x)})})})})}
+                                                  )}-{-16.000}*\sin {(x)}*\c...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+<argument> ...000}*\sin {(x)}*\sin {(x)})})})})})}
+                                                  -{-16.000}*\sin {(x)}*\cos...
+l.42 ...(x)}*\cos{(x)})})})}{(\cos{(x)}^{32.000})}
+                                                  $\\
+(That makes 100 errors; please try again.) 
 Here is how much of TeX's memory you used:
- 3550 strings out of 478927
- 51714 string characters out of 2852535
- 374665 words of memory out of 3000000
+ 3546 strings out of 478927
+ 51640 string characters out of 2852535
+ 366665 words of memory out of 3000000
  21383 multiletter control sequences out of 15000+600000
  410973 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,9n,72p,3332b,211s stack positions out of 5000i,500n,10000p,200000b,80000s
-<
-C:/Users/levce/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmm
-i12.pfb><C:/Users/levce/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmmi6.pfb><C:/Users/levce/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmmi8.pfb><C:/Users/levce/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmr12.pfb><C:/Users/levce/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/levce/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/levce/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/levce/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/levce/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on result.pdf (1 page, 90302 bytes).
-PDF statistics:
- 51 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 64i,7n,72p,241b,211s stack positions out of 5000i,500n,10000p,200000b,80000s
 
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -4,6 +4,7 @@ void fprintf_expression_inside(FILE *dump_file, node *current_node);
 
 void fprintf_double_arg(FILE *dump_file, node *current_node, const char *type);
 
+
 void write_graph_rec(FILE *dump_file, node *current_node);
 
 void write_graph_graphviz(FILE *file, graph *graph);
@@ -183,9 +184,11 @@ void write_graph_rec(FILE *dump_file, node *current_node)
 
 void write_node_value(FILE *dump_file, node *current_node)
 {
+    long int file_start = ftell(dump_file);                                                         
+
     if (current_node->type == CONST_TYPE)
-    {                                                            
-        fprintf(dump_file, "{%.*f}", SIGN_COUNT, current_node->value);           
+    {           
+        fprintf(dump_file, "{%.*f}", SIGN_COUNT, current_node->value);          
     }                                                            
 
     else if(current_node->type == VAR_TYPE || current_node->type == EXP_TYPE)                      
@@ -201,6 +204,14 @@ void write_node_value(FILE *dump_file, node *current_node)
         {
             assert(0);
         }
+    }
+
+    COUNT_SYMBOLS += ftell(dump_file) - file_start;
+    printf("%d\n", COUNT_SYMBOLS);
+    if (COUNT_SYMBOLS >= MAX_LEN_STRING)
+    {
+        fprintf(dump_file, "$\\\\\n$");
+        COUNT_SYMBOLS = 0;
     }
 }
 

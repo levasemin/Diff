@@ -12,6 +12,10 @@ const int SIGN_COUNT = 3;
 
 const char E = 'e' -'a';
 
+const int MAX_LEN_STRING = 80;
+
+extern int COUNT_SYMBOLS;
+
 void DEBUG_GRAPHVIZ_GRAPH(char *graph_file_name, graph *graph);
 
 void DEBUG_GRAPHVIZ_NODE(char *graph_file_name, node *graph_node);

@@ -14,7 +14,6 @@ void fprintf_default_derivative(FILE *dump_file, node **default_node, node **der
     fprintf(dump_file, ")$^{(%d)}$ = ", num_derivative);                                   
                                                                        
     write_graph(dump_file, *derivative_node);                        
-    fprintf(dump_file, "\\\\ \n");                               
 }
 
 node *differentiate_internal(node* calc_node, node *external_derivative, FILE *dump_file_name = nullptr);
@@ -60,6 +59,10 @@ void differentiate_graph(graph *diff_graph, int count_derivative, const char *du
             fprintf_default_derivative(dump_file, &(default_graph.root_node), &(diff_graph->root_node), num_derivative + 1);        
         
             fprintf(dump_file, "\\\\");
+            
+            COUNT_SYMBOLS = 0;                             
+
+            
         }
     }
 

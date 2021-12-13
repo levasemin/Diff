@@ -180,6 +180,8 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
 
     fprintf(dump_file, "\\\\");
 
+    COUNT_SYMBOLS = 0;                             
+
     char equation_string[300] = {};
 
     bool derivative_exist = true;
@@ -199,6 +201,8 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
     write_graph(dump_file, calc_graph.root_node);
 
     fprintf(dump_file, "\\\\ \n");                               
+
+    COUNT_SYMBOLS = 0;                             
 
     derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
 
@@ -227,7 +231,9 @@ void teilor(FILE *dump_file, graph *diff_graph, float locality, int term_count)
         write_graph(dump_file, calc_graph.root_node);
 
         fprintf(dump_file, "\\\\ \n");
-
+        
+        COUNT_SYMBOLS = 0;
+        
         derivative_teilor(&calc_graph.root_node, locality, &derivative_exist);
 
         if (derivative_exist == false)
